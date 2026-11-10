@@ -1123,11 +1123,14 @@
           <h2 style="font-size:16px; font-weight:800;">Roster & Player Ratings</h2>
           <p style="font-size:12px; color:var(--text-muted);" id="rosterCountSub">Manage names, numbers, ratings & team roster.</p>
         </div>
-        <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-secondary" style="width:auto; padding:8px 12px; font-size:13px;" onclick="openAddPlayerModal()">
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-secondary" style="width:auto; padding:8px 10px; font-size:12px; font-weight:700;" onclick="sortRosterAndRender()" title="Sort roster by highest total score first, then alphabetically">
+            🔀 Rank
+          </button>
+          <button type="button" class="btn-secondary" style="width:auto; padding:8px 10px; font-size:12px;" onclick="openAddPlayerModal()">
             ➕ Add
           </button>
-          <button type="button" class="btn-primary" style="width:auto; padding:8px 14px; font-size:13px;" onclick="saveRatings()">
+          <button type="button" class="btn-primary" style="width:auto; padding:8px 12px; font-size:12px;" onclick="saveRatings()">
             💾 Save
           </button>
         </div>
@@ -1215,7 +1218,7 @@
           </div>
 
           <div class="rating-row">
-            <span>Serve Power</span>
+            <span>Serve Quality</span>
             <div class="scale-pills" id="newPill_power">
               <button type="button" class="pill-btn" onclick="selectNewRating('power', 1)">1</button>
               <button type="button" class="pill-btn" onclick="selectNewRating('power', 2)">2</button>
@@ -1226,7 +1229,7 @@
           </div>
 
           <div class="rating-row">
-            <span>Serve Receive</span>
+            <span>Pass & Receive</span>
             <div class="scale-pills" id="newPill_receive">
               <button type="button" class="pill-btn" onclick="selectNewRating('receive', 1)">1</button>
               <button type="button" class="pill-btn active" onclick="selectNewRating('receive', 2)">2</button>
@@ -1237,7 +1240,7 @@
           </div>
 
           <div class="rating-row">
-            <span>Rally Hits</span>
+            <span>Rally & Return</span>
             <div class="scale-pills" id="newPill_rally">
               <button type="button" class="pill-btn" onclick="selectNewRating('rally', 1)">1</button>
               <button type="button" class="pill-btn active" onclick="selectNewRating('rally', 2)">2</button>
@@ -1302,19 +1305,19 @@
   </nav>
 
   <script>
-    // Master Default Roster
+    // Master Default Roster (Sorted by Total Score DESC, then Name ASC)
     const DEFAULT_PLAYERS = [
+      { number: 15, name: "Claire", serve_consistency: 4, serve_power: 4, serve_receive: 3, rally_hits: 4, total_score: 15, tier: "anchor" },
       { number: 14, name: "Tessa", serve_consistency: 3, serve_power: 4, serve_receive: 4, rally_hits: 4, total_score: 15, tier: "anchor" },
+      { number: 10, name: "Harper", serve_consistency: 3, serve_power: 5, serve_receive: 3, rally_hits: 3, total_score: 14, tier: "anchor" },
       { number: 7,  name: "Eileen", serve_consistency: 3, serve_power: 4, serve_receive: 3, rally_hits: 3, total_score: 13, tier: "anchor" },
-      { number: 10, name: "Harper", serve_consistency: 3, serve_power: 4, serve_receive: 2, rally_hits: 3, total_score: 12, tier: "starter" },
-      { number: 8,  name: "Gemma", serve_consistency: 4, serve_power: 3, serve_receive: 2, rally_hits: 3, total_score: 12, tier: "starter" },
       { number: 12, name: "Peyton", serve_consistency: 4, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 11, tier: "starter" },
-      { number: 15, name: "Charley", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
-      { number: 4,  name: "Sophie", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
+      { number: 15, name: "Charley", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 3, total_score: 10, tier: "rotation" },
+      { number: 8,  name: "Gemma", serve_consistency: 4, serve_power: 3, serve_receive: 1, rally_hits: 2, total_score: 10, tier: "rotation" },
+      { number: 5,  name: "Eleanor", serve_consistency: 3, serve_power: 2, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
       { number: 2,  name: "Olivia", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
-      { number: 5,  name: "Eleanor", serve_consistency: 3, serve_power: 2, serve_receive: 1, rally_hits: 2, total_score: 8, tier: "developing" },
-      { number: 15, name: "Claire", serve_consistency: 3, serve_power: 2, serve_receive: 1, rally_hits: 1, total_score: 7, tier: "developing" },
-      { number: 9,  name: "Ella", serve_consistency: 1, serve_power: 1, serve_receive: 1, rally_hits: 1, total_score: 4, tier: "developing" }
+      { number: 4,  name: "Sophie", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
+      { number: 9,  name: "Ella", serve_consistency: 2, serve_power: 2, serve_receive: 1, rally_hits: 1, total_score: 6, tier: "developing" }
     ];
 
     // App State
@@ -1326,6 +1329,31 @@
     let selectedMatchStrategy = "balanced";
     let currentSet3Mode = "win";
     let isSet3Generated = false;
+
+    // Live Midway Substitution State (Defaults: Set 1 & 2 at S5, Set 3 at S3)
+    let activeSubServer = { set1: 5, set2: 5, set3: 3 };
+    let activeSubPossession = { set1: "serving", set2: "serving", set3: "serving" };
+
+    function setSubServer(setKey, num) {
+      activeSubServer[setKey] = parseInt(num);
+      renderPlanTabs();
+    }
+
+    function toggleSubPossession(setKey, poss) {
+      activeSubPossession[setKey] = poss;
+      renderPlanTabs();
+    }
+
+    function copySubCallText(encoded) {
+      const text = decodeURIComponent(encoded);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert("Substitution call copied to clipboard!\n\n" + text);
+        }).catch(() => prompt("Copy your substitution call:", text));
+      } else {
+        prompt("Copy your substitution call:", text);
+      }
+    }
 
     // Override Modal Target State
     let overrideTarget = { setKey: null, halfKey: null, pos: null, currentPlayer: null };
@@ -1412,10 +1440,31 @@
         playersData = JSON.parse(JSON.stringify(DEFAULT_PLAYERS));
       }
 
+      sortPlayersRoster(playersData);
       activePlayerNumbers = playersData.map((p, idx) => p.number + "_" + idx);
       renderRosterChecklist();
       renderRatingsList();
       updateActiveCountBadge();
+    }
+
+    function sortPlayersRoster(arr) {
+      if (!arr || !Array.isArray(arr)) return arr;
+      return arr.sort((a, b) => {
+        const scoreA = Number(a.total_score) || 0;
+        const scoreB = Number(b.total_score) || 0;
+        if (scoreB !== scoreA) {
+          return scoreB - scoreA;
+        }
+        return (a.name || "").localeCompare(b.name || "");
+      });
+    }
+
+    function sortRosterAndRender() {
+      sortPlayersRoster(playersData);
+      activePlayerNumbers = playersData.map((p, idx) => p.number + "_" + idx);
+      renderRatingsList();
+      renderRosterChecklist();
+      saveRatingsQuietly();
     }
 
     function updateActiveCountBadge() {
@@ -1458,11 +1507,32 @@
           <input type="checkbox" ${isChecked ? "checked" : ""}>
           <div class="roster-item-info">
             <div class="roster-name"><strong>#${p.number}</strong> ${escapeHTML(p.name)} ${isChecked ? '<span class="lineup-status-in">✓ In Lineup</span>' : '<span class="lineup-status-out">Absent</span>'}</div>
-            <div class="roster-score">Tot: ${p.total_score} | Srv: ${p.serve_consistency}/${p.serve_power} | Rcv: ${p.serve_receive}</div>
+            <div class="roster-score">Tot: ${p.total_score} | Srv: ${p.serve_consistency}/${p.serve_power} | Pass: ${p.serve_receive} | Rally: ${p.rally_hits}</div>
           </div>
         `;
         container.appendChild(item);
       });
+    }
+
+    function getPlayerStrengthsTag(p) {
+      const tags = [];
+      // Serving Profile
+      if ((p.serve_power || 0) >= 4 && (p.serve_consistency || 0) >= 3) {
+        tags.push("<span style='color:#1e4f95;'>🚀 Lead Server</span>");
+      } else if ((p.serve_consistency || 0) >= 4) {
+        tags.push("<span style='color:#0d9488;'>🎯 Consistent Server</span>");
+      }
+
+      // Court Profile
+      if ((p.serve_receive || 0) >= 3) {
+        tags.push("<span style='color:#16a34a;'>🛡️ Back Row Anchor</span>");
+      } else if ((p.serve_receive || 0) <= 1) {
+        tags.push("<span style='color:#ea580c;'>🏐 Front Row / Net</span>");
+      } else if ((p.rally_hits || 0) >= 3) {
+        tags.push("<span style='color:#7c3aed;'>⚡ Active Rally</span>");
+      }
+
+      return tags.join("<span style='color:#cbd5e1; margin:0 4px;'>•</span>");
     }
 
     function renderRatingsList() {
@@ -1485,7 +1555,6 @@
             </div>
             <div class="player-header-actions">
               <span class="badge badge-blue" style="font-size:11px;">Tot: <strong id="tot_${idx}">${p.total_score}</strong></span>
-              <button type="button" class="player-del-btn" onclick="deletePlayer(${idx})" title="Remove #${p.number} ${escapeHTML(p.name)} from team roster">🗑️</button>
             </div>
           </div>
 
@@ -1497,24 +1566,34 @@
           </div>
 
           <div class="rating-row">
-            <span>Serve Power</span>
+            <span>Serve Quality</span>
             <div class="scale-pills" data-idx="${idx}" data-metric="serve_power">
               ${[1,2,3,4,5].map(v => `<button type="button" class="pill-btn ${p.serve_power === v ? 'active' : ''}" onclick="setRating(${idx}, 'serve_power', ${v})">${v}</button>`).join('')}
             </div>
           </div>
 
           <div class="rating-row">
-            <span>Serve Receive</span>
+            <span>Pass & Receive</span>
             <div class="scale-pills" data-idx="${idx}" data-metric="serve_receive">
               ${[1,2,3,4,5].map(v => `<button type="button" class="pill-btn ${p.serve_receive === v ? 'active' : ''}" onclick="setRating(${idx}, 'serve_receive', ${v})">${v}</button>`).join('')}
             </div>
           </div>
 
           <div class="rating-row">
-            <span>Rally Hits</span>
+            <span>Rally & Return</span>
             <div class="scale-pills" data-idx="${idx}" data-metric="rally_hits">
               ${[1,2,3,4,5].map(v => `<button type="button" class="pill-btn ${p.rally_hits === v ? 'active' : ''}" onclick="setRating(${idx}, 'rally_hits', ${v})">${v}</button>`).join('')}
             </div>
+          </div>
+
+          <!-- Bottom Footer Row: Tactical Strengths & Mini Delete Button -->
+          <div class="player-card-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; padding-top:6px; border-top:1px solid #f1f5f9;">
+            <div style="font-size:10px; color:#475569; font-weight:600; display:flex; align-items:center; gap:4px;">
+              ${getPlayerStrengthsTag(p)}
+            </div>
+            <button type="button" class="player-del-btn-mini" onclick="deletePlayer(${idx})" title="Remove #${p.number} ${escapeHTML(p.name)}" style="background:transparent; color:#94a3b8; border:none; font-size:10px; cursor:pointer; padding:2px 4px; display:inline-flex; align-items:center; gap:3px; opacity:0.7;" onmouseover="this.style.opacity='1'; this.style.color='#ef4444';" onmouseout="this.style.opacity='0.7'; this.style.color='#94a3b8';">
+              <span style="font-size:10px;">🗑️</span> <span>Remove</span>
+            </button>
           </div>
         `;
         container.appendChild(card);
@@ -1553,7 +1632,7 @@
     function deletePlayer(idx) {
       const p = playersData[idx];
       if (!p) return;
-      if (!confirm(`Are you sure you want to remove #${p.number} ${p.name} from the team roster?`)) {
+      if (!confirm(`Are you sure you want to remove #${p.number} ${p.name} from the team roster?\n\nThis will remove them from all match rotations.`)) {
         return;
       }
 
@@ -1751,6 +1830,8 @@
     }
 
     async function saveRatings() {
+      sortPlayersRoster(playersData);
+      activePlayerNumbers = playersData.map((p, idx) => p.number + "_" + idx);
       await saveRatingsQuietly();
       alert("Roster & Ratings saved successfully to backend and device!");
       renderRosterChecklist();
@@ -1900,6 +1981,45 @@
         return { positions, total_score: tot, avg_receive: avgRcv };
       }
 
+      function arrangeSecondHalfPositions(six) {
+        // In youth volleyball with 5-serve limit and sub at point 12/13:
+        // Hot closing serving slots are Slot 5 (most probable at ~31%), Slot 6 (~27%), and Slot 4 (~15%).
+        // Middle Back defense receiver at sub is Slot 3 (in R4) or Slot 4 (in R5).
+        // Front Row Net slots at sub are Slot 1 and Slot 2.
+        const positions = {};
+        let available = [...six];
+
+        // 1. Slot 5: Best server in the incoming group (serves 1st in most common 12/13 sub state)
+        const byServe = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        positions[5] = byServe[0];
+        available = available.filter(p => p !== positions[5]);
+
+        // 2. Slot 6: Second best server in the incoming group
+        const byServe2 = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        positions[6] = byServe2[0];
+        available = available.filter(p => p !== positions[6]);
+
+        // 3. Slot 4: Third best server (serves if sub occurs at S4)
+        const byServe3 = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        positions[4] = byServe3[0];
+        available = available.filter(p => p !== positions[4]);
+
+        // 4. Slot 3: Best pass & receive player remaining (anchors Middle Back receiving)
+        const byDef = [...available].sort((a, b) => calcDefenseValue(b) - calcDefenseValue(a));
+        positions[3] = byDef[0];
+        available = available.filter(p => p !== positions[3]);
+
+        // 5. Slots 1 & 2: Remaining players (play Front Row / Net at sub)
+        positions[1] = available[0];
+        positions[2] = available[1];
+
+        const list = [positions[1], positions[2], positions[3], positions[4], positions[5], positions[6]];
+        const tot = list.reduce((sum, p) => sum + p.total_score, 0);
+        const avgRcv = (list.reduce((sum, p) => sum + p.serve_receive, 0) / 6).toFixed(1);
+
+        return { positions, total_score: tot, avg_receive: avgRcv };
+      }
+
       function partitionSet(anchors, nonAnchorOrdering) {
         const nonAnchors = nonAnchorOrdering.filter(p => !anchors.includes(p));
         const halfSingles = 6 - numAnchors;
@@ -1970,21 +2090,19 @@
       s1Pool.h1.forEach(p => s1s2Halves[p.name]++);
       serveSlots.forEach(pos => served.add(s1H1.positions[pos].name));
 
-      const unservedS1 = active.filter(p => !served.has(p.name));
-      const s1H2 = arrangePositions(s1Pool.h2, unservedS1);
+      const s1H2 = arrangeSecondHalfPositions(s1Pool.h2);
       s1Pool.h2.forEach(p => s1s2Halves[p.name]++);
-      serveSlots.forEach(pos => served.add(s1H2.positions[pos].name));
+      [4, 5, 6].forEach(pos => served.add(s1H2.positions[pos].name));
 
-      // Set 2 (Unserved priority)
+      // Set 2
       const unserved1 = active.filter(p => !served.has(p.name));
       const s2H1 = arrangePositions(s2Pool.h1, unserved1);
       s2Pool.h1.forEach(p => s1s2Halves[p.name]++);
       serveSlots.forEach(pos => served.add(s2H1.positions[pos].name));
 
-      const unserved2 = active.filter(p => !served.has(p.name));
-      const s2H2 = arrangePositions(s2Pool.h2, unserved2);
+      const s2H2 = arrangeSecondHalfPositions(s2Pool.h2);
       s2Pool.h2.forEach(p => s1s2Halves[p.name]++);
-      serveSlots.forEach(pos => served.add(s2H2.positions[pos].name));
+      [4, 5, 6].forEach(pos => served.add(s2H2.positions[pos].name));
 
       // --- Set 3 Dynamic Generation (Deciding Set to 15 Points) ---
       let set3Result = { generated: false };
@@ -2182,38 +2300,153 @@
     }
 
     // Build Court HTML with Clickable Coach Override
-    function buildCourtHTML(half, setKey, halfKey) {
-      const p1 = half.positions[1] || {};
-      const p2 = half.positions[2] || {};
-      const p3 = half.positions[3] || {};
-      const p4 = half.positions[4] || {};
-      const p5 = half.positions[5] || {};
-      const p6 = half.positions[6] || {};
+    function buildCourtHTML(half, setKey, halfKey, activeRotation = 1) {
+      const rot = (halfKey === 'second_half') ? (activeRotation || 1) : 1;
+
+      // Map physical court positions 1..6 based on active rotation
+      const p1 = half.positions[((rot - 1) % 6) + 1] || {};
+      const p2 = half.positions[(rot % 6) + 1] || {};
+      const p3 = half.positions[((rot + 1) % 6) + 1] || {};
+      const p4 = half.positions[((rot + 2) % 6) + 1] || {};
+      const p5 = half.positions[((rot + 3) % 6) + 1] || {};
+      const p6 = half.positions[((rot + 4) % 6) + 1] || {};
 
       function makeCell(pos, roleClass, roleText, player) {
+        const offsets = { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5 };
+        const slotIdx = (halfKey === 'second_half') ? (((rot - 1 + offsets[pos]) % 6) + 1) : pos;
         const isOverride = player._isOverride ? `<span class="cell-role-tag role-override">Override</span>` : `<span class="cell-role-tag ${roleClass}">${roleText}</span>`;
         return `
-          <div class="court-cell" onclick="openOverrideModal('${setKey}', '${halfKey}', ${pos})">
+          <div class="court-cell" onclick="openOverrideModal('${setKey}', '${halfKey}', ${slotIdx})">
             <span class="cell-pos-tag">P${pos}</span>
             ${isOverride}
             <div class="cell-player-name">#${player.number || '?'} ${player.name || 'Empty'}</div>
-            <div class="cell-player-stat">Rcv:${player.serve_receive || 0} Srv:${player.serve_consistency || 0}</div>
+            <div class="cell-player-stat">Pass:${player.serve_receive || 0} Srv:${player.serve_consistency || 0}/${player.serve_power || 0}</div>
             <span class="cell-edit-hint">Tap to swap ✎</span>
           </div>
         `;
       }
 
+      const p1Tag = (halfKey === 'second_half') ? `🎯 Srv #${rot}` : "★ Srv #1";
+      const p2Tag = (halfKey === 'second_half') ? "🔜 Next Srv" : "Srv #2";
+      const p3Tag = (halfKey === 'second_half') ? "🔜 3rd Srv" : "Srv #3";
+      const p4Tag = (halfKey === 'second_half') ? "Net (LF)" : "Net / LF";
+      const p5Tag = (halfKey === 'second_half') ? "Left Back" : "Defense";
+      const p6Tag = (halfKey === 'second_half') ? "Mid Back (Rcv)" : "Anchor";
+
       return `
         <div class="vb-court">
           <div class="court-net-line">▲ ▲ ▲ NET ▲ ▲ ▲</div>
           <div class="court-grid">
-            ${makeCell(4, "role-hide", "Net / LF", p4)}
-            ${makeCell(3, "role-srv3", "Srv #3", p3)}
-            ${makeCell(2, "role-srv2", "Srv #2", p2)}
+            ${makeCell(4, "role-hide", p4Tag, p4)}
+            ${makeCell(3, "role-srv3", p3Tag, p3)}
+            ${makeCell(2, "role-srv2", p2Tag, p2)}
 
-            ${makeCell(5, "role-pass", "Defense", p5)}
-            ${makeCell(6, "role-pass", "Anchor", p6)}
-            ${makeCell(1, "role-srv1", "★ Srv #1", p1)}
+            ${makeCell(5, "role-pass", p5Tag, p5)}
+            ${makeCell(6, "role-pass", p6Tag, p6)}
+            ${makeCell(1, "role-srv1", p1Tag, p1)}
+          </div>
+        </div>
+      `;
+    }
+
+    // Mid-Set Substitution Tracker Header (Point 12–13 or Point 8)
+    function buildSubTrackerHeaderHTML(setKey, isSet3 = false) {
+      const currentRot = activeSubServer[setKey] || (isSet3 ? 3 : 5);
+      const currentPoss = activeSubPossession[setKey] || "serving";
+      const triggerPoint = isSet3 ? "8" : "12–13";
+
+      return `
+        <div class="sub-tracker-card" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:12px 14px; margin-bottom:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+            <div style="font-size:12px; font-weight:800; color:#166534; display:flex; align-items:center; gap:6px;">
+              <span>⏱️</span> Mid-Set Substitution Tracker (Point ${triggerPoint})
+            </div>
+            <span style="font-size:10px; background:#dcfce7; color:#15803d; font-weight:700; padding:2px 8px; border-radius:10px; border:1px solid #86efac;">Active Sub State</span>
+          </div>
+          <p style="font-size:11px; color:#475569; margin-bottom:10px; line-height:1.4;">
+            Tap which server was active at the point ${triggerPoint} whistle to view the exact physical floor rotation &amp; closing serve queue:
+          </p>
+          
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+              <span style="font-size:11px; font-weight:700; color:#1e293b;">Active Server at Sub:</span>
+              <div class="segment-group" style="display:inline-flex; width:auto; margin:0;">
+                ${[1, 2, 3, 4, 5, 6].map(num => `
+                  <button type="button" class="segment-btn ${currentRot === num ? 'active' : ''}" style="padding:4px 8px; font-size:11px;" onclick="setSubServer('${setKey}', ${num})">
+                    S${num}${!isSet3 && num === 5 ? ' (Avg)' : isSet3 && num === 3 ? ' (Avg)' : ''}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
+              <span style="font-size:11px; font-weight:700; color:#1e293b;">Possession at Sub:</span>
+              <div class="segment-group" style="display:inline-flex; width:auto; margin:0;">
+                <button type="button" class="segment-btn ${currentPoss === 'serving' ? 'active' : ''}" style="padding:4px 10px; font-size:11px;" onclick="toggleSubPossession('${setKey}', 'serving')">
+                  🟢 We Are Serving
+                </button>
+                <button type="button" class="segment-btn ${currentPoss === 'receiving' ? 'active' : ''}" style="padding:4px 10px; font-size:11px;" onclick="toggleSubPossession('${setKey}', 'receiving')">
+                  🟡 Opponent Serving (Receive)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Closing Serve Queue (Points 12–25)
+    function buildClosingServeQueueHTML(half, rot, poss, isSet3 = false) {
+      const p1 = half.positions[((rot - 1) % 6) + 1] || {};
+      const p2 = half.positions[(rot % 6) + 1] || {};
+      const p3 = half.positions[((rot + 1) % 6) + 1] || {};
+      const p4 = half.positions[((rot + 2) % 6) + 1] || {};
+      const p5 = half.positions[((rot + 3) % 6) + 1] || {};
+      const p6 = half.positions[((rot + 4) % 6) + 1] || {};
+
+      const isServing = poss !== "receiving";
+      const pointsSpan = isSet3 ? "Points 8–15" : "Points 12–25";
+
+      return `
+        <div class="card" style="padding:12px 14px; background:#f8fafc; border:1px solid #e2e8f0; margin-top:10px;">
+          <div style="font-size:12px; font-weight:800; color:#1e293b; margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;">
+            <span>🎯 Closing Serve Order (${pointsSpan})</span>
+            <span style="font-size:10px; color:#16a34a; font-weight:700;">Max 5 Serves / Kid</span>
+          </div>
+          <p style="font-size:11px; color:#64748b; margin-bottom:10px;">
+            With only ~12 points remaining, these 3 servers will handle the entire second half:
+          </p>
+          <div style="display:flex; flex-direction:column; gap:6px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; background:white; padding:7px 10px; border-radius:6px; border-left:4px solid #16a34a; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div>
+                <span style="font-size:11px; font-weight:700; color:#15803d;">1st Server: </span>
+                <strong style="font-size:13px; color:#0f172a;">#${p1.number || '?'} ${escapeHTML(p1.name || 'TBD')}</strong>
+                <span style="font-size:10px; color:#64748b; margin-left:4px;">(Srv: ${p1.serve_consistency || 0}/${p1.serve_power || 0})</span>
+              </div>
+              <span style="font-size:11px; font-weight:700; color:#16a34a;">${isServing ? 'Serving Now' : 'Serves on 1st Sideout'}</span>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; background:white; padding:7px 10px; border-radius:6px; border-left:4px solid #2563eb; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div>
+                <span style="font-size:11px; font-weight:700; color:#2563eb;">2nd Server: </span>
+                <strong style="font-size:13px; color:#0f172a;">#${p2.number || '?'} ${escapeHTML(p2.name || 'TBD')}</strong>
+                <span style="font-size:10px; color:#64748b; margin-left:4px;">(Srv: ${p2.serve_consistency || 0}/${p2.serve_power || 0})</span>
+              </div>
+              <span style="font-size:11px; font-weight:700; color:#2563eb;">Next Up</span>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between; background:white; padding:7px 10px; border-radius:6px; border-left:4px solid #7c3aed; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+              <div>
+                <span style="font-size:11px; font-weight:700; color:#7c3aed;">3rd Server: </span>
+                <strong style="font-size:13px; color:#0f172a;">#${p3.number || '?'} ${escapeHTML(p3.name || 'TBD')}</strong>
+                <span style="font-size:10px; color:#64748b; margin-left:4px;">(Srv: ${p3.serve_consistency || 0}/${p3.serve_power || 0})</span>
+              </div>
+              <span style="font-size:11px; font-weight:700; color:#7c3aed;">Closing Points</span>
+            </div>
+
+            <div style="font-size:11px; color:#64748b; padding:6px 8px; background:#f1f5f9; border-radius:6px; margin-top:4px;">
+              🏐 <strong>Front Row (Plays Net / Won't Serve before 25):</strong> #${p4.number || '?'} ${escapeHTML(p4.name || '')}, #${p5.number || '?'} ${escapeHTML(p5.name || '')}, #${p6.number || '?'} ${escapeHTML(p6.name || '')}
+            </div>
           </div>
         </div>
       `;
@@ -2425,14 +2658,23 @@
         `;
       }
 
+      const subCallLines = pairs.map(p => `Sub IN: #${p.inPlayer.number} ${p.inPlayer.name} ➔ Sub OUT: ${p.outPlayer ? '#' + p.outPlayer.number + ' ' + p.outPlayer.name : 'Open'} (${p.posLabel})`);
+      const subCallText = `St. Cecilia Substitution Call (Point 12–13):\n` + subCallLines.join('\n');
+      const subCallEncoded = encodeURIComponent(subCallText);
+
       return `
         <div class="swap-card">
           <div class="swap-header">
             <div>
-              <div class="swap-title">⇄ Midway Substitution Plan (Point 13)</div>
+              <div class="swap-title">⇄ Midway Substitution Plan (Point 12–13)</div>
               <div class="swap-subtitle">Official 1-to-1 player exchange for referee / scorekeeper:</div>
             </div>
-            <span class="badge badge-blue">${pairs.length} Subs</span>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="badge badge-blue">${pairs.length} Subs</span>
+              <button type="button" class="copy-lineup-btn" style="padding:4px 8px; font-size:11px;" onclick="copySubCallText('${subCallEncoded}')">
+                📋 Copy Sub Call
+              </button>
+            </div>
           </div>
           <div class="sub-pairs-list">
             ${rowsHTML}
@@ -2591,11 +2833,14 @@
       const s2 = p.set2;
       const s3 = p.set3;
 
+      const rot1 = activeSubServer.set1 || 5;
+      const poss1 = activeSubPossession.set1 || "serving";
+
       // SET 1
       document.getElementById("set1Content").innerHTML = `
         <div class="court-card">
           <div class="court-header">
-            <div class="court-title">Set 1: First Half (0 to ~13 pts)</div>
+            <div class="court-title">Set 1: First Half (0 to ~12–13 pts)</div>
             <div class="court-badges">
               <span class="badge badge-blue">Score: ${s1.first_half.total_score}</span>
               <span class="badge badge-green">Rcv: ${s1.first_half.avg_receive}</span>
@@ -2612,13 +2857,15 @@
 
         <div class="court-card">
           <div class="court-header">
-            <div class="court-title">Set 1: Second Half (13 to 25 pts)</div>
+            <div class="court-title">Set 1: Second Half (Point 12–13 to 25 pts)</div>
             <div class="court-badges">
               <span class="badge badge-blue">Score: ${s1.second_half.total_score}</span>
               <span class="badge badge-green">Rcv: ${s1.second_half.avg_receive}</span>
             </div>
           </div>
-          ${buildCourtHTML(s1.second_half, 'set1', 'second_half')}
+          ${buildSubTrackerHeaderHTML('set1', false)}
+          ${buildCourtHTML(s1.second_half, 'set1', 'second_half', rot1)}
+          ${buildClosingServeQueueHTML(s1.second_half, rot1, poss1, false)}
           ${buildScorekeeperSlipHTML(s1.second_half, 'Set 1 Second Half')}
           <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
             <strong>Bench (Resting):</strong> ${s1.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
@@ -2626,11 +2873,14 @@
         </div>
       `;
 
+      const rot2 = activeSubServer.set2 || 5;
+      const poss2 = activeSubPossession.set2 || "serving";
+
       // SET 2
       document.getElementById("set2Content").innerHTML = `
         <div class="court-card">
           <div class="court-header">
-            <div class="court-title">Set 2: First Half (0 to ~13 pts)</div>
+            <div class="court-title">Set 2: First Half (0 to ~12–13 pts)</div>
             <div class="court-badges">
               <span class="badge badge-blue">Score: ${s2.first_half.total_score}</span>
               <span class="badge badge-green">Rcv: ${s2.first_half.avg_receive}</span>
@@ -2647,13 +2897,15 @@
 
         <div class="court-card">
           <div class="court-header">
-            <div class="court-title">Set 2: Second Half (13 to 25 pts)</div>
+            <div class="court-title">Set 2: Second Half (Point 12–13 to 25 pts)</div>
             <div class="court-badges">
               <span class="badge badge-blue">Score: ${s2.second_half.total_score}</span>
               <span class="badge badge-green">Rcv: ${s2.second_half.avg_receive}</span>
             </div>
           </div>
-          ${buildCourtHTML(s2.second_half, 'set2', 'second_half')}
+          ${buildSubTrackerHeaderHTML('set2', false)}
+          ${buildCourtHTML(s2.second_half, 'set2', 'second_half', rot2)}
+          ${buildClosingServeQueueHTML(s2.second_half, rot2, poss2, false)}
           ${buildScorekeeperSlipHTML(s2.second_half, 'Set 2 Second Half')}
           <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
             <strong>Bench:</strong> ${s2.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
@@ -2692,6 +2944,9 @@
 
         let set3BodyHTML = "";
         if (s3.is_split) {
+          const rot3 = activeSubServer.set3 || 3;
+          const poss3 = activeSubPossession.set3 || "serving";
+
           set3BodyHTML = `
             <div class="court-card">
               <div class="court-header">
@@ -2718,7 +2973,9 @@
                   <span class="badge badge-green">Rcv: ${s3.second_half.avg_receive}</span>
                 </div>
               </div>
-              ${buildCourtHTML(s3.second_half, 'set3', 'second_half')}
+              ${buildSubTrackerHeaderHTML('set3', true)}
+              ${buildCourtHTML(s3.second_half, 'set3', 'second_half', rot3)}
+              ${buildClosingServeQueueHTML(s3.second_half, rot3, poss3, true)}
               ${buildScorekeeperSlipHTML(s3.second_half, 'Set 3 Second Half')}
               <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
                 <strong>Bench (Resting):</strong> ${s3.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
