@@ -1,0 +1,2966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>St. Cecilia Volleyball - 4th Grade Optimizer</title>
+  <link rel="icon" type="image/png" href="./st_cecilia_logo.png">
+  <link rel="apple-touch-icon" href="./st_cecilia_logo.png">
+  <style>
+    :root {
+      --primary: #1e4f95; /* St. Cecilia School Royal Blue */
+      --primary-dark: #153a70;
+      --court-floor: #fef08a;
+      --court-border: #b45309;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent-orange: #ea580c;
+      --accent-green: #16a34a;
+      --accent-purple: #7c3aed;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding-bottom: 95px;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e4f95, #143566);
+      color: white;
+      padding: 14px 18px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(20, 53, 102, 0.3);
+    }
+    .header-content {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      background: white;
+      border-radius: 6px;
+      padding: 2px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+    .brand h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+    .brand p {
+      font-size: 11px;
+      color: #cbd5e1;
+    }
+
+    /* Container */
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Navigation / Tabs */
+    .nav-tabs {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      display: flex;
+      border-top: 1px solid var(--border);
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+      z-index: 100;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+    .tab-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px 0;
+      gap: 4px;
+      border-radius: 8px;
+    }
+    .tab-btn span.icon {
+      font-size: 20px;
+    }
+    .tab-btn.active {
+      color: var(--primary);
+    }
+
+    /* Views */
+    .view-section {
+      display: none;
+    }
+    .view-section.active {
+      display: block;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Home Action Hub */
+    .hero-card {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border-radius: 16px;
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 20px -5px rgba(37,99,235,0.4);
+    }
+    .hero-card h2 {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .hero-card p {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-bottom: 18px;
+    }
+    .home-choice-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .choice-card {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: all 0.15s;
+    }
+    .choice-card:active {
+      transform: scale(0.98);
+      border-color: var(--primary);
+    }
+    .choice-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      flex-shrink: 0;
+    }
+    .choice-info h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .choice-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Form Controls */
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 15px;
+      background: white;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+    }
+
+    /* Segmented Controls */
+    .segment-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .segment-btn {
+      padding: 10px 6px;
+      border: 1.5px solid var(--border);
+      background: #f8fafc;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .segment-btn.active {
+      border-color: var(--primary);
+      background: #eff6ff;
+      color: var(--primary);
+    }
+
+    /* Attendance Grid */
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .roster-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      gap: 10px;
+      transition: all 0.15s;
+    }
+    .roster-item.active {
+      border-color: var(--accent-green);
+      background: #f0fdf4;
+    }
+    .roster-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-green);
+    }
+    .roster-item-info {
+      flex: 1;
+      overflow: hidden;
+    }
+    .roster-name {
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .roster-score {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Action Buttons */
+    .btn-primary {
+      width: 100%;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.25);
+      transition: background 0.15s;
+    }
+    .btn-primary:active {
+      background: var(--primary-dark);
+      transform: scale(0.99);
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--text);
+      border: 1.5px solid var(--border);
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Court Representation */
+    .court-card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1.5px solid #cbd5e1;
+      padding: 14px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+    .court-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+    .court-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .court-badges {
+      display: flex;
+      gap: 6px;
+      font-size: 11px;
+    }
+    .badge {
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-purple { background: #f3e8ff; color: #6b21a8; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+
+    /* The Volleyball Court Diagram */
+    .vb-court {
+      background: #fef08a;
+      border: 3px solid #b45309;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 12px;
+    }
+    .court-net-line {
+      background: #0284c7;
+      color: white;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      padding: 4px 0;
+      border-bottom: 2px solid #0369a1;
+    }
+    .court-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 3px;
+      background: #b45309;
+      padding: 3px;
+    }
+    .court-cell {
+      background: #fef9c3;
+      padding: 8px 6px;
+      text-align: center;
+      min-height: 74px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .court-cell:active {
+      background: #fef08a;
+    }
+    .cell-pos-tag {
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      font-size: 9px;
+      font-weight: 800;
+      color: #78350f;
+      opacity: 0.8;
+    }
+    .cell-role-tag {
+      position: absolute;
+      top: 3px;
+      right: 4px;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 1px 4px;
+      border-radius: 4px;
+    }
+    .role-srv1 { background: #ef4444; color: white; }
+    .role-srv2 { background: #f97316; color: white; }
+    .role-srv3 { background: #eab308; color: black; }
+    .role-pass { background: #0284c7; color: white; }
+    .role-hide { background: #cbd5e1; color: #334155; }
+    .role-override { background: #7c3aed; color: white; }
+
+    .cell-player-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-top: 8px;
+    }
+    .cell-player-stat {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+    }
+    .cell-edit-hint {
+      font-size: 9px;
+      color: var(--primary);
+      margin-top: 2px;
+      font-weight: 700;
+    }
+
+    /* Scorekeeper / Ref Lineup Slip */
+    .scorekeeper-card {
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-top: 10px;
+      margin-bottom: 8px;
+    }
+    .scorekeeper-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+    .scorekeeper-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .scorekeeper-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .scorekeeper-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .scorekeeper-num-name {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .serve-seq-badge {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #1e293b;
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .serve-seq-badge.srv1 { background: #ef4444; }
+    .serve-seq-badge.srv2 { background: #f97316; }
+    .serve-seq-badge.srv3 { background: #eab308; color: black; }
+    .player-bold-item {
+      font-size: 15px;
+      color: #0f172a;
+    }
+    .player-bold-item strong {
+      font-size: 17px;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.3px;
+      margin-right: 4px;
+    }
+    .scorekeeper-pos-detail {
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .copy-lineup-btn {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Enhanced Midway Substitution Card */
+    .swap-card {
+      background: white;
+      border: 1.5px solid #2563eb;
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin: 14px 0;
+      box-shadow: 0 4px 10px rgba(37,99,235,0.08);
+    }
+    .swap-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed #bfdbfe;
+    }
+    .swap-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+    .swap-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .sub-pairs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .sub-pair-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+    }
+    .sub-in-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #0f172a;
+    }
+    .sub-in-tag strong {
+      font-size: 15px;
+      color: #166534;
+    }
+    .sub-pill {
+      font-size: 9px;
+      font-weight: 900;
+      padding: 2px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .sub-pill.in { background: #dcfce7; color: #166534; }
+    .sub-pill.out { background: #fee2e2; color: #991b1b; }
+    .sub-arrow {
+      font-size: 10px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    .sub-out-tag {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #64748b;
+    }
+    .sub-out-tag strong {
+      font-size: 14px;
+      color: #991b1b;
+    }
+    .sub-pos-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: #475569;
+      background: #e2e8f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .anchor-status-box {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #1e40af;
+      line-height: 1.4;
+    }
+
+    /* Safe Subs Card */
+    .safe-sub-item {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent-purple);
+      padding: 10px 12px;
+      border-radius: 6px;
+      margin-top: 8px;
+      font-size: 13px;
+    }
+    .safe-sub-title {
+      font-weight: 700;
+      color: var(--accent-purple);
+      margin-bottom: 2px;
+    }
+
+    /* Ratings List & Player Editing */
+    .player-edit-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .player-edit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+    .player-edit-inputs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+    .num-input-wrap {
+      display: flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 2px 6px;
+      flex-shrink: 0;
+    }
+    .num-prefix {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-right: 2px;
+    }
+    .player-num-input {
+      width: 36px;
+      border: none;
+      background: transparent;
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      padding: 4px 0;
+      text-align: center;
+    }
+    .player-num-input:focus {
+      outline: none;
+    }
+    .player-name-input {
+      flex: 1;
+      min-width: 0;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      background: white;
+    }
+    .player-name-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(37,99,235,0.15);
+    }
+    .player-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .player-del-btn {
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+      border-radius: 6px;
+      padding: 5px 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.15s;
+    }
+    .player-del-btn:active {
+      transform: scale(0.92);
+      background: #fecaca;
+    }
+    .btn-add-player {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #f0fdf4;
+      border: 1.5px dashed #16a34a;
+      color: #166534;
+      border-radius: 10px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      width: 100%;
+      cursor: pointer;
+      margin-bottom: 14px;
+      transition: all 0.15s;
+    }
+    .btn-add-player:active {
+      background: #dcfce7;
+      transform: scale(0.98);
+    }
+    .lineup-status-in {
+      font-size: 10px;
+      font-weight: 700;
+      color: #166534;
+      background: #dcfce7;
+      padding: 1px 5px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+    .lineup-status-out {
+      font-size: 10px;
+      font-weight: 600;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 1px 5px;
+      border-radius: 4px;
+      margin-left: 6px;
+    }
+    .player-edit-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .rating-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .scale-pills {
+      display: flex;
+      gap: 4px;
+    }
+    .pill-btn {
+      width: 32px;
+      height: 30px;
+      border: 1.5px solid var(--border);
+      background: #f8fafc;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .pill-btn.active {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Audit Table */
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    .audit-table th {
+      background: #f1f5f9;
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--border);
+      font-weight: 700;
+    }
+    .audit-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .badge-check {
+      color: var(--accent-green);
+      font-weight: 800;
+    }
+
+    /* History Cards */
+    .history-card {
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      margin-bottom: 12px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .history-opponent {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+    }
+    .history-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* Modal / Bottom Sheet for Coach Override */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .bottom-sheet {
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 20px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+      animation: slideUp 0.25s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-title {
+      font-size: 16px;
+      font-weight: 800;
+    }
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .override-player-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    .override-player-item:active {
+      background: #eff6ff;
+      border-color: var(--primary);
+    }
+    .override-player-item.current {
+      background: #f1f5f9;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="header-content">
+      <div class="brand" onclick="switchView('viewHome')">
+        <img src="./st_cecilia_logo.png" alt="St. Cecilia Logo" class="brand-logo">
+        <div>
+          <h1>St. Cecilia Volleyball</h1>
+          <p>4th Grade Rotation & Lineup Optimizer</p>
+        </div>
+      </div>
+      <span id="activeCountBadge" class="badge badge-green">11 Active</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- VIEW 0: HOME SCREEN (Initial Options) -->
+    <div id="viewHome" class="view-section active">
+      <div class="hero-card" style="background: linear-gradient(135deg, #1e4f95, #143566);">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+          <img src="./st_cecilia_logo.png" alt="St. Cecilia" style="width:46px; height:44px; object-fit:contain; background:white; border-radius:6px; padding:3px; box-shadow:0 2px 5px rgba(0,0,0,0.2);">
+          <div>
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.8px; opacity:0.95;">St. Cecilia Parish & School</div>
+            <h2 style="font-size:20px; font-weight:800; line-height:1.2; margin:0;">Game Day Manager</h2>
+          </div>
+        </div>
+        <p style="margin-bottom:14px; opacity:0.95;">Optimize rotations, ensure equal playing time, and adapt on the fly from the bench.</p>
+        <button type="button" class="btn-primary" style="background:white; color:#1e4f95; font-size:15px; font-weight:800; padding:12px;" onclick="switchView('viewSetup')">
+          + Create New Game & Rotation
+        </button>
+      </div>
+
+      <div class="home-choice-grid">
+        <div class="choice-card" onclick="switchView('viewSetup')">
+          <div class="choice-icon" style="background:#eff6ff; color:#2563eb;">🏐</div>
+          <div class="choice-info">
+            <h3>Create New Game</h3>
+            <p>Select today's active roster, set tactics, and generate Sets 1 & 2.</p>
+          </div>
+        </div>
+
+        <div class="choice-card" onclick="switchView('viewHistory')">
+          <div class="choice-icon" style="background:#fef3c7; color:#d97706;">📜</div>
+          <div class="choice-info">
+            <h3>View Historical Rotations</h3>
+            <p id="historyCountNotice">View and reload lineups from previous games.</p>
+          </div>
+        </div>
+
+        <div class="choice-card" onclick="switchView('viewRatings')">
+          <div class="choice-icon" style="background:#f0fdf4; color:#16a34a;">⭐</div>
+          <div class="choice-info">
+            <h3>Player Ratings (1–5)</h3>
+            <p>Update serving, passing, and rally scores for your 11 players.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- VIEW 1: GAME SETUP -->
+    <div id="viewSetup" class="view-section">
+      <div class="card">
+        <div class="card-title">
+          <span>Game Details</span>
+          <button type="button" class="btn-secondary" style="padding:4px 8px; font-size:11px;" onclick="switchView('viewHome')">← Back Home</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Opponent Name</label>
+          <input type="text" id="opponentInput" class="form-input" placeholder="e.g. St. Anne's Wildcats" value="St. Anne's">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Match Date</label>
+          <input type="date" id="dateInput" class="form-input">
+        </div>
+      </div>
+
+      <!-- Strategy Selectors -->
+      <div class="card">
+        <div class="card-title">Match Optimization Strategy</div>
+        
+        <div class="form-group">
+          <label class="form-label">Tactical Bias (Skill Emphasis)</label>
+          <div class="segment-group" id="tacticalBiasGroup">
+            <button type="button" class="segment-btn active" data-val="balanced">⚖️ Balanced</button>
+            <button type="button" class="segment-btn" data-val="offense">⚡ Offense (Aces)</button>
+            <button type="button" class="segment-btn" data-val="defense">🛡️ Defense (Pass)</button>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-top: 14px;">
+          <label class="form-label">Set Distribution (Sets 1 & 2)</label>
+          <div class="segment-group" id="matchStrategyGroup">
+            <button type="button" class="segment-btn active" data-val="balanced">⚖️ Balanced<br><span style="font-size:10px; font-weight:normal;">(Win 2-0)</span></button>
+            <button type="button" class="segment-btn" data-val="drop_second">🚀 Win Set 1<br><span style="font-size:10px; font-weight:normal;">(Drop Set 2)</span></button>
+            <button type="button" class="segment-btn" data-val="drop_first">🎯 Win Set 2<br><span style="font-size:10px; font-weight:normal;">(Drop Set 1)</span></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Roster Checklist -->
+      <div class="card">
+        <div class="card-title">
+          <span>Active Lineup for Today</span>
+          <div style="display:flex; align-items:center; gap:8px; font-size: 12px;">
+            <a href="javascript:void(0)" onclick="openAddPlayerModal()" style="color:var(--accent-green); font-weight:700; text-decoration:none; margin-right:4px;">➕ Add Player</a>
+            <span style="color:var(--border);">|</span>
+            <a href="javascript:void(0)" onclick="toggleAllRoster(true)" style="color:var(--primary); text-decoration:none;">All</a>
+            <a href="javascript:void(0)" onclick="toggleAllRoster(false)" style="color:var(--text-muted); text-decoration:none;">Clear</a>
+          </div>
+        </div>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">
+          Uncheck girls who are absent today. Rotation engine automatically adapts for any roster size (6–12).
+        </p>
+        <div class="roster-grid" id="rosterChecklist"></div>
+      </div>
+
+      <button type="button" class="btn-primary" onclick="generateInitialLineups()">
+        <span>⚡ Generate Sets 1 & 2 Rotations ➔</span>
+      </button>
+    </div>
+
+
+    <!-- VIEW 2: LINEUPS & ROTATIONS -->
+    <div id="viewLineups" class="view-section">
+      <!-- Game Info Header Bar -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div>
+          <h2 id="lineupGameTitle" style="font-size:17px; font-weight:800;">vs St. Anne's</h2>
+          <p id="lineupGameSub" style="font-size:11px; color:var(--text-muted);">Sets 1 & 2 Active • Tap any player to Override</p>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="btn-secondary" style="font-size:11px; padding:6px 10px;" onclick="openAdjustLineupModal()" title="Add or remove players from this match">
+            👥 Adjust Lineup
+          </button>
+          <button type="button" class="btn-secondary" style="font-size:11px; padding:6px 10px;" onclick="saveCurrentGameToHistory()">
+            💾 Save
+          </button>
+        </div>
+      </div>
+
+      <!-- Set Switcher -->
+      <div class="segment-group" style="margin-bottom: 16px;">
+        <button type="button" class="segment-btn active" onclick="switchSetTab('set1')">Set 1</button>
+        <button type="button" class="segment-btn" onclick="switchSetTab('set2')">Set 2</button>
+        <button type="button" class="segment-btn" onclick="switchSetTab('set3')">Set 3 (Final)</button>
+        <button type="button" class="segment-btn" onclick="switchSetTab('audit')">Audit</button>
+      </div>
+
+      <div id="set1Content" class="set-view-tab"></div>
+      <div id="set2Content" class="set-view-tab" style="display:none;"></div>
+      <div id="set3Content" class="set-view-tab" style="display:none;"></div>
+      <div id="auditContent" class="set-view-tab" style="display:none;"></div>
+    </div>
+
+
+    <!-- VIEW 3: HISTORICAL ROTATIONS -->
+    <div id="viewHistory" class="view-section">
+      <div class="card" style="display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <h2 style="font-size:16px; font-weight:800;">Historical Rotations</h2>
+          <p style="font-size:12px; color:var(--text-muted);">Saved games and previous rotation sheets.</p>
+        </div>
+        <button type="button" class="btn-secondary" style="font-size:11px;" onclick="switchView('viewSetup')">+ New</button>
+      </div>
+
+      <div id="historyListContainer"></div>
+    </div>
+
+
+    <!-- VIEW 4: RATINGS & PLAYERS -->
+    <div id="viewRatings" class="view-section">
+      <div class="card" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div>
+          <h2 style="font-size:16px; font-weight:800;">Roster & Player Ratings</h2>
+          <p style="font-size:12px; color:var(--text-muted);" id="rosterCountSub">Manage names, numbers, ratings & team roster.</p>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="btn-secondary" style="width:auto; padding:8px 12px; font-size:13px;" onclick="openAddPlayerModal()">
+            ➕ Add
+          </button>
+          <button type="button" class="btn-primary" style="width:auto; padding:8px 14px; font-size:13px;" onclick="saveRatings()">
+            💾 Save
+          </button>
+        </div>
+      </div>
+
+      <!-- Device Storage & Backup Toolbar -->
+      <div class="card" style="padding:12px 14px; background:#f8fafc; border:1px solid #cbd5e1; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <div style="font-size:12px; font-weight:800; color:#1e293b; display:flex; align-items:center; gap:6px;">
+            <span>📱</span> Device Storage & Cloud Backup
+          </div>
+          <span style="font-size:10px; color:#16a34a; font-weight:700; background:#dcfce7; padding:2px 8px; border-radius:12px; border:1px solid #bbf7d0;">✓ Browser Storage Active</span>
+        </div>
+        <p style="font-size:11px; color:#64748b; margin-bottom:10px; line-height:1.4;">
+          All roster ratings &amp; match history are saved directly in this browser. Use backup to transfer data between devices or share with coaches.
+        </p>
+        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;">
+          <button type="button" class="btn-secondary" style="font-size:11px; padding:7px 4px; text-align:center; font-weight:700;" onclick="exportDataBackup()">📤 Backup</button>
+          <label class="btn-secondary" style="font-size:11px; padding:7px 4px; text-align:center; font-weight:700; cursor:pointer; margin:0; display:flex; align-items:center; justify-content:center;">
+            📥 Restore
+            <input type="file" id="importBackupInput" accept=".json" style="display:none;" onchange="importDataBackup(event)">
+          </label>
+          <button type="button" class="btn-secondary" style="font-size:11px; padding:7px 4px; text-align:center; color:#dc2626; font-weight:700;" onclick="resetToDefaults()">🔄 Reset</button>
+        </div>
+      </div>
+
+      <button type="button" class="btn-add-player" onclick="openAddPlayerModal()">
+        ➕ Add New Player to Team Roster
+      </button>
+
+      <div id="ratingsList"></div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Sheet / Modal for Coach Override -->
+  <div id="overrideModal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="overrideModalTitle">Coach Override: Pos 1</div>
+          <div style="font-size:12px; color:var(--text-muted);" id="overrideModalSubtitle">Swap current player with any active player</div>
+        </div>
+        <button type="button" class="close-btn" onclick="closeOverrideModal()">✕</button>
+      </div>
+      <div id="overridePlayerList"></div>
+    </div>
+  </div>
+
+  <!-- Modal for Adding New Player -->
+  <div id="addPlayerModal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">➕ Add New Player</div>
+          <div style="font-size:12px; color:var(--text-muted);">Add player to team roster & set initial ratings</div>
+        </div>
+        <button type="button" class="close-btn" onclick="closeAddPlayerModal()">✕</button>
+      </div>
+
+      <div style="padding:14px 0;">
+        <div style="display:grid; grid-template-columns: 85px 1fr; gap:10px; margin-bottom:14px;">
+          <div>
+            <label class="form-label">Jersey #</label>
+            <input type="number" id="newPlayerNumber" class="form-input" placeholder="e.g. 11" min="0" max="99" style="font-weight:800; font-size:16px; text-align:center;">
+          </div>
+          <div>
+            <label class="form-label">Player Name</label>
+            <input type="text" id="newPlayerName" class="form-input" placeholder="e.g. Maya" style="font-weight:700; font-size:15px;">
+          </div>
+        </div>
+
+        <div class="card" style="margin-bottom:14px; background:#f8fafc;">
+          <div style="font-size:13px; font-weight:700; margin-bottom:8px; color:var(--text);">Initial Player Ratings (1–5):</div>
+
+          <div class="rating-row">
+            <span>Serve Consistency</span>
+            <div class="scale-pills" id="newPill_consistency">
+              <button type="button" class="pill-btn" onclick="selectNewRating('consistency', 1)">1</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('consistency', 2)">2</button>
+              <button type="button" class="pill-btn active" onclick="selectNewRating('consistency', 3)">3</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('consistency', 4)">4</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('consistency', 5)">5</button>
+            </div>
+          </div>
+
+          <div class="rating-row">
+            <span>Serve Power</span>
+            <div class="scale-pills" id="newPill_power">
+              <button type="button" class="pill-btn" onclick="selectNewRating('power', 1)">1</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('power', 2)">2</button>
+              <button type="button" class="pill-btn active" onclick="selectNewRating('power', 3)">3</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('power', 4)">4</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('power', 5)">5</button>
+            </div>
+          </div>
+
+          <div class="rating-row">
+            <span>Serve Receive</span>
+            <div class="scale-pills" id="newPill_receive">
+              <button type="button" class="pill-btn" onclick="selectNewRating('receive', 1)">1</button>
+              <button type="button" class="pill-btn active" onclick="selectNewRating('receive', 2)">2</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('receive', 3)">3</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('receive', 4)">4</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('receive', 5)">5</button>
+            </div>
+          </div>
+
+          <div class="rating-row">
+            <span>Rally Hits</span>
+            <div class="scale-pills" id="newPill_rally">
+              <button type="button" class="pill-btn" onclick="selectNewRating('rally', 1)">1</button>
+              <button type="button" class="pill-btn active" onclick="selectNewRating('rally', 2)">2</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('rally', 3)">3</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('rally', 4)">4</button>
+              <button type="button" class="pill-btn" onclick="selectNewRating('rally', 5)">5</button>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary" onclick="submitNewPlayer()">
+          ✓ Add Player to Roster
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Adjusting Active Match Lineup -->
+  <div id="adjustLineupModal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">👥 Adjust Match Lineup</div>
+          <div style="font-size:12px; color:var(--text-muted);" id="adjustLineupSub">Add or remove players for this game</div>
+        </div>
+        <button type="button" class="close-btn" onclick="closeAdjustLineupModal()">✕</button>
+      </div>
+
+      <div style="padding:14px 0;">
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:10px;">
+          Check or uncheck players to update who is participating in this match:
+        </p>
+
+        <div class="roster-grid" id="adjustLineupList" style="max-height:280px; overflow-y:auto; margin-bottom:14px;"></div>
+
+        <div style="display:flex; gap:10px;">
+          <button type="button" class="btn-secondary" style="flex:1;" onclick="closeAdjustLineupModal()">Cancel</button>
+          <button type="button" class="btn-primary" style="flex:2;" onclick="applyLineupAdjustment()">🔄 Rebalance Lineup</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="nav-tabs">
+    <button class="tab-btn active" onclick="switchView('viewHome', event)">
+      <span class="icon">🏠</span>
+      <span>Home</span>
+    </button>
+    <button class="tab-btn" onclick="switchView('viewLineups', event)">
+      <span class="icon">🏐</span>
+      <span>Game</span>
+    </button>
+    <button class="tab-btn" onclick="switchView('viewHistory', event)">
+      <span class="icon">📜</span>
+      <span>History</span>
+    </button>
+    <button class="tab-btn" onclick="switchView('viewRatings', event)">
+      <span class="icon">⭐</span>
+      <span>Ratings</span>
+    </button>
+  </nav>
+
+  <script>
+    // Master Default Roster
+    const DEFAULT_PLAYERS = [
+      { number: 14, name: "Tessa", serve_consistency: 3, serve_power: 4, serve_receive: 4, rally_hits: 4, total_score: 15, tier: "anchor" },
+      { number: 7,  name: "Eileen", serve_consistency: 3, serve_power: 4, serve_receive: 3, rally_hits: 3, total_score: 13, tier: "anchor" },
+      { number: 10, name: "Harper", serve_consistency: 3, serve_power: 4, serve_receive: 2, rally_hits: 3, total_score: 12, tier: "starter" },
+      { number: 8,  name: "Gemma", serve_consistency: 4, serve_power: 3, serve_receive: 2, rally_hits: 3, total_score: 12, tier: "starter" },
+      { number: 12, name: "Peyton", serve_consistency: 4, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 11, tier: "starter" },
+      { number: 15, name: "Charley", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
+      { number: 4,  name: "Sophie", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
+      { number: 2,  name: "Olivia", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
+      { number: 5,  name: "Eleanor", serve_consistency: 3, serve_power: 2, serve_receive: 1, rally_hits: 2, total_score: 8, tier: "developing" },
+      { number: 15, name: "Claire", serve_consistency: 3, serve_power: 2, serve_receive: 1, rally_hits: 1, total_score: 7, tier: "developing" },
+      { number: 9,  name: "Ella", serve_consistency: 1, serve_power: 1, serve_receive: 1, rally_hits: 1, total_score: 4, tier: "developing" }
+    ];
+
+    // App State
+    let playersData = [];
+    let activePlayerNumbers = [];
+    let currentPlan = null;
+    let currentGameMeta = { id: null, opponent: "St. Anne's", date: "", tactical_bias: "balanced", match_strategy: "balanced" };
+    let selectedTacticalBias = "balanced";
+    let selectedMatchStrategy = "balanced";
+    let currentSet3Mode = "win";
+    let isSet3Generated = false;
+
+    // Override Modal Target State
+    let overrideTarget = { setKey: null, halfKey: null, pos: null, currentPlayer: null };
+
+    // Initialize
+    window.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("dateInput").value = new Date().toISOString().split("T")[0];
+      loadPlayers();
+      loadHistoryList();
+      setupSegmentControls();
+    });
+
+    function setupSegmentControls() {
+      document.querySelectorAll("#tacticalBiasGroup .segment-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("#tacticalBiasGroup .segment-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedTacticalBias = btn.dataset.val;
+        });
+      });
+
+      document.querySelectorAll("#matchStrategyGroup .segment-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll("#matchStrategyGroup .segment-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          selectedMatchStrategy = btn.dataset.val;
+        });
+      });
+    }
+
+    function switchView(viewId, evt) {
+      document.querySelectorAll(".view-section").forEach(v => v.classList.remove("active"));
+      document.getElementById(viewId).classList.add("active");
+      document.querySelectorAll(".nav-tabs .tab-btn").forEach(b => b.classList.remove("active"));
+      
+      const tabMap = { 'viewHome': 0, 'viewLineups': 1, 'viewHistory': 2, 'viewRatings': 3 };
+      if (tabMap[viewId] !== undefined) {
+        document.querySelectorAll(".nav-tabs .tab-btn")[tabMap[viewId]].classList.add("active");
+      }
+      if (viewId === 'viewHistory') loadHistoryList();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function switchSetTab(tabKey) {
+      document.querySelectorAll(".set-view-tab").forEach(t => t.style.display = "none");
+      document.getElementById(tabKey + "Content").style.display = "block";
+
+      const btns = document.querySelectorAll("#viewLineups > .segment-group .segment-btn");
+      const keyMap = { 'set1': 0, 'set2': 1, 'set3': 2, 'audit': 3 };
+      btns.forEach((b, idx) => {
+        if (idx === keyMap[tabKey]) b.classList.add("active");
+        else b.classList.remove("active");
+      });
+    }
+
+    // Load Players
+    async function loadPlayers() {
+      let loaded = false;
+      const stored = localStorage.getItem("moneyball_vb_players");
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            playersData = parsed;
+            loaded = true;
+          }
+        } catch (e) {}
+      }
+
+      if (!loaded) {
+        try {
+          const res = await fetch("/api/players");
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.players && data.players.length > 0) {
+              playersData = data.players;
+              loaded = true;
+            }
+          }
+        } catch (e) {}
+      }
+
+      if (!playersData || playersData.length === 0) {
+        playersData = JSON.parse(JSON.stringify(DEFAULT_PLAYERS));
+      }
+
+      activePlayerNumbers = playersData.map((p, idx) => p.number + "_" + idx);
+      renderRosterChecklist();
+      renderRatingsList();
+      updateActiveCountBadge();
+    }
+
+    function updateActiveCountBadge() {
+      const badge = document.getElementById("activeCountBadge");
+      badge.textContent = `${activePlayerNumbers.length} Active`;
+    }
+
+    function toggleAllRoster(select) {
+      if (select) activePlayerNumbers = playersData.map((p, idx) => p.number + "_" + idx);
+      else activePlayerNumbers = [];
+      renderRosterChecklist();
+      updateActiveCountBadge();
+    }
+
+    function renderRosterChecklist() {
+      const container = document.getElementById("rosterChecklist");
+      container.innerHTML = "";
+      playersData.forEach((p, idx) => {
+        const pKey = p.number + "_" + idx;
+        const isChecked = activePlayerNumbers.includes(pKey);
+        const item = document.createElement("div");
+        item.className = `roster-item ${isChecked ? "active" : ""}`;
+        item.onclick = (e) => {
+          if (e.target.tagName !== "INPUT") {
+            const cb = item.querySelector("input");
+            cb.checked = !cb.checked;
+          }
+          if (item.querySelector("input").checked) {
+            if (!activePlayerNumbers.includes(pKey)) activePlayerNumbers.push(pKey);
+            item.classList.add("active");
+          } else {
+            activePlayerNumbers = activePlayerNumbers.filter(k => k !== pKey);
+            item.classList.remove("active");
+          }
+          updateActiveCountBadge();
+          renderRosterChecklist();
+        };
+
+        item.innerHTML = `
+          <input type="checkbox" ${isChecked ? "checked" : ""}>
+          <div class="roster-item-info">
+            <div class="roster-name"><strong>#${p.number}</strong> ${escapeHTML(p.name)} ${isChecked ? '<span class="lineup-status-in">✓ In Lineup</span>' : '<span class="lineup-status-out">Absent</span>'}</div>
+            <div class="roster-score">Tot: ${p.total_score} | Srv: ${p.serve_consistency}/${p.serve_power} | Rcv: ${p.serve_receive}</div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderRatingsList() {
+      const container = document.getElementById("ratingsList");
+      container.innerHTML = "";
+      const sub = document.getElementById("rosterCountSub");
+      if (sub) sub.textContent = `${playersData.length} Players on team roster • Edit names, numbers & ratings below:`;
+
+      playersData.forEach((p, idx) => {
+        const card = document.createElement("div");
+        card.className = "player-edit-card";
+        card.innerHTML = `
+          <div class="player-edit-header">
+            <div class="player-edit-inputs">
+              <div class="num-input-wrap">
+                <span class="num-prefix">#</span>
+                <input type="number" class="player-num-input" value="${p.number}" min="0" max="99" onchange="updatePlayerNumber(${idx}, this.value)" title="Jersey Number">
+              </div>
+              <input type="text" class="player-name-input" value="${escapeHTML(p.name)}" onchange="updatePlayerName(${idx}, this.value)" placeholder="Player Name" title="Player Name">
+            </div>
+            <div class="player-header-actions">
+              <span class="badge badge-blue" style="font-size:11px;">Tot: <strong id="tot_${idx}">${p.total_score}</strong></span>
+              <button type="button" class="player-del-btn" onclick="deletePlayer(${idx})" title="Remove #${p.number} ${escapeHTML(p.name)} from team roster">🗑️</button>
+            </div>
+          </div>
+
+          <div class="rating-row">
+            <span>Serve Consistency</span>
+            <div class="scale-pills" data-idx="${idx}" data-metric="serve_consistency">
+              ${[1,2,3,4,5].map(v => `<button type="button" class="pill-btn ${p.serve_consistency === v ? 'active' : ''}" onclick="setRating(${idx}, 'serve_consistency', ${v})">${v}</button>`).join('')}
+            </div>
+          </div>
+
+          <div class="rating-row">
+            <span>Serve Power</span>
+            <div class="scale-pills" data-idx="${idx}" data-metric="serve_power">
+              ${[1,2,3,4,5].map(v => `<button type="button" class="pill-btn ${p.serve_power === v ? 'active' : ''}" onclick="setRating(${idx}, 'serve_power', ${v})">${v}</button>`).join('')}
+            </div>
+          </div>
+
+          <div class="rating-row">
+            <span>Serve Receive</span>
+            <div class="scale-pills" data-idx="${idx}" data-metric="serve_receive">
+              ${[1,2,3,4,5].map(v => `<button type="button" class="pill-btn ${p.serve_receive === v ? 'active' : ''}" onclick="setRating(${idx}, 'serve_receive', ${v})">${v}</button>`).join('')}
+            </div>
+          </div>
+
+          <div class="rating-row">
+            <span>Rally Hits</span>
+            <div class="scale-pills" data-idx="${idx}" data-metric="rally_hits">
+              ${[1,2,3,4,5].map(v => `<button type="button" class="pill-btn ${p.rally_hits === v ? 'active' : ''}" onclick="setRating(${idx}, 'rally_hits', ${v})">${v}</button>`).join('')}
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function updatePlayerName(idx, newName) {
+      const p = playersData[idx];
+      if (!p) return;
+      const trimmed = newName.trim();
+      if (!trimmed) {
+        alert("Player name cannot be blank.");
+        renderRatingsList();
+        return;
+      }
+      p.name = trimmed;
+      renderRosterChecklist();
+      saveRatingsQuietly();
+    }
+
+    function updatePlayerNumber(idx, newNum) {
+      const p = playersData[idx];
+      if (!p) return;
+      const num = parseInt(newNum, 10);
+      if (isNaN(num) || num < 0) {
+        alert("Please enter a valid jersey number.");
+        renderRatingsList();
+        return;
+      }
+      p.number = num;
+      // Also update key in activePlayerNumbers if present
+      renderRosterChecklist();
+      saveRatingsQuietly();
+    }
+
+    function deletePlayer(idx) {
+      const p = playersData[idx];
+      if (!p) return;
+      if (!confirm(`Are you sure you want to remove #${p.number} ${p.name} from the team roster?`)) {
+        return;
+      }
+
+      playersData.splice(idx, 1);
+      // Re-index active roster
+      activePlayerNumbers = playersData.map((pl, i) => pl.number + "_" + i);
+
+      renderRatingsList();
+      renderRosterChecklist();
+      updateActiveCountBadge();
+      saveRatingsQuietly();
+    }
+
+    let newPlayerRatings = { consistency: 3, power: 3, receive: 2, rally: 2 };
+
+    function openAddPlayerModal() {
+      document.getElementById("newPlayerNumber").value = "";
+      document.getElementById("newPlayerName").value = "";
+      newPlayerRatings = { consistency: 3, power: 3, receive: 2, rally: 2 };
+      updateNewPlayerPills();
+      document.getElementById("addPlayerModal").classList.add("active");
+      setTimeout(() => {
+        const inp = document.getElementById("newPlayerNumber");
+        if (inp) inp.focus();
+      }, 150);
+    }
+
+    function closeAddPlayerModal() {
+      document.getElementById("addPlayerModal").classList.remove("active");
+    }
+
+    function selectNewRating(metric, val) {
+      newPlayerRatings[metric] = val;
+      updateNewPlayerPills();
+    }
+
+    function updateNewPlayerPills() {
+      ['consistency', 'power', 'receive', 'rally'].forEach(m => {
+        const val = newPlayerRatings[m];
+        const container = document.getElementById(`newPill_${m}`);
+        if (container) {
+          container.querySelectorAll(".pill-btn").forEach((b, i) => {
+            if (i + 1 === val) b.classList.add("active");
+            else b.classList.remove("active");
+          });
+        }
+      });
+    }
+
+    function submitNewPlayer() {
+      const numInput = document.getElementById("newPlayerNumber").value.trim();
+      const nameInput = document.getElementById("newPlayerName").value.trim();
+
+      if (!numInput && numInput !== "0") {
+        alert("Please enter a jersey number.");
+        return;
+      }
+      if (!nameInput) {
+        alert("Please enter a player name.");
+        return;
+      }
+
+      const num = parseInt(numInput, 10);
+      const tot = newPlayerRatings.consistency + newPlayerRatings.power + newPlayerRatings.receive + newPlayerRatings.rally;
+      const tier = tot >= 13 ? "anchor" : (tot >= 10 ? "starter" : (tot >= 9 ? "rotation" : "developing"));
+
+      const newPlayer = {
+        number: num,
+        name: nameInput,
+        serve_consistency: newPlayerRatings.consistency,
+        serve_power: newPlayerRatings.power,
+        serve_receive: newPlayerRatings.receive,
+        rally_hits: newPlayerRatings.rally,
+        total_score: tot,
+        tier: tier
+      };
+
+      playersData.push(newPlayer);
+      const newIdx = playersData.length - 1;
+      const newKey = newPlayer.number + "_" + newIdx;
+      if (!activePlayerNumbers.includes(newKey)) {
+        activePlayerNumbers.push(newKey);
+      }
+
+      closeAddPlayerModal();
+      renderRatingsList();
+      renderRosterChecklist();
+      updateActiveCountBadge();
+      saveRatingsQuietly();
+      alert(`Added #${newPlayer.number} ${newPlayer.name} to the team roster and today's lineup!`);
+    }
+
+    // Modal to Adjust Match Lineup on the fly
+    let tempAdjustKeys = [];
+
+    function openAdjustLineupModal() {
+      tempAdjustKeys = [...activePlayerNumbers];
+      renderAdjustLineupChecklist();
+      document.getElementById("adjustLineupModal").classList.add("active");
+    }
+
+    function closeAdjustLineupModal() {
+      document.getElementById("adjustLineupModal").classList.remove("active");
+    }
+
+    function renderAdjustLineupChecklist() {
+      const container = document.getElementById("adjustLineupList");
+      container.innerHTML = "";
+      const sub = document.getElementById("adjustLineupSub");
+      if (sub) sub.textContent = `${tempAdjustKeys.length} of ${playersData.length} active in this game`;
+
+      playersData.forEach((p, idx) => {
+        const pKey = p.number + "_" + idx;
+        const isChecked = tempAdjustKeys.includes(pKey);
+        const item = document.createElement("div");
+        item.className = `roster-item ${isChecked ? "active" : ""}`;
+        item.innerHTML = `
+          <input type="checkbox" ${isChecked ? "checked" : ""}>
+          <div class="roster-item-info">
+            <div class="roster-name"><strong>#${p.number}</strong> ${escapeHTML(p.name)}</div>
+            <div class="roster-score">${isChecked ? '<span style="color:#166534; font-weight:700;">● In Lineup</span>' : '<span style="color:#94a3b8;">○ Absent / Resting</span>'}</div>
+          </div>
+        `;
+        item.onclick = (e) => {
+          if (e.target.tagName !== "INPUT") {
+            const cb = item.querySelector("input");
+            cb.checked = !cb.checked;
+          }
+          if (item.querySelector("input").checked) {
+            if (!tempAdjustKeys.includes(pKey)) tempAdjustKeys.push(pKey);
+            item.classList.add("active");
+          } else {
+            tempAdjustKeys = tempAdjustKeys.filter(k => k !== pKey);
+            item.classList.remove("active");
+          }
+          if (sub) sub.textContent = `${tempAdjustKeys.length} of ${playersData.length} active in this game`;
+        };
+        container.appendChild(item);
+      });
+    }
+
+    function applyLineupAdjustment() {
+      if (tempAdjustKeys.length < 6) {
+        alert("You need at least 6 active players to field a volleyball lineup.");
+        return;
+      }
+      activePlayerNumbers = [...tempAdjustKeys];
+      updateActiveCountBadge();
+      renderRosterChecklist();
+
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      // Re-generate plan
+      currentPlan = clientSideOptimize(activeList, selectedTacticalBias, selectedMatchStrategy, currentSet3Mode, isSet3Generated);
+
+      closeAdjustLineupModal();
+      renderPlanTabs();
+      alert(`Lineup updated! Rotations successfully rebalanced for ${activeList.length} active players.`);
+    }
+
+    function setRating(idx, metric, val) {
+      const player = playersData[idx];
+      if (!player) return;
+      player[metric] = val;
+      player.total_score = player.serve_consistency + player.serve_power + player.serve_receive + player.rally_hits;
+      const totEl = document.getElementById(`tot_${idx}`);
+      if (totEl) totEl.textContent = player.total_score;
+
+      const row = document.querySelector(`.scale-pills[data-idx="${idx}"][data-metric="${metric}"]`);
+      if (row) {
+        row.querySelectorAll(".pill-btn").forEach((b, i) => {
+          if (i + 1 === val) b.classList.add("active");
+          else b.classList.remove("active");
+        });
+      }
+      saveRatingsQuietly();
+    }
+
+    async function saveRatingsQuietly() {
+      localStorage.setItem("moneyball_vb_players", JSON.stringify(playersData));
+      try {
+        await fetch("/api/players", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            team_name: "St. Cecilia 4th Grade",
+            rules: { players_on_court: 6, serve_limit_per_player: 5 },
+            players: playersData
+          })
+        });
+      } catch (e) {}
+    }
+
+    async function saveRatings() {
+      await saveRatingsQuietly();
+      alert("Roster & Ratings saved successfully to backend and device!");
+      renderRosterChecklist();
+      renderRatingsList();
+    }
+
+    function exportDataBackup() {
+      const backupObj = {
+        app: "Moneyball VB",
+        team_name: "St. Cecilia 4th Grade",
+        exported_at: new Date().toISOString(),
+        players: playersData,
+        games: JSON.parse(localStorage.getItem("moneyball_vb_games") || "[]")
+      };
+      const jsonStr = JSON.stringify(backupObj, null, 2);
+      const blob = new Blob([jsonStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `st_cecilia_vb_backup_${new Date().toISOString().split("T")[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
+    function importDataBackup(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (data.players && Array.isArray(data.players) && data.players.length > 0) {
+            playersData = data.players;
+            localStorage.setItem("moneyball_vb_players", JSON.stringify(playersData));
+            activePlayerNumbers = playersData.map((p, idx) => p.number + "_" + idx);
+          }
+          if (data.games && Array.isArray(data.games)) {
+            localStorage.setItem("moneyball_vb_games", JSON.stringify(data.games));
+          }
+          renderRosterChecklist();
+          renderRatingsList();
+          updateActiveCountBadge();
+          if (typeof loadHistoryList === "function") loadHistoryList();
+          alert("Backup successfully restored! Roster and match history updated.");
+        } catch (err) {
+          alert("Error importing file: " + err.message);
+        }
+        event.target.value = "";
+      };
+      reader.readAsText(file);
+    }
+
+    function resetToDefaults() {
+      if (!confirm("Reset roster to original St. Cecilia 4th grade default players and ratings? Any custom edits on this device will be replaced.")) return;
+      playersData = JSON.parse(JSON.stringify(DEFAULT_PLAYERS));
+      localStorage.setItem("moneyball_vb_players", JSON.stringify(playersData));
+      activePlayerNumbers = playersData.map((p, idx) => p.number + "_" + idx);
+      renderRosterChecklist();
+      renderRatingsList();
+      updateActiveCountBadge();
+      alert("Reset to default St. Cecilia roster!");
+    }
+
+    // -------------------------------------------------------------
+    // MONEYBALL OPTIMIZATION ENGINE
+    // -------------------------------------------------------------
+    function clientSideOptimize(activeList, tacticalBias = "balanced", matchStrategy = "balanced", set3Mode = "win", generateSet3 = false) {
+      const active = [...activeList].sort((a, b) => b.total_score - a.total_score);
+      const n = active.length;
+      if (n < 6) throw new Error("At least 6 players needed.");
+
+      const numAnchors = Math.max(0, 12 - n);
+
+      function calcServeThreat(p) {
+        let pWeight = 1.8;
+        let cWeight = 1.3;
+        if (tacticalBias === "offense") {
+          pWeight = 2.4;
+          cWeight = 0.9;
+        } else if (tacticalBias === "defense") {
+          pWeight = 1.3;
+          cWeight = 1.7;
+        }
+        return (p.serve_power * pWeight) + (p.serve_consistency * cWeight) + (p.total_score * 0.25);
+      }
+
+      function calcDefenseValue(p) {
+        return (p.serve_receive * 2.5) + (p.rally_hits * 1.5) + (p.total_score * 0.2);
+      }
+
+      function arrangePositions(six, priorityServers = [], designateP1 = null) {
+        const positions = {};
+        let available = [...six];
+
+        let cands = [];
+        if (priorityServers && priorityServers.length > 0) {
+          cands = available.filter(p => priorityServers.includes(p));
+          cands.sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        } else {
+          cands = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        }
+
+        const byServe = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+
+        // Pos 1: Server 1 (Top Ace Weapon, e.g. Tessa)
+        let p1;
+        if (designateP1 && available.includes(designateP1)) {
+          p1 = designateP1;
+        } else if (cands.length > 0) {
+          p1 = cands[0];
+        } else {
+          p1 = byServe[0];
+        }
+        positions[1] = p1;
+        available = available.filter(p => p !== p1);
+        cands = cands.filter(p => p !== p1);
+
+        // Pos 2: Server 2 (Second Weapon, e.g. Eileen)
+        let p2 = (cands.length > 0) ? cands[0] : [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a))[0];
+        positions[2] = p2;
+        available = available.filter(p => p !== p2);
+        cands = cands.filter(p => p !== p2);
+
+        // Pos 3: Server 3 (Third Weapon, e.g. Harper)
+        let p3 = (cands.length > 0) ? cands[0] : [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a))[0];
+        positions[3] = p3;
+        available = available.filter(p => p !== p3);
+        cands = cands.filter(p => p !== p3);
+
+        // Pos 4: Left Front (Net) - Hide weakest receiver
+        const byDefWeakest = [...available].sort((a, b) => calcDefenseValue(a) - calcDefenseValue(b));
+        const p4 = byDefWeakest[0];
+        positions[4] = p4;
+        available = available.filter(p => p !== p4);
+
+        // Pos 6: Middle Back - Best remaining pass anchor
+        const byDefStrongest = [...available].sort((a, b) => calcDefenseValue(b) - calcDefenseValue(a));
+        positions[6] = byDefStrongest[0];
+        positions[5] = byDefStrongest[1];
+
+        const list = [positions[1], positions[2], positions[3], positions[4], positions[5], positions[6]];
+        const tot = list.reduce((sum, p) => sum + p.total_score, 0);
+        const avgRcv = (list.reduce((sum, p) => sum + p.serve_receive, 0) / 6).toFixed(1);
+
+        return { positions, total_score: tot, avg_receive: avgRcv };
+      }
+
+      function partitionSet(anchors, nonAnchorOrdering) {
+        const nonAnchors = nonAnchorOrdering.filter(p => !anchors.includes(p));
+        const halfSingles = 6 - numAnchors;
+        const h1Singles = nonAnchors.slice(0, halfSingles);
+        const h2Singles = nonAnchors.slice(halfSingles, halfSingles * 2);
+        return {
+          h1: [...anchors, ...h1Singles],
+          h2: [...anchors, ...h2Singles]
+        };
+      }
+
+      const allBest = [...active];
+      const allWorst = [...active].reverse();
+
+      let s1Anchors, s1Pool, s2Anchors, s2Pool;
+
+      function selectS2Anchors(candidates, s1A, count) {
+        const disjoint = candidates.filter(p => !s1A.includes(p));
+        if (disjoint.length >= count) {
+          return disjoint.slice(0, count);
+        }
+        const needed = count - disjoint.length;
+        return [...disjoint, ...candidates.filter(p => s1A.includes(p)).slice(0, needed)];
+      }
+
+      if (matchStrategy === "drop_first") {
+        s1Anchors = allWorst.slice(0, numAnchors);
+        s1Pool = partitionSet(s1Anchors, allWorst);
+
+        s2Anchors = selectS2Anchors(allBest, s1Anchors, numAnchors);
+        s2Pool = partitionSet(s2Anchors, allBest);
+      } else if (matchStrategy === "drop_second") {
+        s1Anchors = allBest.slice(0, numAnchors);
+        s1Pool = partitionSet(s1Anchors, allBest);
+
+        s2Anchors = selectS2Anchors(allWorst, s1Anchors, numAnchors);
+        s2Pool = partitionSet(s2Anchors, allWorst);
+      } else {
+        const mid = Math.max(0, Math.min(3, active.length - numAnchors));
+        s1Anchors = active.slice(mid, mid + numAnchors);
+        s2Anchors = selectS2Anchors(active, s1Anchors, numAnchors);
+
+        const alt = [];
+        let l = 0, r = active.length - 1;
+        while (l <= r) {
+          if (l === r) alt.push(active[l]);
+          else { alt.push(active[l]); alt.push(active[r]); }
+          l++; r--;
+        }
+        s1Pool = partitionSet(s1Anchors, alt);
+        s2Pool = partitionSet(s2Anchors, alt);
+      }
+
+      const served = new Set();
+      const s1s2Halves = {};
+      const s3Halves = {};
+      const s3Status = {};
+      active.forEach(p => {
+        s1s2Halves[p.name] = 0;
+        s3Halves[p.name] = 0;
+        s3Status[p.name] = "— (Pending)";
+      });
+
+      const serveSlots = [1, 2, 3];
+
+      // Set 1
+      const s1H1 = arrangePositions(s1Pool.h1, []);
+      s1Pool.h1.forEach(p => s1s2Halves[p.name]++);
+      serveSlots.forEach(pos => served.add(s1H1.positions[pos].name));
+
+      const unservedS1 = active.filter(p => !served.has(p.name));
+      const s1H2 = arrangePositions(s1Pool.h2, unservedS1);
+      s1Pool.h2.forEach(p => s1s2Halves[p.name]++);
+      serveSlots.forEach(pos => served.add(s1H2.positions[pos].name));
+
+      // Set 2 (Unserved priority)
+      const unserved1 = active.filter(p => !served.has(p.name));
+      const s2H1 = arrangePositions(s2Pool.h1, unserved1);
+      s2Pool.h1.forEach(p => s1s2Halves[p.name]++);
+      serveSlots.forEach(pos => served.add(s2H1.positions[pos].name));
+
+      const unserved2 = active.filter(p => !served.has(p.name));
+      const s2H2 = arrangePositions(s2Pool.h2, unserved2);
+      s2Pool.h2.forEach(p => s1s2Halves[p.name]++);
+      serveSlots.forEach(pos => served.add(s2H2.positions[pos].name));
+
+      // --- Set 3 Dynamic Generation (Deciding Set to 15 Points) ---
+      let set3Result = { generated: false };
+
+      if (generateSet3) {
+        if (set3Mode === "win") {
+          const top6 = active.slice(0, 6);
+          const s3Lineup = arrangePositions(top6);
+          const bench3 = active.slice(6);
+          top6.forEach(p => {
+            s3Halves[p.name] = 2; // Full 15-pt set
+            s3Status[p.name] = "Full Set (15 pts)";
+          });
+          bench3.forEach(p => {
+            s3Status[p.name] = "Bench";
+          });
+
+          const safeSubs = [];
+          bench3.forEach(bp => {
+            if (bp.total_score >= 7) {
+              safeSubs.push({
+                position: "Pos 4 (Left Front)",
+                situation: "Lead-Safe Sub (Up by 3+ points)",
+                reason: `Sub #${bp.number} ${bp.name} for #${s3Lineup.positions[4].number} ${s3Lineup.positions[4].name} at the net without hurting back-row defense.`
+              });
+            }
+          });
+
+          set3Result = {
+            generated: true,
+            mode: "win",
+            title: "🏆 Win at All Costs (15-pt Championship Lineup)",
+            desc: "Deciding set to 15 points. Peak 6 players on court in optimal alignment. Built to take the championship.",
+            is_split: false,
+            lineup: s3Lineup,
+            bench: bench3,
+            safe_subs: safeSubs
+          };
+
+        } else if (set3Mode === "even") {
+          // Sort by lowest playing time in Sets 1 & 2!
+          const sortedByMins = [...active].sort((a, b) => s1s2Halves[a.name] - s1s2Halves[b.name]);
+          const s3H1Players = sortedByMins.slice(0, 6);
+          const s3H1 = arrangePositions(s3H1Players);
+          s3H1Players.forEach(p => {
+            s3Halves[p.name] = 1;
+            s3Status[p.name] = "1st Half (0–8 pts)";
+          });
+
+          const remaining = active.filter(p => !s3H1Players.includes(p));
+          const neededAnchors = 6 - remaining.length;
+          const s3Anchors = s3H1Players.slice(0, neededAnchors);
+          const s3H2Players = [...remaining, ...s3Anchors];
+          const s3H2 = arrangePositions(s3H2Players);
+          remaining.forEach(p => {
+            s3Halves[p.name] = 1;
+            s3Status[p.name] = "2nd Half (8–15 pts)";
+          });
+          s3Anchors.forEach(p => {
+            s3Halves[p.name] = 2;
+            s3Status[p.name] = "Both Halves (0–15 pts)";
+          });
+
+          set3Result = {
+            generated: true,
+            mode: "even",
+            title: "⚖️ Even Playing Time (Sub at 8 Points)",
+            desc: "Deciding set to 15 points. Midway substitution happens at 8 points (side switch) so bench balances playing time.",
+            is_split: true,
+            first_half: s3H1,
+            second_half: s3H2,
+            anchors: s3Anchors.map(p => p.name),
+            bench_first_half: active.filter(p => !s3H1Players.includes(p)),
+            bench_second_half: active.filter(p => !s3H2Players.includes(p)),
+            safe_subs: []
+          };
+
+        } else { // "reps"
+          const worstFirst = [...active].reverse();
+          const devSix = worstFirst.slice(0, 6);
+          const repsLineup = arrangePositions(devSix, [devSix[0]]);
+          const benchReps = worstFirst.slice(6);
+          devSix.forEach(p => {
+            s3Halves[p.name] = 2;
+            s3Status[p.name] = "Full Set (15 pts)";
+          });
+          benchReps.forEach(p => {
+            s3Status[p.name] = "Bench";
+          });
+
+          set3Result = {
+            generated: true,
+            mode: "reps",
+            title: "🌟 Get Reps (15-pt Exhibition Set)",
+            desc: "Match is already won! Developing girls get starting roles and high-volume serving reps in a fun, zero-pressure set to 15.",
+            is_split: false,
+            lineup: repsLineup,
+            bench: benchReps,
+            safe_subs: [
+              {
+                position: "Pos 6 (Middle Back)",
+                situation: "Stabilizer Sub",
+                reason: `If opponents go on a scoring run, sub in #${active[0].number} ${active[0].name} for 2 rotations to pass and settle the team.`
+              }
+            ]
+          };
+        }
+      }
+
+      const audit = active.map(p => ({
+        number: p.number,
+        name: p.name,
+        s1s2_halves: s1s2Halves[p.name],
+        s1s2_full_game_met: s1s2Halves[p.name] >= 2,
+        s1s2_served: served.has(p.name),
+        set3_status: s3Status[p.name],
+        set3_halves: s3Halves[p.name],
+        total_halves: s1s2Halves[p.name] + s3Halves[p.name]
+      }));
+
+      return {
+        meta: {
+          anchors_set1: s1Anchors.map(p => p.name),
+          anchors_set2: s2Anchors.map(p => p.name)
+        },
+        set1: {
+          first_half: s1H1,
+          second_half: s1H2,
+          bench_first_half: active.filter(p => !s1Pool.h1.includes(p)),
+          bench_second_half: active.filter(p => !s1Pool.h2.includes(p))
+        },
+        set2: {
+          first_half: s2H1,
+          second_half: s2H2,
+          bench_first_half: active.filter(p => !s2Pool.h1.includes(p)),
+          bench_second_half: active.filter(p => !s2Pool.h2.includes(p))
+        },
+        set3: set3Result,
+        audit: audit
+      };
+    }
+
+    // Generate Sets 1 & 2
+    function generateInitialLineups() {
+      if (activePlayerNumbers.length < 6) {
+        alert("Please select at least 6 active players to field a team.");
+        return;
+      }
+
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const opp = document.getElementById("opponentInput").value || "Opponent";
+      const dt = document.getElementById("dateInput").value || new Date().toISOString().split("T")[0];
+
+      currentGameMeta = {
+        id: "game_" + Date.now(),
+        opponent: opp,
+        date: dt,
+        tactical_bias: selectedTacticalBias,
+        match_strategy: selectedMatchStrategy,
+        active_numbers: [...activePlayerNumbers]
+      };
+
+      isSet3Generated = false;
+      currentPlan = clientSideOptimize(activeList, selectedTacticalBias, selectedMatchStrategy, "win", false);
+
+      document.getElementById("lineupGameTitle").textContent = `St. Cecilia vs ${opp}`;
+      document.getElementById("lineupGameSub").textContent = `${dt} • Lineup Card Active • Tap any player to Override`;
+
+      renderPlanTabs();
+      switchSetTab('set1');
+      switchView('viewLineups');
+    }
+
+    // Generate Set 3 Dynamically
+    function triggerGenerateSet3(mode) {
+      currentSet3Mode = mode;
+      isSet3Generated = true;
+
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      // Keep existing Set 1 & Set 2 with any coach overrides!
+      const freshPlan = clientSideOptimize(activeList, selectedTacticalBias, selectedMatchStrategy, currentSet3Mode, true);
+      currentPlan.set3 = freshPlan.set3;
+      currentPlan.audit = freshPlan.audit;
+
+      renderPlanTabs();
+      switchSetTab('set3');
+    }
+
+    // Build Court HTML with Clickable Coach Override
+    function buildCourtHTML(half, setKey, halfKey) {
+      const p1 = half.positions[1] || {};
+      const p2 = half.positions[2] || {};
+      const p3 = half.positions[3] || {};
+      const p4 = half.positions[4] || {};
+      const p5 = half.positions[5] || {};
+      const p6 = half.positions[6] || {};
+
+      function makeCell(pos, roleClass, roleText, player) {
+        const isOverride = player._isOverride ? `<span class="cell-role-tag role-override">Override</span>` : `<span class="cell-role-tag ${roleClass}">${roleText}</span>`;
+        return `
+          <div class="court-cell" onclick="openOverrideModal('${setKey}', '${halfKey}', ${pos})">
+            <span class="cell-pos-tag">P${pos}</span>
+            ${isOverride}
+            <div class="cell-player-name">#${player.number || '?'} ${player.name || 'Empty'}</div>
+            <div class="cell-player-stat">Rcv:${player.serve_receive || 0} Srv:${player.serve_consistency || 0}</div>
+            <span class="cell-edit-hint">Tap to swap ✎</span>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="vb-court">
+          <div class="court-net-line">▲ ▲ ▲ NET ▲ ▲ ▲</div>
+          <div class="court-grid">
+            ${makeCell(4, "role-hide", "Net / LF", p4)}
+            ${makeCell(3, "role-srv3", "Srv #3", p3)}
+            ${makeCell(2, "role-srv2", "Srv #2", p2)}
+
+            ${makeCell(5, "role-pass", "Defense", p5)}
+            ${makeCell(6, "role-pass", "Anchor", p6)}
+            ${makeCell(1, "role-srv1", "★ Srv #1", p1)}
+          </div>
+        </div>
+      `;
+    }
+
+    // Build Formatted Ref / Scorekeeper Lineup Slip
+    function buildScorekeeperSlipHTML(half, label = "") {
+      const serveSequence = [1, 2, 3, 4, 5, 6];
+      const posLabels = {
+        1: "Pos 1 (RB) • 1st Server",
+        2: "Pos 2 (RF) • 2nd Server",
+        3: "Pos 3 (MF) • 3rd Server",
+        4: "Pos 4 (LF) • 4th Server",
+        5: "Pos 5 (LB) • 5th Server",
+        6: "Pos 6 (MB) • 6th Server"
+      };
+
+      const plainTextList = [];
+      const rows = serveSequence.map((pos, idx) => {
+        const p = half.positions[pos] || {};
+        const numStr = p.number !== undefined ? `#${p.number}` : `#?`;
+        const nameStr = p.name || "TBD";
+        plainTextList.push(`Pos ${pos}: ${numStr} ${nameStr}`);
+        const badgeClass = idx === 0 ? 'srv1' : (idx === 1 ? 'srv2' : (idx === 2 ? 'srv3' : ''));
+
+        return `
+          <div class="scorekeeper-row">
+            <div class="scorekeeper-num-name">
+              <span class="serve-seq-badge ${badgeClass}">${pos}</span>
+              <span class="player-bold-item"><strong>${numStr}</strong> ${nameStr}</span>
+            </div>
+            <span class="scorekeeper-pos-detail">${posLabels[pos]}</span>
+          </div>
+        `;
+      }).join('');
+
+      const copyPayload = encodeURIComponent("St. Cecilia - " + label + " Lineup Card (Pos 1–6):\n" + plainTextList.join('\n'));
+
+      return `
+        <div class="scorekeeper-card">
+          <div class="scorekeeper-header">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <img src="./st_cecilia_logo.png" alt="St. Cecilia" style="width:26px; height:24px; object-fit:contain; background:white; border-radius:4px; padding:1px;">
+              <span class="scorekeeper-title">St. Cecilia Lineup Card (For Ref & Bookkeeper)</span>
+            </div>
+            <button type="button" class="copy-lineup-btn" onclick="copyLineupText('${copyPayload}')">
+              📋 Copy
+            </button>
+          </div>
+          <div class="scorekeeper-list">
+            ${rows}
+          </div>
+        </div>
+      `;
+    }
+
+    function copyLineupText(encoded) {
+      const text = decodeURIComponent(encoded);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert("Copied lineup for bookkeeper:\n\n" + text);
+        }).catch(() => {
+          prompt("Copy lineup text:", text);
+        });
+      } else {
+        prompt("Copy lineup text:", text);
+      }
+    }
+
+    function escapeHTML(str) {
+      if (str === null || str === undefined) return '';
+      return String(str).replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;'
+      }[tag] || tag));
+    }
+
+    // -------------------------------------------------------------
+    // MIDWAY SUBSTITUTION PAIRINGS (POINT 13)
+    // -------------------------------------------------------------
+    function getSubPositionName(pos) {
+      const names = {
+        1: "Pos 1 (RB / Server)",
+        2: "Pos 2 (RF)",
+        3: "Pos 3 (MF)",
+        4: "Pos 4 (LF)",
+        5: "Pos 5 (LB)",
+        6: "Pos 6 (MB)"
+      };
+      return names[pos] || `Pos ${pos}`;
+    }
+
+    function buildSubPairsHTML(h1, h2, defaultAnchors = []) {
+      if (!h1 || !h2 || !h1.positions || !h2.positions) return "";
+
+      const h1Players = [];
+      const h2Players = [];
+
+      for (let pos = 1; pos <= 6; pos++) {
+        if (h1.positions[pos]) {
+          h1Players.push({ pos, player: h1.positions[pos] });
+        }
+        if (h2.positions[pos]) {
+          h2Players.push({ pos, player: h2.positions[pos] });
+        }
+      }
+
+      // Identify anchors: players present in BOTH h1 and h2
+      const anchors = [];
+      h1Players.forEach(p1 => {
+        const match = h2Players.find(p2 => p2.player.name === p1.player.name && p2.player.number === p1.player.number);
+        if (match) {
+          anchors.push({
+            player: p1.player,
+            h1Pos: p1.pos,
+            h2Pos: match.pos
+          });
+        }
+      });
+
+      const anchorIds = new Set(anchors.map(a => `${a.player.number}_${a.player.name}`));
+
+      // Outgoing: in H1, not an anchor
+      const outgoing = h1Players.filter(p => !anchorIds.has(`${p.player.number}_${p.player.name}`));
+
+      // Incoming: in H2, not an anchor
+      const incoming = h2Players.filter(p => !anchorIds.has(`${p.player.number}_${p.player.name}`));
+
+      // Build 1-to-1 pairs
+      const pairs = [];
+      const matchedOut = new Set();
+      const matchedIn = new Set();
+
+      // Priority 1: Match by exact position
+      incoming.forEach(inc => {
+        const exactOut = outgoing.find(out => out.pos === inc.pos && !matchedOut.has(`${out.player.number}_${out.player.name}`));
+        if (exactOut) {
+          pairs.push({
+            inPlayer: inc.player,
+            outPlayer: exactOut.player,
+            pos: inc.pos,
+            posLabel: getSubPositionName(inc.pos)
+          });
+          matchedIn.add(`${inc.player.number}_${inc.player.name}`);
+          matchedOut.add(`${exactOut.player.number}_${exactOut.player.name}`);
+        }
+      });
+
+      // Priority 2: Match remaining incoming with remaining outgoing
+      const remIn = incoming.filter(inc => !matchedIn.has(`${inc.player.number}_${inc.player.name}`));
+      const remOut = outgoing.filter(out => !matchedOut.has(`${out.player.number}_${out.player.name}`));
+
+      for (let i = 0; i < remIn.length; i++) {
+        const inc = remIn[i];
+        const out = remOut[i] || null;
+        if (out) {
+          pairs.push({
+            inPlayer: inc.player,
+            outPlayer: out.player,
+            pos: inc.pos,
+            posLabel: `${getSubPositionName(inc.pos)} (takes Pos ${out.pos})`
+          });
+        } else {
+          pairs.push({
+            inPlayer: inc.player,
+            outPlayer: null,
+            pos: inc.pos,
+            posLabel: getSubPositionName(inc.pos)
+          });
+        }
+      }
+
+      pairs.sort((a, b) => a.pos - b.pos);
+
+      const rowsHTML = pairs.map(pair => `
+        <div class="sub-pair-row">
+          <div class="sub-in-tag">
+            <span class="sub-pill in">IN</span>
+            <strong>#${pair.inPlayer.number}</strong> ${escapeHTML(pair.inPlayer.name)}
+          </div>
+          <div class="sub-arrow">➔ for ➔</div>
+          <div class="sub-out-tag">
+            <span class="sub-pill out">OUT</span>
+            ${pair.outPlayer ? `<strong>#${pair.outPlayer.number}</strong> ${escapeHTML(pair.outPlayer.name)}` : '<span style="color:#94a3b8;">(Open)</span>'}
+          </div>
+          <span class="sub-pos-badge">${pair.posLabel}</span>
+        </div>
+      `).join('');
+
+      let anchorHTML = "";
+      if (anchors.length > 0) {
+        const anchorDesc = anchors.map(a => {
+          const posNote = (a.h1Pos === a.h2Pos) ? `stays at ${getSubPositionName(a.h1Pos)}` : `shifts Pos ${a.h1Pos} ➔ Pos ${a.h2Pos}`;
+          return `<strong>#${a.player.number} ${escapeHTML(a.player.name)}</strong> (${posNote})`;
+        }).join(' & ');
+        anchorHTML = `
+          <div class="anchor-status-box" style="margin-top:10px;">
+            ★ <strong>Full-Set Anchor:</strong> ${anchorDesc} plays both halves (no sub).
+          </div>
+        `;
+      } else if (defaultAnchors && defaultAnchors.length > 0) {
+        anchorHTML = `
+          <div class="anchor-status-box" style="margin-top:10px;">
+            ★ <strong>Full-Set Anchor:</strong> ${defaultAnchors.join(', ')} plays both halves (no sub).
+          </div>
+        `;
+      }
+
+      return `
+        <div class="swap-card">
+          <div class="swap-header">
+            <div>
+              <div class="swap-title">⇄ Midway Substitution Plan (Point 13)</div>
+              <div class="swap-subtitle">Official 1-to-1 player exchange for referee / scorekeeper:</div>
+            </div>
+            <span class="badge badge-blue">${pairs.length} Subs</span>
+          </div>
+          <div class="sub-pairs-list">
+            ${rowsHTML}
+          </div>
+          ${anchorHTML}
+        </div>
+      `;
+    }
+
+    // -------------------------------------------------------------
+    // COACH OVERRIDE MODAL LOGIC
+    // -------------------------------------------------------------
+    function openOverrideModal(setKey, halfKey, pos) {
+      let targetHalf = null;
+      if (setKey === 'set1') targetHalf = currentPlan.set1[halfKey];
+      else if (setKey === 'set2') targetHalf = currentPlan.set2[halfKey];
+      else if (setKey === 'set3') {
+        targetHalf = currentPlan.set3.is_split ? currentPlan.set3[halfKey] : currentPlan.set3.lineup;
+      }
+
+      if (!targetHalf) return;
+      const currentPlayer = targetHalf.positions[pos];
+      overrideTarget = { setKey, halfKey, pos, currentPlayer, targetHalf };
+
+      document.getElementById("overrideModalTitle").textContent = `Coach Override: Pos ${pos}`;
+      document.getElementById("overrideModalSubtitle").textContent = `Current: #${currentPlayer.number} ${currentPlayer.name}. Tap a player below to swap:`;
+
+      // Get all active players
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const listContainer = document.getElementById("overridePlayerList");
+      listContainer.innerHTML = "";
+
+      activeList.forEach(p => {
+        const isCurrent = (p.number === currentPlayer.number && p.name === currentPlayer.name);
+        const item = document.createElement("div");
+        item.className = `override-player-item ${isCurrent ? 'current' : ''}`;
+        item.innerHTML = `
+          <div>
+            <strong>#${p.number} ${p.name}</strong>
+            <span style="font-size:11px; color:var(--text-muted); margin-left:6px;">Tot:${p.total_score} | Rcv:${p.serve_receive} | Srv:${p.serve_consistency}</span>
+          </div>
+          <button type="button" class="btn-secondary" style="padding:4px 10px; font-size:11px;" ${isCurrent ? 'disabled' : ''}>
+            ${isCurrent ? 'Current' : 'Swap Here'}
+          </button>
+        `;
+        if (!isCurrent) {
+          item.onclick = () => executeCoachOverride(p);
+        }
+        listContainer.appendChild(item);
+      });
+
+      // Also show inactive / absent roster players
+      const inactiveList = playersData.filter((p, idx) => !activePlayerNumbers.includes(p.number + "_" + idx));
+      if (inactiveList.length > 0) {
+        const divider = document.createElement("div");
+        divider.style.cssText = "font-size:12px; font-weight:700; color:var(--text-muted); margin:14px 0 6px; padding-top:8px; border-top:1px dashed #cbd5e1;";
+        divider.textContent = "➕ Absent / Inactive Roster Players (Activate & Sub):";
+        listContainer.appendChild(divider);
+
+        inactiveList.forEach(p => {
+          const item = document.createElement("div");
+          item.className = "override-player-item";
+          item.style.borderColor = "#86efac";
+          item.style.background = "#f0fdf4";
+          item.innerHTML = `
+            <div>
+              <strong style="color:#166534;">#${p.number} ${escapeHTML(p.name)}</strong>
+              <span style="font-size:11px; color:#15803d; margin-left:4px;">(Activate to Lineup)</span>
+            </div>
+            <button type="button" class="btn-primary" style="padding:4px 8px; font-size:11px; background:#16a34a;">
+              + Activate & Sub
+            </button>
+          `;
+          item.onclick = () => {
+            const pIdx = playersData.indexOf(p);
+            if (pIdx >= 0) {
+              const pKey = p.number + "_" + pIdx;
+              if (!activePlayerNumbers.includes(pKey)) activePlayerNumbers.push(pKey);
+              updateActiveCountBadge();
+              renderRosterChecklist();
+            }
+            executeCoachOverride(p);
+          };
+          listContainer.appendChild(item);
+        });
+      }
+
+      document.getElementById("overrideModal").classList.add("active");
+    }
+
+    function closeOverrideModal() {
+      document.getElementById("overrideModal").classList.remove("active");
+    }
+
+    function executeCoachOverride(newPlayer) {
+      const { setKey, halfKey, pos, currentPlayer, targetHalf } = overrideTarget;
+
+      // Ensure newPlayer is registered in activePlayerNumbers if not already
+      const pIdx = playersData.findIndex(p => p.number === newPlayer.number && p.name === newPlayer.name);
+      if (pIdx >= 0) {
+        const pKey = newPlayer.number + "_" + pIdx;
+        if (!activePlayerNumbers.includes(pKey)) {
+          activePlayerNumbers.push(pKey);
+          updateActiveCountBadge();
+          renderRosterChecklist();
+        }
+      }
+
+      // Check if newPlayer is already on the court in another position
+      let otherPos = null;
+      for (let pNum in targetHalf.positions) {
+        if (targetHalf.positions[pNum].number === newPlayer.number && targetHalf.positions[pNum].name === newPlayer.name) {
+          otherPos = pNum;
+          break;
+        }
+      }
+
+      const markedPlayer = { ...newPlayer, _isOverride: true };
+
+      if (otherPos) {
+        // Swap court positions
+        targetHalf.positions[otherPos] = currentPlayer;
+        targetHalf.positions[pos] = markedPlayer;
+      } else {
+        // Player was on bench, swap with bench
+        targetHalf.positions[pos] = markedPlayer;
+
+        // Update bench lists if applicable
+        if (setKey === 'set1' || setKey === 'set2') {
+          const benchKey = (halfKey === 'first_half') ? 'bench_first_half' : 'bench_second_half';
+          const bench = currentPlan[setKey][benchKey];
+          const bIdx = bench.findIndex(b => b.number === newPlayer.number && b.name === newPlayer.name);
+          if (bIdx >= 0) bench.splice(bIdx, 1);
+          bench.push(currentPlayer);
+        }
+      }
+
+      // Recalculate stats for that half
+      const list = Object.values(targetHalf.positions);
+      targetHalf.total_score = list.reduce((sum, p) => sum + p.total_score, 0);
+      targetHalf.avg_receive = (list.reduce((sum, p) => sum + p.serve_receive, 0) / 6).toFixed(1);
+
+      closeOverrideModal();
+      renderPlanTabs();
+    }
+
+    // Render Full Rotation Sheets
+    function renderPlanTabs() {
+      if (!currentPlan) return;
+      const p = currentPlan;
+      const s1 = p.set1;
+      const s2 = p.set2;
+      const s3 = p.set3;
+
+      // SET 1
+      document.getElementById("set1Content").innerHTML = `
+        <div class="court-card">
+          <div class="court-header">
+            <div class="court-title">Set 1: First Half (0 to ~13 pts)</div>
+            <div class="court-badges">
+              <span class="badge badge-blue">Score: ${s1.first_half.total_score}</span>
+              <span class="badge badge-green">Rcv: ${s1.first_half.avg_receive}</span>
+            </div>
+          </div>
+          ${buildCourtHTML(s1.first_half, 'set1', 'first_half')}
+          ${buildScorekeeperSlipHTML(s1.first_half, 'Set 1 First Half')}
+          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+            <strong>Bench (Waiting):</strong> ${s1.bench_first_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+          </div>
+        </div>
+
+        ${buildSubPairsHTML(s1.first_half, s1.second_half, p.meta.anchors_set1)}
+
+        <div class="court-card">
+          <div class="court-header">
+            <div class="court-title">Set 1: Second Half (13 to 25 pts)</div>
+            <div class="court-badges">
+              <span class="badge badge-blue">Score: ${s1.second_half.total_score}</span>
+              <span class="badge badge-green">Rcv: ${s1.second_half.avg_receive}</span>
+            </div>
+          </div>
+          ${buildCourtHTML(s1.second_half, 'set1', 'second_half')}
+          ${buildScorekeeperSlipHTML(s1.second_half, 'Set 1 Second Half')}
+          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+            <strong>Bench (Resting):</strong> ${s1.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+          </div>
+        </div>
+      `;
+
+      // SET 2
+      document.getElementById("set2Content").innerHTML = `
+        <div class="court-card">
+          <div class="court-header">
+            <div class="court-title">Set 2: First Half (0 to ~13 pts)</div>
+            <div class="court-badges">
+              <span class="badge badge-blue">Score: ${s2.first_half.total_score}</span>
+              <span class="badge badge-green">Rcv: ${s2.first_half.avg_receive}</span>
+            </div>
+          </div>
+          ${buildCourtHTML(s2.first_half, 'set2', 'first_half')}
+          ${buildScorekeeperSlipHTML(s2.first_half, 'Set 2 First Half')}
+          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+            <strong>Bench:</strong> ${s2.bench_first_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+          </div>
+        </div>
+
+        ${buildSubPairsHTML(s2.first_half, s2.second_half, p.meta.anchors_set2)}
+
+        <div class="court-card">
+          <div class="court-header">
+            <div class="court-title">Set 2: Second Half (13 to 25 pts)</div>
+            <div class="court-badges">
+              <span class="badge badge-blue">Score: ${s2.second_half.total_score}</span>
+              <span class="badge badge-green">Rcv: ${s2.second_half.avg_receive}</span>
+            </div>
+          </div>
+          ${buildCourtHTML(s2.second_half, 'set2', 'second_half')}
+          ${buildScorekeeperSlipHTML(s2.second_half, 'Set 2 Second Half')}
+          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+            <strong>Bench:</strong> ${s2.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+          </div>
+        </div>
+      `;
+
+      // SET 3
+      if (!isSet3Generated || !s3 || !s3.generated) {
+        document.getElementById("set3Content").innerHTML = `
+          <div class="card" style="text-align:center; padding:24px 16px;">
+            <div style="font-size:36px; margin-bottom:10px;">🏐</div>
+            <h3 style="font-size:18px; font-weight:800; margin-bottom:6px;">Set 3: Deciding Tiebreaker (15 Points)</h3>
+            <p style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
+              Played to 15 points (substitutions at 8 points). Play Sets 1 and 2 first. Once ready for Set 3, choose your match situation below:
+            </p>
+
+            <div class="segment-group" style="margin-bottom:16px;">
+              <button type="button" class="segment-btn active" id="btnS3Win" onclick="setInitialS3Choice('win')">🏆 Win at All Costs<br><span style="font-size:10px; font-weight:normal;">(Tied 1–1)</span></button>
+              <button type="button" class="segment-btn" id="btnS3Even" onclick="setInitialS3Choice('even')">⚖️ Even Minutes<br><span style="font-size:10px; font-weight:normal;">(Equal Time)</span></button>
+              <button type="button" class="segment-btn" id="btnS3Reps" onclick="setInitialS3Choice('reps')">🌟 Get Reps<br><span style="font-size:10px; font-weight:normal;">(Won 2–0)</span></button>
+            </div>
+
+            <button type="button" class="btn-primary" onclick="triggerGenerateSet3(currentSet3Mode)">
+              ⚡ Generate Set 3 Rotation Sheet ➔
+            </button>
+          </div>
+        `;
+      } else {
+        const safeSubsHTML = (s3.safe_subs || []).map(sub => `
+          <div class="safe-sub-item">
+            <div class="safe-sub-title">🔄 ${sub.situation} (${sub.position})</div>
+            <div>${sub.reason}</div>
+          </div>
+        `).join('') || '<div style="font-size:13px; color:var(--text-muted); margin-top:6px;">No subs needed.</div>';
+
+        let set3BodyHTML = "";
+        if (s3.is_split) {
+          set3BodyHTML = `
+            <div class="court-card">
+              <div class="court-header">
+                <div class="court-title">Set 3: First Half (0 to 8 pts)</div>
+                <div class="court-badges">
+                  <span class="badge badge-purple">Score: ${s3.first_half.total_score}</span>
+                  <span class="badge badge-green">Rcv: ${s3.first_half.avg_receive}</span>
+                </div>
+              </div>
+              ${buildCourtHTML(s3.first_half, 'set3', 'first_half')}
+              ${buildScorekeeperSlipHTML(s3.first_half, 'Set 3 First Half')}
+              <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+                <strong>Bench (Waiting):</strong> ${s3.bench_first_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+              </div>
+            </div>
+
+            ${buildSubPairsHTML(s3.first_half, s3.second_half, s3.anchors || [])}
+
+            <div class="court-card">
+              <div class="court-header">
+                <div class="court-title">Set 3: Second Half (8 to 15 pts)</div>
+                <div class="court-badges">
+                  <span class="badge badge-purple">Score: ${s3.second_half.total_score}</span>
+                  <span class="badge badge-green">Rcv: ${s3.second_half.avg_receive}</span>
+                </div>
+              </div>
+              ${buildCourtHTML(s3.second_half, 'set3', 'second_half')}
+              ${buildScorekeeperSlipHTML(s3.second_half, 'Set 3 Second Half')}
+              <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+                <strong>Bench (Resting):</strong> ${s3.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+              </div>
+            </div>
+          `;
+        } else {
+          set3BodyHTML = `
+            <div class="court-card">
+              <div class="court-header">
+                <div class="court-title">${s3.title}</div>
+                <div class="court-badges">
+                  <span class="badge badge-purple">Score: ${s3.lineup.total_score}</span>
+                  <span class="badge badge-green">Rcv: ${s3.lineup.avg_receive}</span>
+                </div>
+              </div>
+              ${buildCourtHTML(s3.lineup, 'set3', 'lineup')}
+              ${buildScorekeeperSlipHTML(s3.lineup, s3.title)}
+              <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+                <strong>Bench:</strong> ${(s3.bench || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Situational Sub Opportunities</div>
+              <p style="font-size:12px; color:var(--text-muted);">
+                ${s3.mode === 'win' ? 'Make these low-risk substitutions at the net without degrading back-row pass defense:' : 'Options to stabilize or rotate players during the set:'}
+              </p>
+              ${safeSubsHTML}
+            </div>
+          `;
+        }
+
+        document.getElementById("set3Content").innerHTML = `
+          <div class="card" style="padding:12px 14px; margin-bottom:14px; background:#f8fafc; border:1.5px solid #cbd5e1;">
+            <div style="font-size:13px; font-weight:700; margin-bottom:8px; color:var(--text);">Set 3 Objective (Change anytime!):</div>
+            <div class="segment-group">
+              <button type="button" class="segment-btn ${s3.mode === 'win' ? 'active' : ''}" onclick="triggerGenerateSet3('win')">🏆 Win at All Costs</button>
+              <button type="button" class="segment-btn ${s3.mode === 'even' ? 'active' : ''}" onclick="triggerGenerateSet3('even')">⚖️ Even Minutes</button>
+              <button type="button" class="segment-btn ${s3.mode === 'reps' ? 'active' : ''}" onclick="triggerGenerateSet3('reps')">🌟 Get Reps</button>
+            </div>
+            <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">${s3.desc}</p>
+          </div>
+
+          ${set3BodyHTML}
+        `;
+      }
+
+      // AUDIT
+      const auditRows = p.audit.map(a => `
+        <tr>
+          <td><strong>#${a.number} ${a.name}</strong></td>
+          <td>
+            <strong>${a.s1s2_halves}</strong> / 4 halves
+            <span class="badge-check">✓ Full Set</span>
+          </td>
+          <td>
+            ${a.s1s2_served ? '<span class="badge-check">✓ YES (P1–P3)</span>' : '<span style="color:#ef4444">✗ No</span>'}
+          </td>
+          <td>
+            ${isSet3Generated 
+              ? `<span class="badge ${a.set3_halves > 0 ? 'badge-purple' : 'badge-gray'}">${a.set3_status}</span>`
+              : `<span style="color:var(--text-muted); font-size:12px; font-style:italic;">Pending Sets 1 & 2</span>`}
+          </td>
+          <td style="font-weight:700;">
+            ${isSet3Generated ? `${a.total_halves} halves` : `${a.s1s2_halves} halves`}
+          </td>
+        </tr>
+      `).join('');
+
+      document.getElementById("auditContent").innerHTML = `
+        <div class="card">
+          <div class="card-title">Sets 1 & 2 Playing Time & Serve Audit</div>
+          <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+            Sets 1 & 2 consist of <strong>4 total halves</strong> (24 court player-halves). Every player is verified to play ≥ 2 halves (equivalent of 1 full set / 50% match time) and gets a guaranteed service turn in Pos 1–3. Set 3 (played to 15 points, sub at 8) is shown separately.
+          </p>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:14px;">
+            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px;">
+              <div style="font-size:11px; font-weight:700; color:#15803d; text-transform:uppercase;">Sets 1 & 2 Playing Time</div>
+              <div style="font-size:15px; font-weight:800; color:#166534; margin-top:2px;">100% Full Set Met</div>
+              <div style="font-size:11px; color:#15803d;">All players play ≥2 of 4 halves</div>
+            </div>
+            <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px;">
+              <div style="font-size:11px; font-weight:700; color:#1d4ed8; text-transform:uppercase;">Sets 1 & 2 Serve Turns</div>
+              <div style="font-size:15px; font-weight:800; color:#1e40af; margin-top:2px;">100% Guaranteed</div>
+              <div style="font-size:11px; color:#1d4ed8;">Every player in Pos 1–3</div>
+            </div>
+          </div>
+
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>Player</th>
+                <th>Sets 1 & 2 Time</th>
+                <th>Sets 1 & 2 Serve</th>
+                <th>Set 3 (15 Pts)</th>
+                <th>Total Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${auditRows}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function setInitialS3Choice(mode) {
+      currentSet3Mode = mode;
+      document.getElementById("btnS3Win").classList.toggle("active", mode === 'win');
+      document.getElementById("btnS3Even").classList.toggle("active", mode === 'even');
+      document.getElementById("btnS3Reps").classList.toggle("active", mode === 'reps');
+    }
+
+    // -------------------------------------------------------------
+    // HISTORICAL GAMES STORAGE & RETRIEVAL
+    // -------------------------------------------------------------
+    function saveCurrentGameToHistory() {
+      if (!currentPlan) return;
+      const gameRecord = {
+        id: currentGameMeta.id || ("game_" + Date.now()),
+        opponent: currentGameMeta.opponent,
+        date: currentGameMeta.date,
+        tactical_bias: selectedTacticalBias,
+        match_strategy: selectedMatchStrategy,
+        active_numbers: [...activePlayerNumbers],
+        isSet3Generated: isSet3Generated,
+        set3Mode: currentSet3Mode,
+        plan: currentPlan
+      };
+
+      // 1. Save to local storage
+      let games = [];
+      try {
+        games = JSON.parse(localStorage.getItem("moneyball_vb_games") || "[]");
+      } catch (e) {}
+
+      const existingIdx = games.findIndex(g => g.id === gameRecord.id);
+      if (existingIdx >= 0) games[existingIdx] = gameRecord;
+      else games.unshift(gameRecord);
+
+      localStorage.setItem("moneyball_vb_games", JSON.stringify(games));
+
+      // 2. Try saving to server API
+      try {
+        fetch("/api/games", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(gameRecord)
+        });
+      } catch (e) {}
+
+      alert(`Game vs ${gameRecord.opponent} saved to history!`);
+      loadHistoryList();
+    }
+
+    function formatMatchStrategyLabel(strat) {
+      if (strat === 'drop_second') return 'WIN SET 1 (DROP SET 2)';
+      if (strat === 'drop_first') return 'WIN SET 2 (DROP SET 1)';
+      return 'BALANCED';
+    }
+
+    async function loadHistoryList() {
+      let games = [];
+      // Try local storage first
+      try {
+        games = JSON.parse(localStorage.getItem("moneyball_vb_games") || "[]");
+      } catch (e) {}
+
+      // Try fetching server games only if local storage has none
+      if (games.length === 0) {
+        try {
+          const res = await fetch("/api/games");
+          if (res.ok) {
+            const d = await res.json();
+            if (d.games && d.games.length > 0) games = d.games;
+          }
+        } catch (e) {}
+      }
+
+      const container = document.getElementById("historyListContainer");
+      document.getElementById("historyCountNotice").textContent = `${games.length} past game rotation${games.length === 1 ? '' : 's'} recorded.`;
+
+      if (games.length === 0) {
+        container.innerHTML = `
+          <div class="card" style="text-align:center; padding:24px; color:var(--text-muted);">
+            <div style="font-size:32px; margin-bottom:8px;">📜</div>
+            <p>No historical games saved yet. Create a game to start recording rotations!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = games.map((g, idx) => `
+        <div class="history-card" onclick="loadGameFromHistory('${g.id}')">
+          <div class="history-header">
+            <span class="history-opponent">vs ${g.opponent}</span>
+            <span class="history-date">${g.date}</span>
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; font-size:11px; margin-bottom:8px;">
+            <span class="badge badge-blue">${g.active_numbers ? g.active_numbers.length : 11} Active</span>
+            <span class="badge badge-green">${formatMatchStrategyLabel(g.match_strategy)}</span>
+            ${g.isSet3Generated ? `<span class="badge badge-purple">Set 3: ${g.set3Mode.toUpperCase()}</span>` : '<span class="badge badge-amber">Sets 1 & 2 Only</span>'}
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:12px; color:var(--primary); font-weight:700;">View Rotation Sheets ➔</span>
+            <button type="button" style="background:none; border:none; color:#ef4444; font-size:11px; cursor:pointer;" onclick="deleteGameFromHistory(event, '${g.id}')">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadGameFromHistory(gameId) {
+      let games = [];
+      try { games = JSON.parse(localStorage.getItem("moneyball_vb_games") || "[]"); } catch (e) {}
+      const game = games.find(g => g.id === gameId);
+      if (!game) return;
+
+      currentGameMeta = game;
+      currentPlan = game.plan;
+      isSet3Generated = game.isSet3Generated;
+      currentSet3Mode = game.set3Mode || "win";
+      activePlayerNumbers = game.active_numbers || [];
+
+      document.getElementById("lineupGameTitle").textContent = `St. Cecilia vs ${game.opponent}`;
+      document.getElementById("lineupGameSub").textContent = `${game.date} • Historical Game`;
+
+      renderPlanTabs();
+      switchSetTab('set1');
+      switchView('viewLineups');
+    }
+
+    function deleteGameFromHistory(e, gameId) {
+      e.stopPropagation();
+      if (!confirm("Delete this game from history?")) return;
+      let games = [];
+      try { games = JSON.parse(localStorage.getItem("moneyball_vb_games") || "[]"); } catch (e) {}
+      games = games.filter(g => g.id !== gameId);
+      localStorage.setItem("moneyball_vb_games", JSON.stringify(games));
+      loadHistoryList();
+    }
+  </script>
+</body>
+</html>

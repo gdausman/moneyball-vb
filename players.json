@@ -1,0 +1,119 @@
+{
+  "team_name": "St. Cecilia 4th Grade",
+  "rules": {
+    "players_on_court": 6,
+    "serve_limit_per_player": 5
+  },
+  "players": [
+    {
+      "number": 14,
+      "name": "Tessa",
+      "serve_consistency": 3,
+      "serve_power": 4,
+      "serve_receive": 4,
+      "rally_hits": 4,
+      "total_score": 15,
+      "tier": "anchor"
+    },
+    {
+      "number": 7,
+      "name": "Eileen",
+      "serve_consistency": 3,
+      "serve_power": 4,
+      "serve_receive": 3,
+      "rally_hits": 3,
+      "total_score": 13,
+      "tier": "anchor"
+    },
+    {
+      "number": 10,
+      "name": "Harper",
+      "serve_consistency": 3,
+      "serve_power": 4,
+      "serve_receive": 2,
+      "rally_hits": 3,
+      "total_score": 12,
+      "tier": "starter"
+    },
+    {
+      "number": 8,
+      "name": "Gemma",
+      "serve_consistency": 4,
+      "serve_power": 3,
+      "serve_receive": 2,
+      "rally_hits": 3,
+      "total_score": 12,
+      "tier": "starter"
+    },
+    {
+      "number": 12,
+      "name": "Peyton",
+      "serve_consistency": 4,
+      "serve_power": 3,
+      "serve_receive": 2,
+      "rally_hits": 2,
+      "total_score": 11,
+      "tier": "starter"
+    },
+    {
+      "number": 15,
+      "name": "Charley",
+      "serve_consistency": 2,
+      "serve_power": 3,
+      "serve_receive": 2,
+      "rally_hits": 2,
+      "total_score": 9,
+      "tier": "rotation"
+    },
+    {
+      "number": 4,
+      "name": "Sophie",
+      "serve_consistency": 2,
+      "serve_power": 3,
+      "serve_receive": 2,
+      "rally_hits": 2,
+      "total_score": 9,
+      "tier": "rotation"
+    },
+    {
+      "number": 2,
+      "name": "Olivia",
+      "serve_consistency": 2,
+      "serve_power": 3,
+      "serve_receive": 2,
+      "rally_hits": 2,
+      "total_score": 9,
+      "tier": "rotation"
+    },
+    {
+      "number": 5,
+      "name": "Eleanor",
+      "serve_consistency": 3,
+      "serve_power": 2,
+      "serve_receive": 1,
+      "rally_hits": 2,
+      "total_score": 8,
+      "tier": "developing"
+    },
+    {
+      "number": 15,
+      "name": "Claire",
+      "serve_consistency": 3,
+      "serve_power": 2,
+      "serve_receive": 1,
+      "rally_hits": 1,
+      "total_score": 7,
+      "tier": "developing"
+    },
+    {
+      "number": 9,
+      "name": "Ella",
+      "serve_consistency": 1,
+      "serve_power": 1,
+      "serve_receive": 1,
+      "rally_hits": 1,
+      "total_score": 4,
+      "tier": "developing"
+    }
+  ]
+}
