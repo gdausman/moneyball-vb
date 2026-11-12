@@ -430,9 +430,9 @@
     }
     .court-cell {
       background: #ffffff;
-      padding: 10px 6px 8px;
+      padding: 16px 6px 12px;
       text-align: center;
-      min-height: 70px;
+      min-height: 58px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -451,42 +451,163 @@
     }
     .cell-pos-tag {
       position: absolute;
-      top: 4px;
-      left: 5px;
-      font-size: 9px;
+      top: 5px;
+      left: 6px;
+      font-size: 10px;
       font-weight: 800;
-      color: #64748b;
+      color: #475569;
       background: #f1f5f9;
-      padding: 1px 5px;
-      border-radius: 3px;
-    }
-    .cell-role-tag {
-      position: absolute;
-      top: 4px;
-      right: 5px;
-      font-size: 9px;
-      font-weight: 700;
       padding: 1px 5px;
       border-radius: 4px;
     }
+    .cell-role-tag {
+      position: absolute;
+      top: 5px;
+      right: 6px;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
     .role-srv1 { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
-    .role-srv2 { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
-    .role-srv3 { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
     .role-active-srv { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
     .role-override { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
 
     .cell-player-name {
-      font-size: 13.5px;
+      font-size: 15px;
       font-weight: 800;
       color: #0f172a;
-      margin-top: 6px;
-      line-height: 1.2;
+      margin-top: 2px;
+      line-height: 1.25;
     }
-    .cell-player-stat {
+
+    /* Clean Midway Substitution Rows */
+    .sub-pair-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .sub-pair-row:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+    .sub-pill-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .sub-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .pill-out {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+    .tag-out {
       font-size: 10px;
-      font-weight: 600;
-      color: #64748b;
-      margin-top: 3px;
+      font-weight: 800;
+      background: #fee2e2;
+      color: #dc2626;
+      padding: 1px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .sub-arrow {
+      font-size: 14px;
+      color: #94a3b8;
+      font-weight: 800;
+    }
+    .pill-in {
+      background: #f0fdf4;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+    .tag-in {
+      font-size: 10px;
+      font-weight: 800;
+      background: #dcfce7;
+      color: #16a34a;
+      padding: 1px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+    .btn-sub-edit {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0284c7;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .btn-sub-edit:hover {
+      background: #f0f9ff;
+      border-color: #0284c7;
+    }
+
+    /* Court Rotation Controller (Second Half) */
+    .court-rotation-ctrl {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+    .btn-rot {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: #1e293b;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .btn-rot:hover {
+      background: #f0f7ff;
+      border-color: #3b82f6;
+      color: #1d4ed8;
+    }
+    .rot-status {
+      text-align: center;
+      flex: 1;
+    }
+    .rot-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .rot-server {
+      font-size: 11px;
+      color: #166534;
+      margin-top: 1px;
     }
 
     /* Scorekeeper / Ref Lineup Slip */
@@ -1532,7 +1653,7 @@
       { number: 7,  name: "Eileen", serve_consistency: 3, serve_power: 4, serve_receive: 3, rally_hits: 3, total_score: 13, tier: "anchor" },
       { number: 12, name: "Peyton", serve_consistency: 4, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 11, tier: "starter" },
       { number: 15, name: "Charley", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 3, total_score: 10, tier: "rotation" },
-      { number: 8,  name: "Gemma", serve_consistency: 4, serve_power: 3, serve_receive: 1, rally_hits: 2, total_score: 10, tier: "rotation" },
+      { number: 8,  name: "Gemma", serve_consistency: 3, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 10, tier: "rotation" },
       { number: 5,  name: "Eleanor", serve_consistency: 3, serve_power: 2, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
       { number: 2,  name: "Olivia", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
       { number: 4,  name: "Sophie", serve_consistency: 2, serve_power: 3, serve_receive: 2, rally_hits: 2, total_score: 9, tier: "rotation" },
@@ -1549,9 +1670,21 @@
     let currentSet3Mode = "win";
     let isSet3Generated = false;
 
-    // Live Midway Substitution State (Defaults: Set 1 & 2 at S5, Set 3 at S3)
-    let activeSubServer = { set1: 5, set2: 5, set3: 3 };
+    // Live Midway Substitution State (Defaults: Set 1, 2, 3 at Rotation 1)
+    let activeSubServer = { set1: 1, set2: 1, set3: 1 };
     let activeSubPossession = { set1: "serving", set2: "serving", set3: "serving" };
+
+    function rotateCourtRight(setKey) {
+      const cur = activeSubServer[setKey] || 1;
+      activeSubServer[setKey] = (cur % 6) + 1;
+      renderPlanTabs();
+    }
+
+    function rotateCourtLeft(setKey) {
+      const cur = activeSubServer[setKey] || 1;
+      activeSubServer[setKey] = (cur === 1 ? 6 : cur - 1);
+      renderPlanTabs();
+    }
 
     function setSubServer(setKey, num) {
       activeSubServer[setKey] = parseInt(num);
@@ -1640,32 +1773,59 @@
     // Load Players
     async function loadPlayers() {
       let loaded = false;
-      const stored = localStorage.getItem("moneyball_vb_players");
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            playersData = parsed;
+
+      // 1. Try local server API first
+      try {
+        const res = await fetch("/api/players");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.players && data.players.length > 0) {
+            playersData = data.players;
+            localStorage.setItem("moneyball_vb_players", JSON.stringify(playersData));
             loaded = true;
           }
-        } catch (e) {}
-      }
+        }
+      } catch (e) {}
 
+      // 2. Fall back to localStorage if offline/static
       if (!loaded) {
-        try {
-          const res = await fetch("/api/players");
-          if (res.ok) {
-            const data = await res.json();
-            if (data && data.players && data.players.length > 0) {
-              playersData = data.players;
+        const stored = localStorage.getItem("moneyball_vb_players");
+        if (stored) {
+          try {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              playersData = parsed;
               loaded = true;
             }
-          }
-        } catch (e) {}
+          } catch (e) {}
+        }
       }
 
+      // 3. Fall back to DEFAULT_PLAYERS
       if (!playersData || playersData.length === 0) {
         playersData = JSON.parse(JSON.stringify(DEFAULT_PLAYERS));
+      }
+
+      // Upgrade Gemma to updated defaults if on legacy defaults
+      const gemma = playersData.find(p => p.name === "Gemma" && p.number === 8);
+      if (gemma && gemma.serve_consistency === 4 && gemma.serve_receive === 1) {
+        gemma.serve_consistency = 3;
+        gemma.serve_receive = 2;
+        gemma.serve_power = 3;
+        gemma.rally_hits = 2;
+        gemma.total_score = 10;
+        localStorage.setItem("moneyball_vb_players", JSON.stringify(playersData));
+      }
+
+      // Ensure Charley defaults match
+      const charley = playersData.find(p => p.name === "Charley" && p.number === 15);
+      if (charley) {
+        charley.serve_consistency = 2;
+        charley.serve_power = 3;
+        charley.serve_receive = 2;
+        charley.rally_hits = 3;
+        charley.total_score = 10;
+        localStorage.setItem("moneyball_vb_players", JSON.stringify(playersData));
       }
 
       sortPlayersRoster(playersData);
@@ -3434,18 +3594,15 @@
             <span class="cell-pos-tag">P${pos}</span>
             ${tag}
             <div class="cell-player-name">#${player.number || '?'} ${escapeHTML(player.name || 'Empty')}</div>
-            <div class="cell-player-stat">Pass ${player.serve_receive || 0} · Srv ${player.serve_consistency || 0}/${player.serve_power || 0}</div>
           </div>
         `;
       }
 
-      let p1Tag = "", p2Tag = "", p3Tag = "";
+      let p1Tag = "";
       if (halfKey === 'second_half') {
-        p1Tag = `<span class="cell-role-tag role-active-srv">🎯 Srv #${rot}</span>`;
+        p1Tag = `<span class="cell-role-tag role-active-srv">🎯 Serving</span>`;
       } else {
-        p1Tag = `<span class="cell-role-tag role-srv1">★ Srv 1</span>`;
-        p2Tag = `<span class="cell-role-tag role-srv2">Srv 2</span>`;
-        p3Tag = `<span class="cell-role-tag role-srv3">Srv 3</span>`;
+        p1Tag = `<span class="cell-role-tag role-srv1">★ 1st Server</span>`;
       }
 
       return `
@@ -3453,8 +3610,8 @@
           <div class="court-net-line">── NET ──</div>
           <div class="court-grid">
             ${makeCell(4, "", p4)}
-            ${makeCell(3, p3Tag, p3)}
-            ${makeCell(2, p2Tag, p2)}
+            ${makeCell(3, "", p3)}
+            ${makeCell(2, "", p2)}
 
             ${makeCell(5, "", p5)}
             ${makeCell(6, "", p6)}
@@ -3464,73 +3621,21 @@
       `;
     }
 
-    // Mid-Set Substitution Tracker Header (Compact & Collapsible)
-    function buildSubTrackerHeaderHTML(setKey, isSet3 = false) {
-      const currentRot = activeSubServer[setKey] || (isSet3 ? 3 : 5);
-      const currentPoss = activeSubPossession[setKey] || "serving";
-      const triggerPoint = isSet3 ? "8" : "12–13";
-
-      return `
-        <details class="clean-sub-tracker" style="margin-top:8px; margin-bottom:8px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:6px 10px;">
-          <summary style="font-size:11px; font-weight:700; color:#475569; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none;">
-            <span>⏱️ Rotation at Whistle (Active: S${currentRot} · ${currentPoss === 'serving' ? 'Serving' : 'Receiving'})</span>
-            <span style="font-size:10px; color:#3b82f6;">Adjust ▾</span>
-          </summary>
-          <div style="margin-top:8px; padding-top:8px; border-top:1px dashed #cbd5e1; display:flex; flex-direction:column; gap:6px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
-              <span style="font-size:11px; font-weight:700; color:#1e293b;">Server at Point ${triggerPoint}:</span>
-              <div class="segment-group" style="display:inline-flex; width:auto; margin:0;">
-                ${[1, 2, 3, 4, 5, 6].map(num => `
-                  <button type="button" class="segment-btn ${currentRot === num ? 'active' : ''}" style="padding:2px 7px; font-size:10px;" onclick="setSubServer('${setKey}', ${num})">
-                    S${num}${!isSet3 && num === 5 ? ' (Avg)' : isSet3 && num === 3 ? ' (Avg)' : ''}
-                  </button>
-                `).join('')}
-              </div>
-            </div>
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
-              <span style="font-size:11px; font-weight:700; color:#1e293b;">Possession:</span>
-              <div class="segment-group" style="display:inline-flex; width:auto; margin:0;">
-                <button type="button" class="segment-btn ${currentPoss === 'serving' ? 'active' : ''}" style="padding:2px 8px; font-size:10px;" onclick="toggleSubPossession('${setKey}', 'serving')">
-                  Serving
-                </button>
-                <button type="button" class="segment-btn ${currentPoss === 'receiving' ? 'active' : ''}" style="padding:2px 8px; font-size:10px;" onclick="toggleSubPossession('${setKey}', 'receiving')">
-                  Receiving
-                </button>
-              </div>
-            </div>
-          </div>
-        </details>
-      `;
-    }
-
-    // Closing Serve Queue (Compact & Clean)
-    function buildClosingServeQueueHTML(half, rot, poss, isSet3 = false) {
+    // Court Rotation Bar (Second Half: Rotate Left ↺ / Rotate Right ↻)
+    function buildCourtRotationBarHTML(half, setKey, rot) {
       const p1 = half.positions[((rot - 1) % 6) + 1] || {};
-      const p2 = half.positions[(rot % 6) + 1] || {};
-      const p3 = half.positions[((rot + 1) % 6) + 1] || {};
-
-      const pointsSpan = isSet3 ? "Points 8–15" : "Points 12–25";
-
       return `
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:6px 10px; margin-top:8px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
-            <span style="font-size:11px; font-weight:800; color:#1e293b;">🎯 Closing Servers (${pointsSpan}):</span>
-            <span style="font-size:10px; color:#16a34a; font-weight:700;">Max 5 Serves/Kid</span>
+        <div class="court-rotation-ctrl">
+          <button type="button" class="btn-rot" onclick="rotateCourtLeft('${setKey}')" title="Rotate Counter-Clockwise">
+            ↺ Rotate Left
+          </button>
+          <div class="rot-status">
+            <div class="rot-title">Rotation ${rot} of 6</div>
+            <div class="rot-server">🎯 Server in P1: <strong>#${p1.number || '?'} ${escapeHTML(p1.name || 'TBD')}</strong></div>
           </div>
-          <div style="display:flex; gap:6px; flex-wrap:wrap; font-size:12px;">
-            <div style="background:white; border:1px solid #dbeafe; border-radius:6px; padding:3px 8px; display:flex; align-items:center; gap:4px;">
-              <span style="font-size:9px; font-weight:800; color:#1e40af; background:#eff6ff; padding:1px 4px; border-radius:3px;">1st</span>
-              <strong>#${p1.number || '?'} ${escapeHTML(p1.name || 'TBD')}</strong>
-            </div>
-            <div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:3px 8px; display:flex; align-items:center; gap:4px;">
-              <span style="font-size:9px; font-weight:800; color:#475569; background:#f1f5f9; padding:1px 4px; border-radius:3px;">2nd</span>
-              <strong>#${p2.number || '?'} ${escapeHTML(p2.name || 'TBD')}</strong>
-            </div>
-            <div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:3px 8px; display:flex; align-items:center; gap:4px;">
-              <span style="font-size:9px; font-weight:800; color:#64748b; background:#f8fafc; padding:1px 4px; border-radius:3px;">3rd</span>
-              <strong>#${p3.number || '?'} ${escapeHTML(p3.name || 'TBD')}</strong>
-            </div>
-          </div>
+          <button type="button" class="btn-rot" onclick="rotateCourtRight('${setKey}')" title="Rotate Clockwise">
+            Rotate Right ↻
+          </button>
         </div>
       `;
     }
@@ -3711,18 +3816,21 @@
       pairs.sort((a, b) => a.pos - b.pos);
 
       const rowsHTML = pairs.length > 0 ? pairs.map(pair => `
-        <div class="sub-pair-row" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:6px; transition:all 0.15s ease;" onclick="openEditSubModal('${setKey}', ${pair.pos})">
-          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
-            <span style="font-size:10px; font-weight:800; color:#1e40af; background:#eff6ff; padding:2px 6px; border-radius:4px; border:1px solid #dbeafe;">P${pair.pos}</span>
-            <span style="font-size:13px; font-weight:700; color:#0f172a;">#${pair.inPlayer.number} ${escapeHTML(pair.inPlayer.name)}</span>
-            <span style="font-size:11px; color:#16a34a; font-weight:700;">IN</span>
-            <span style="font-size:11px; color:#94a3b8;">for</span>
-            <span style="font-size:13px; color:#64748b; font-weight:600;">${pair.outPlayer ? `#${pair.outPlayer.number} ${escapeHTML(pair.outPlayer.name)}` : 'Open'}</span>
-            <span style="font-size:11px; color:#dc2626; font-weight:700;">OUT</span>
+        <div class="sub-pair-row" onclick="openEditSubModal('${setKey}', ${pair.pos})">
+          <div class="sub-pill-container">
+            <div class="sub-pill pill-out">
+              <span class="sub-pill-name">#${pair.outPlayer ? pair.outPlayer.number : '?'} ${escapeHTML(pair.outPlayer ? pair.outPlayer.name : 'Open')}</span>
+              <span class="sub-pill-tag tag-out">OUT</span>
+            </div>
+            <span class="sub-arrow">➔</span>
+            <div class="sub-pill pill-in">
+              <span class="sub-pill-name">#${pair.inPlayer.number} ${escapeHTML(pair.inPlayer.name)}</span>
+              <span class="sub-pill-tag tag-in">IN</span>
+            </div>
           </div>
-          <div style="font-size:11px; font-weight:700; color:var(--primary); display:flex; align-items:center; gap:2px;">
-            <span>✎ Edit</span>
-          </div>
+          <button type="button" class="btn-sub-edit" onclick="event.stopPropagation(); openEditSubModal('${setKey}', ${pair.pos})">
+            ✎ Edit
+          </button>
         </div>
       `).join('') : '<div style="font-size:12px; color:var(--text-muted); padding:8px 0;">All 6 active players play full match (no bench subs).</div>';
 
@@ -3920,7 +4028,7 @@
       const s2 = p.set2;
       const s3 = p.set3;
 
-      const rot1 = activeSubServer.set1 || 5;
+      const rot1 = activeSubServer.set1 || 1;
       const poss1 = activeSubPossession.set1 || "serving";
 
       // SET 1
@@ -3929,7 +4037,7 @@
           <div class="card" style="padding:10px 14px; margin-bottom:12px; background:#f8fafc; border:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
             <div>
               <div style="font-size:13px; font-weight:800; color:#1e293b;">Set 1: Review Rotation &amp; Subs</div>
-              <div style="font-size:11px; color:#64748b;">Tap court cells to swap players. Tap '✎ Edit Sub' to adjust point 13 subs.</div>
+              <div style="font-size:11px; color:#64748b;">Tap court cells to swap players. Tap '✎ Edit' to adjust point 13 subs.</div>
             </div>
             <div style="display:flex; gap:6px;">
               <button type="button" class="btn-secondary" style="padding:5px 9px; font-size:11px; font-weight:700;" onclick="openManualRotationBuilder('set1')">✍️ Build Manually</button>
@@ -3952,7 +4060,7 @@
             <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
               <strong>Bench:</strong> ${(s1.bench_first_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
             </div>
-            ${buildScorekeeperSlipHTML(s1.first_half, 'Set 1 First Half')}
+            ${buildScorekeeperSlipHTML(s1.first_half, 'Set 1')}
           </div>
 
           ${buildSubPairsHTML(s1.first_half, s1.second_half, (p.meta && p.meta.anchors_set1) || [], 'set1')}
@@ -3968,13 +4076,11 @@
                 <span class="badge badge-green">Rcv: ${s1.second_half.avg_receive}</span>
               </div>
             </div>
+            ${buildCourtRotationBarHTML(s1.second_half, 'set1', rot1)}
             ${buildCourtHTML(s1.second_half, 'set1', 'second_half', rot1)}
             <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
               <strong>Bench:</strong> ${(s1.bench_second_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
             </div>
-            ${buildClosingServeQueueHTML(s1.second_half, rot1, poss1, false)}
-            ${buildSubTrackerHeaderHTML('set1', false)}
-            ${buildScorekeeperSlipHTML(s1.second_half, 'Set 1 Second Half')}
           </div>
 
           ${renderSetApprovalCard(1)}
@@ -4001,7 +4107,7 @@
           </div>
         `;
       } else {
-        const rot2 = activeSubServer.set2 || 5;
+        const rot2 = activeSubServer.set2 || 1;
         const poss2 = activeSubPossession.set2 || "serving";
 
         document.getElementById("set2Content").innerHTML = `
@@ -4031,7 +4137,7 @@
             <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
               <strong>Bench:</strong> ${(s2.bench_first_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
             </div>
-            ${buildScorekeeperSlipHTML(s2.first_half, 'Set 2 First Half')}
+            ${buildScorekeeperSlipHTML(s2.first_half, 'Set 2')}
           </div>
 
           ${buildSubPairsHTML(s2.first_half, s2.second_half, (p.meta && p.meta.anchors_set2) || [], 'set2')}
@@ -4047,13 +4153,11 @@
                 <span class="badge badge-green">Rcv: ${s2.second_half.avg_receive}</span>
               </div>
             </div>
+            ${buildCourtRotationBarHTML(s2.second_half, 'set2', rot2)}
             ${buildCourtHTML(s2.second_half, 'set2', 'second_half', rot2)}
             <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
               <strong>Bench:</strong> ${(s2.bench_second_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
             </div>
-            ${buildClosingServeQueueHTML(s2.second_half, rot2, poss2, false)}
-            ${buildSubTrackerHeaderHTML('set2', false)}
-            ${buildScorekeeperSlipHTML(s2.second_half, 'Set 2 Second Half')}
           </div>
 
           ${renderSetApprovalCard(2)}
@@ -4096,7 +4200,7 @@
 
         let set3BodyHTML = "";
         if (s3.is_split) {
-          const rot3 = activeSubServer.set3 || 3;
+          const rot3 = activeSubServer.set3 || 1;
           const poss3 = activeSubPossession.set3 || "serving";
 
           set3BodyHTML = `
@@ -4115,7 +4219,7 @@
               <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
                 <strong>Bench:</strong> ${(s3.bench_first_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
               </div>
-              ${buildScorekeeperSlipHTML(s3.first_half, 'Set 3 First Half')}
+              ${buildScorekeeperSlipHTML(s3.first_half, 'Set 3')}
             </div>
 
             ${buildSubPairsHTML(s3.first_half, s3.second_half, s3.anchors || [], 'set3')}
@@ -4131,13 +4235,11 @@
                   <span class="badge badge-green">Rcv: ${s3.second_half.avg_receive}</span>
                 </div>
               </div>
+              ${buildCourtRotationBarHTML(s3.second_half, 'set3', rot3)}
               ${buildCourtHTML(s3.second_half, 'set3', 'second_half', rot3)}
               <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
                 <strong>Bench:</strong> ${(s3.bench_second_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
               </div>
-              ${buildClosingServeQueueHTML(s3.second_half, rot3, poss3, true)}
-              ${buildSubTrackerHeaderHTML('set3', true)}
-              ${buildScorekeeperSlipHTML(s3.second_half, 'Set 3 Second Half')}
             </div>
           `;
         } else {

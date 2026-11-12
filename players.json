@@ -68,9 +68,9 @@
     {
       "number": 8,
       "name": "Gemma",
-      "serve_consistency": 4,
+      "serve_consistency": 3,
       "serve_power": 3,
-      "serve_receive": 1,
+      "serve_receive": 2,
       "rally_hits": 2,
       "total_score": 10,
       "tier": "rotation"
