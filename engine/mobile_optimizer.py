@@ -1,5 +1,5 @@
 """
-Mobile-Optimized Volleyball Match Engine for 4th Grade.
+Mobile-Optimized Volleyball Match Engine for St. Cecilia CYO.
 Supports:
 - Dynamic active roster (6 to 12 players)
 - Match strategies: 'drop_first', 'drop_second', 'balanced'
@@ -17,7 +17,7 @@ class DynamicOptimizer:
 
     def calc_serve_threat(self, p: Player, tactical_bias: str = "balanced") -> float:
         """
-        Calculates realistic offensive serving threat for 4th grade:
+        Calculates realistic offensive serving threat for CYO:
         - Power (1.8x - 2.2x): Scarcest offensive asset; produces unreturnable aces and free balls.
         - Consistency (1.1x - 1.4x): Getting it in play cleanly.
         - Total score (0.25x): Athletic composure under pressure.

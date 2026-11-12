@@ -1,5 +1,5 @@
 """
-Moneyball VB - 4th Grade Rotation Optimizer
+Moneyball VB - St. Cecilia CYO Rotation Optimizer
 Main CLI to run strategies and print game plans.
 """
 import os
@@ -17,7 +17,7 @@ def main():
     planner = MatchPlanner(opt)
 
     print("================================================================================")
-    print("                      MONEYBALL VB: 4TH GRADE OPTIMIZER                         ")
+    print("                      MONEYBALL VB: ST. CECILIA CYO OPTIMIZER                   ")
     print("================================================================================")
     print(f"Loaded {len(players)} players.")
     print("League Rules: 6 on court, midway swap at pt 13, 5-serve limit, equal playing time.\n")

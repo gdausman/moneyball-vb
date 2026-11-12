@@ -42,7 +42,7 @@ class MoneyballOptimizer:
         """
         Assigns players to Positions 1-6 based on:
         - Server Priority: P1 is first server, P2 is second server, P3 is third server.
-        - Defensive Geometry: P6 (Middle Back) & P5 (Left Back) face 75% of 4th-grade serves.
+        - Defensive Geometry: P6 (Middle Back) & P5 (Left Back) face 75% of CYO serves.
         """
         positions: Dict[int, Player] = {}
         available = list(six_players)

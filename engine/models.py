@@ -19,7 +19,7 @@ class Player:
     def expected_serve_value(self) -> float:
         """
         Expected service points metric for youth volleyball:
-        Power creates aces, deep disruption, and free balls (scarcest offensive asset in 4th grade).
+        Power creates aces, deep disruption, and free balls (scarcest offensive asset in CYO youth volleyball).
         Consistency gets the ball over the net without unforced errors.
         Total score reflects overall athleticism and composure under pressure.
         """
@@ -29,7 +29,7 @@ class Player:
     def defense_value(self) -> float:
         """
         Serve receive defense:
-        First contact (serve_receive) is the rarest skill in 4th grade; rally_hits saves scrambles.
+        First contact (serve_receive) is the rarest skill in CYO volleyball; rally_hits saves scrambles.
         """
         return (self.serve_receive * 2.5) + (self.rally_hits * 1.5) + (self.total_score * 0.2)
 

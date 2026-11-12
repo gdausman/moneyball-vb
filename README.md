@@ -1,13 +1,13 @@
 # Moneyball VB 🏐
 
-**Youth Volleyball Rotation Optimizer & Match Planner**  
-Designed for 4th Grade CYO / Youth Volleyball (St. Cecilia), applying data-driven roster optimization, rotation tracking, and league rule enforcement.
+**St. Cecilia CYO Volleyball Rotation Optimizer & Match Planner**  
+Designed for St. Cecilia CYO Volleyball, applying data-driven roster optimization, rotation tracking, and league rule enforcement.
 
 ---
 
 ## Overview
 
-In 4th-grade youth volleyball, service efficiency and receive stability determine match outcomes. **Moneyball VB** models player ratings (consistency, power, receive, rally hits) and solves for optimal lineups while strictly enforcing league rules:
+In CYO youth volleyball, service efficiency and receive stability determine match outcomes. **Moneyball VB** models player ratings (consistency, power, receive, rally hits) and solves for optimal lineups while strictly enforcing league rules:
 - **6 players on court** at all times.
 - **Midway rotation swap** at point 13.
 - **5-serve maximum** per player per rotation before a mandatory sideout.

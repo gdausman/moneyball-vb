@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>St. Cecilia Volleyball - 4th Grade Optimizer</title>
+  <title>St. Cecilia CYO Volleyball - CYO Rotation &amp; Lineup</title>
   <link rel="icon" type="image/png" href="./st_cecilia_logo.png">
   <link rel="apple-touch-icon" href="./st_cecilia_logo.png">
   <style>
@@ -1193,8 +1193,8 @@
       <div class="brand" onclick="switchView('viewHome')">
         <img src="./st_cecilia_logo.png" alt="St. Cecilia Logo" class="brand-logo">
         <div>
-          <h1>St. Cecilia Volleyball</h1>
-          <p>4th Grade Rotation & Lineup Optimizer</p>
+          <h1>St. Cecilia CYO</h1>
+          <p>CYO Rotation &amp; Lineup</p>
         </div>
       </div>
       <span id="activeCountBadge" class="badge badge-green">11 Active</span>
@@ -2212,7 +2212,7 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            team_name: "St. Cecilia 4th Grade",
+            team_name: "St. Cecilia CYO",
             rules: { players_on_court: 6, serve_limit_per_player: 5 },
             players: playersData
           })
@@ -2232,7 +2232,7 @@
     function exportDataBackup() {
       const backupObj = {
         app: "Moneyball VB",
-        team_name: "St. Cecilia 4th Grade",
+        team_name: "St. Cecilia CYO",
         exported_at: new Date().toISOString(),
         players: playersData,
         games: JSON.parse(localStorage.getItem("moneyball_vb_games") || "[]")
@@ -2278,14 +2278,14 @@
     }
 
     function resetToDefaults() {
-      if (!confirm("Reset roster to original St. Cecilia 4th grade default players and ratings? Any custom edits on this device will be replaced.")) return;
+      if (!confirm("Reset roster to original St. Cecilia CYO default players and ratings? Any custom edits on this device will be replaced.")) return;
       playersData = JSON.parse(JSON.stringify(DEFAULT_PLAYERS));
       localStorage.setItem("moneyball_vb_players", JSON.stringify(playersData));
       activePlayerNumbers = playersData.map((p, idx) => p.number + "_" + idx);
       renderRosterChecklist();
       renderRatingsList();
       updateActiveCountBadge();
-      alert("Reset to default St. Cecilia roster!");
+      alert("Reset to default St. Cecilia CYO roster!");
     }
 
     // -------------------------------------------------------------
