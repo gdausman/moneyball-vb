@@ -32,6 +32,11 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
 
+    html, body {
+      overflow-x: hidden;
+      max-width: 100vw;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text);
@@ -153,6 +158,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     /* Home Action Hub */
@@ -269,9 +276,15 @@
     /* Attendance Grid */
     .roster-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
       gap: 8px;
       margin-top: 8px;
+      width: 100%;
+    }
+    @media (min-width: 540px) {
+      .roster-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
     .roster-item {
       display: flex;
@@ -283,6 +296,9 @@
       cursor: pointer;
       gap: 10px;
       transition: all 0.15s;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
     }
     .roster-item.active {
       border-color: var(--accent-green);
@@ -292,9 +308,11 @@
       width: 18px;
       height: 18px;
       accent-color: var(--accent-green);
+      flex-shrink: 0;
     }
     .roster-item-info {
       flex: 1;
+      min-width: 0;
       overflow: hidden;
     }
     .roster-name {
@@ -307,6 +325,9 @@
     .roster-score {
       font-size: 11px;
       color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Action Buttons */
@@ -378,91 +399,94 @@
     .badge-purple { background: #f3e8ff; color: #6b21a8; }
     .badge-red { background: #fee2e2; color: #991b1b; }
 
-    /* The Volleyball Court Diagram */
+    /* Clean & Modern Volleyball Court Diagram */
     .vb-court {
-      background: #fef08a;
-      border: 3px solid #b45309;
-      border-radius: 8px;
+      background: #f8fafc;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
       overflow: hidden;
       position: relative;
       margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
     }
     .court-net-line {
-      background: #0284c7;
-      color: white;
+      background: #1e293b;
+      color: #cbd5e1;
       text-align: center;
-      font-size: 11px;
-      font-weight: 900;
+      font-size: 10px;
+      font-weight: 800;
       letter-spacing: 2px;
-      padding: 4px 0;
-      border-bottom: 2px solid #0369a1;
+      padding: 5px 0;
+      text-transform: uppercase;
+      border-bottom: 1.5px solid #0f172a;
     }
     .court-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(2, 1fr);
-      gap: 3px;
-      background: #b45309;
-      padding: 3px;
+      gap: 6px;
+      background: #f1f5f9;
+      padding: 6px;
     }
     .court-cell {
-      background: #fef9c3;
-      padding: 8px 6px;
+      background: #ffffff;
+      padding: 10px 6px 8px;
       text-align: center;
-      min-height: 74px;
+      min-height: 70px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       position: relative;
-      border-radius: 4px;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
     }
-    .court-cell:active {
-      background: #fef08a;
+    .court-cell:hover, .court-cell:active {
+      background: #f0f7ff;
+      border-color: #3b82f6;
+      transform: translateY(-1px);
     }
     .cell-pos-tag {
       position: absolute;
-      top: 3px;
-      left: 4px;
+      top: 4px;
+      left: 5px;
       font-size: 9px;
       font-weight: 800;
-      color: #78350f;
-      opacity: 0.8;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 1px 5px;
+      border-radius: 3px;
     }
     .cell-role-tag {
       position: absolute;
-      top: 3px;
-      right: 4px;
-      font-size: 8px;
-      font-weight: 800;
-      padding: 1px 4px;
+      top: 4px;
+      right: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 1px 5px;
       border-radius: 4px;
     }
-    .role-srv1 { background: #ef4444; color: white; }
-    .role-srv2 { background: #f97316; color: white; }
-    .role-srv3 { background: #eab308; color: black; }
-    .role-pass { background: #0284c7; color: white; }
-    .role-hide { background: #cbd5e1; color: #334155; }
-    .role-override { background: #7c3aed; color: white; }
+    .role-srv1 { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .role-srv2 { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+    .role-srv3 { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
+    .role-active-srv { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .role-override { background: #f3e8ff; color: #6b21a8; border: 1px solid #e9d5ff; }
 
     .cell-player-name {
-      font-size: 13px;
+      font-size: 13.5px;
       font-weight: 800;
       color: #0f172a;
-      margin-top: 8px;
+      margin-top: 6px;
+      line-height: 1.2;
     }
     .cell-player-stat {
       font-size: 10px;
       font-weight: 600;
       color: #64748b;
-    }
-    .cell-edit-hint {
-      font-size: 9px;
-      color: var(--primary);
-      margin-top: 2px;
-      font-weight: 700;
+      margin-top: 3px;
     }
 
     /* Scorekeeper / Ref Lineup Slip */
@@ -781,6 +805,8 @@
       padding: 1px 5px;
       border-radius: 4px;
       margin-left: 6px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .lineup-status-out {
       font-size: 10px;
@@ -790,6 +816,8 @@
       padding: 1px 5px;
       border-radius: 4px;
       margin-left: 6px;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .player-edit-title {
       font-size: 16px;
@@ -942,6 +970,98 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+
+    /* Unified Match Progress Stepper & Set Tabs */
+    .match-stepper-container {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 6px 8px;
+      margin-bottom: 14px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .match-stepper-track {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .stepper-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 4px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #f8fafc;
+      cursor: pointer;
+      min-width: 0;
+      transition: all 0.15s ease;
+    }
+    .stepper-step:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    .stepper-step.active {
+      border-color: var(--primary);
+      background: #eff6ff;
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+    .stepper-step.approved {
+      border-color: #86efac;
+      background: #f0fdf4;
+    }
+    .stepper-step.approved.active {
+      border-color: #16a34a;
+      box-shadow: 0 0 0 1px #16a34a;
+    }
+    .stepper-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .stepper-status {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+      margin-top: 1px;
+    }
+    .stepper-step.approved .stepper-status {
+      color: #166534;
+    }
+    .stepper-step.active .stepper-status {
+      color: var(--primary);
+    }
+    .stepper-arrow {
+      color: #cbd5e1;
+      font-size: 11px;
+      font-weight: 700;
+      user-select: none;
+    }
+    }
+    .stepper-arrow {
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .manual-slot-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 8px;
+    }
+    .manual-slot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
   </style>
 </head>
 <body>
@@ -1063,9 +1183,14 @@
         <div class="roster-grid" id="rosterChecklist"></div>
       </div>
 
-      <button type="button" class="btn-primary" onclick="generateInitialLineups()">
-        <span>⚡ Generate Sets 1 & 2 Rotations ➔</span>
-      </button>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <button type="button" class="btn-primary" onclick="startWorkflowWithOptimizer()">
+          <span>⚡ Auto-Generate Set 1 ➔</span>
+        </button>
+        <button type="button" class="btn-secondary" style="font-weight:700; border-color:var(--primary); color:var(--primary); padding:12px; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="startWorkflowManually()">
+          <span>✍️ Build Set 1 Manually ➔</span>
+        </button>
+      </div>
     </div>
 
 
@@ -1075,7 +1200,7 @@
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
         <div>
           <h2 id="lineupGameTitle" style="font-size:17px; font-weight:800;">vs St. Anne's</h2>
-          <p id="lineupGameSub" style="font-size:11px; color:var(--text-muted);">Sets 1 & 2 Active • Tap any player to Override</p>
+          <p id="lineupGameSub" style="font-size:11px; color:var(--text-muted);">Step 1: Set 1 Lineup &amp; Subs • Tap any player to Override</p>
         </div>
         <div style="display:flex; gap:6px;">
           <button type="button" class="btn-secondary" style="font-size:11px; padding:6px 10px;" onclick="openAdjustLineupModal()" title="Add or remove players from this match">
@@ -1087,12 +1212,29 @@
         </div>
       </div>
 
-      <!-- Set Switcher -->
-      <div class="segment-group" style="margin-bottom: 16px;">
-        <button type="button" class="segment-btn active" onclick="switchSetTab('set1')">Set 1</button>
-        <button type="button" class="segment-btn" onclick="switchSetTab('set2')">Set 2</button>
-        <button type="button" class="segment-btn" onclick="switchSetTab('set3')">Set 3 (Final)</button>
-        <button type="button" class="segment-btn" onclick="switchSetTab('audit')">Audit</button>
+      <!-- Unified Match Stepper & Set Tabs -->
+      <div class="match-stepper-container">
+        <div class="match-stepper-track">
+          <button type="button" class="stepper-step active" id="stepperStep1" onclick="switchSetTab('set1')">
+            <span class="stepper-label">Set 1</span>
+            <span class="stepper-status" id="stepperStatus1">Review</span>
+          </button>
+          <div class="stepper-arrow">➔</div>
+          <button type="button" class="stepper-step" id="stepperStep2" onclick="switchSetTab('set2')">
+            <span class="stepper-label">Set 2</span>
+            <span class="stepper-status" id="stepperStatus2">Pending</span>
+          </button>
+          <div class="stepper-arrow">➔</div>
+          <button type="button" class="stepper-step" id="stepperStep3" onclick="switchSetTab('set3')">
+            <span class="stepper-label">Set 3</span>
+            <span class="stepper-status" id="stepperStatus3">Decider</span>
+          </button>
+          <div class="stepper-arrow" style="opacity:0.3;">|</div>
+          <button type="button" class="stepper-step" id="tabBtnAudit" onclick="switchSetTab('audit')">
+            <span class="stepper-label">Audit</span>
+            <span class="stepper-status">Equal Play</span>
+          </button>
+        </div>
       </div>
 
       <div id="set1Content" class="set-view-tab"></div>
@@ -1284,6 +1426,83 @@
     </div>
   </div>
 
+  <!-- Modal for Manual Rotation Builder -->
+  <div id="manualRotationModal" class="modal-overlay">
+    <div class="bottom-sheet" style="max-height:90vh;">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="manualRotationModalTitle">✍️ Manual Rotation Builder</div>
+          <div style="font-size:12px; color:var(--text-muted);" id="manualRotationModalSubtitle">Choose players for Positions 1–6 and set subs</div>
+        </div>
+        <button type="button" class="close-btn" onclick="closeManualRotationModal()">✕</button>
+      </div>
+
+      <div style="padding:8px 0;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-size:13px; font-weight:800; color:#1e293b;">1. Starting 6 (First Half: 0–13 pts)</span>
+          <button type="button" class="btn-secondary" style="padding:3px 8px; font-size:11px;" onclick="autoFillManualRemaining()">⚡ Auto-Fill Empty</button>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:6px;" id="manualSlotsContainer"></div>
+
+        <div style="background:#f1f5f9; border-radius:8px; padding:8px 10px; margin:10px 0; font-size:11px; color:#475569;" id="manualBenchPreview">
+          <strong>Bench (Waiting):</strong> <span id="manualBenchText">None</span>
+        </div>
+
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px; margin-top:10px;">
+          <div style="font-size:12px; font-weight:800; color:#166534; margin-bottom:4px;">2. Midway Subs (Point 12–13)</div>
+          <p style="font-size:11px; color:#15803d; margin:0;">
+            Bench players will automatically rotate onto the court at point 13 so everyone gets playing time. You can fine-tune any sub after saving.
+          </p>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:14px;">
+          <button type="button" class="btn-secondary" style="flex:1;" onclick="closeManualRotationModal()">Cancel</button>
+          <button type="button" class="btn-primary" style="flex:2;" onclick="applyManualRotation()">💾 Apply Manual Rotation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Editing Midway Sub Pairs -->
+  <div id="editSubModal" class="modal-overlay">
+    <div class="bottom-sheet">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="editSubModalTitle">⇄ Edit Midway Substitution</div>
+          <div style="font-size:12px; color:var(--text-muted);" id="editSubModalSubtitle">Customize who enters and leaves at Point 13</div>
+        </div>
+        <button type="button" class="close-btn" onclick="closeEditSubModal()">✕</button>
+      </div>
+
+      <div style="padding:12px 0;">
+        <div style="font-size:11px; color:#15803d; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:8px 10px; margin-bottom:12px;">
+          ✓ <strong>Bench Only:</strong> Only players on the bench are eligible to enter as midway substitutes.
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Position on Court</label>
+          <div id="editSubPosLabel" style="font-weight:700; font-size:14px; color:#1e4f95; margin-bottom:6px;">Pos 4 (LF)</div>
+        </div>
+
+        <div class="form-group" style="margin-top:10px;">
+          <label class="form-label">Incoming Player (Entering from Bench)</label>
+          <select id="editSubInSelect" class="form-input" style="font-weight:600;"></select>
+        </div>
+
+        <div class="form-group" style="margin-top:10px;">
+          <label class="form-label">Outgoing Player (Leaving Court)</label>
+          <select id="editSubOutSelect" class="form-input" style="font-weight:600;"></select>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:18px;">
+          <button type="button" class="btn-secondary" style="flex:1;" onclick="closeEditSubModal()">Cancel</button>
+          <button type="button" class="btn-primary" style="flex:2;" onclick="saveEditedSubPair()">💾 Save Substitution</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Bottom Navigation Bar -->
   <nav class="nav-tabs">
     <button class="tab-btn active" onclick="switchView('viewHome', event)">
@@ -1399,13 +1618,22 @@
 
     function switchSetTab(tabKey) {
       document.querySelectorAll(".set-view-tab").forEach(t => t.style.display = "none");
-      document.getElementById(tabKey + "Content").style.display = "block";
+      const target = document.getElementById(tabKey + "Content");
+      if (target) target.style.display = "block";
 
-      const btns = document.querySelectorAll("#viewLineups > .segment-group .segment-btn");
-      const keyMap = { 'set1': 0, 'set2': 1, 'set3': 2, 'audit': 3 };
-      btns.forEach((b, idx) => {
-        if (idx === keyMap[tabKey]) b.classList.add("active");
-        else b.classList.remove("active");
+      const navMap = {
+        'set1': 'stepperStep1',
+        'set2': 'stepperStep2',
+        'set3': 'stepperStep3',
+        'audit': 'tabBtnAudit'
+      };
+
+      ['stepperStep1', 'stepperStep2', 'stepperStep3', 'tabBtnAudit'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+          if (id === navMap[tabKey]) el.classList.add("active");
+          else el.classList.remove("active");
+        }
       });
     }
 
@@ -1506,8 +1734,11 @@
         item.innerHTML = `
           <input type="checkbox" ${isChecked ? "checked" : ""}>
           <div class="roster-item-info">
-            <div class="roster-name"><strong>#${p.number}</strong> ${escapeHTML(p.name)} ${isChecked ? '<span class="lineup-status-in">✓ In Lineup</span>' : '<span class="lineup-status-out">Absent</span>'}</div>
-            <div class="roster-score">Tot: ${p.total_score} | Srv: ${p.serve_consistency}/${p.serve_power} | Pass: ${p.serve_receive} | Rally: ${p.rally_hits}</div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+              <span class="roster-name" style="flex:1;"><strong>#${p.number}</strong> ${escapeHTML(p.name)}</span>
+              ${isChecked ? '<span class="lineup-status-in">✓ In Lineup</span>' : '<span class="lineup-status-out">Absent</span>'}
+            </div>
+            <div class="roster-score">Tot: <strong>${p.total_score}</strong> | Srv: ${p.serve_consistency}/${p.serve_power} | Pass: ${p.serve_receive} | Rally: ${p.rally_hits}</div>
           </div>
         `;
         container.appendChild(item);
@@ -2245,8 +2476,18 @@
       };
     }
 
-    // Generate Sets 1 & 2
-    function generateInitialLineups() {
+    // -------------------------------------------------------------
+    // COACH APPROVAL WORKFLOW & ROTATION CONTROLS
+    // -------------------------------------------------------------
+    let setApproved = {
+      set1: false,
+      set2: false,
+      set3: false
+    };
+    let currentEditingSub = null;
+    let manualTargetSetKey = "set1";
+
+    function startWorkflowWithOptimizer() {
       if (activePlayerNumbers.length < 6) {
         alert("Please select at least 6 active players to field a team.");
         return;
@@ -2269,15 +2510,64 @@
         active_numbers: [...activePlayerNumbers]
       };
 
+      setApproved = { set1: false, set2: false, set3: false };
       isSet3Generated = false;
+
+      // Generate Set 1 via optimizer; Set 2 starts pending review of Set 1
       currentPlan = clientSideOptimize(activeList, selectedTacticalBias, selectedMatchStrategy, "win", false);
+      currentPlan.set2 = null;
 
       document.getElementById("lineupGameTitle").textContent = `St. Cecilia vs ${opp}`;
-      document.getElementById("lineupGameSub").textContent = `${dt} • Lineup Card Active • Tap any player to Override`;
+      document.getElementById("lineupGameSub").textContent = `${dt} • Step 1: Set 1 Lineup & Subs • Review and Approve`;
 
+      recalculatePlanAudit();
       renderPlanTabs();
       switchSetTab('set1');
       switchView('viewLineups');
+    }
+
+    function startWorkflowManually() {
+      if (activePlayerNumbers.length < 6) {
+        alert("Please select at least 6 active players to field a team.");
+        return;
+      }
+
+      const opp = document.getElementById("opponentInput").value || "Opponent";
+      const dt = document.getElementById("dateInput").value || new Date().toISOString().split("T")[0];
+
+      currentGameMeta = {
+        id: "game_" + Date.now(),
+        opponent: opp,
+        date: dt,
+        tactical_bias: selectedTacticalBias,
+        match_strategy: selectedMatchStrategy,
+        active_numbers: [...activePlayerNumbers]
+      };
+
+      setApproved = { set1: false, set2: false, set3: false };
+      isSet3Generated = false;
+
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      currentPlan = clientSideOptimize(activeList, selectedTacticalBias, selectedMatchStrategy, "win", false);
+      currentPlan.set2 = null;
+
+      document.getElementById("lineupGameTitle").textContent = `St. Cecilia vs ${opp}`;
+      document.getElementById("lineupGameSub").textContent = `${dt} • Step 1: Set 1 Lineup & Subs (Manual Builder)`;
+
+      recalculatePlanAudit();
+      renderPlanTabs();
+      switchSetTab('set1');
+      switchView('viewLineups');
+      openManualRotationBuilder('set1');
+    }
+
+    // Backwards-compatible alias
+    function generateInitialLineups() {
+      startWorkflowWithOptimizer();
     }
 
     // Generate Set 3 Dynamically
@@ -2290,16 +2580,840 @@
         return playersData[parseInt(idx)];
       }).filter(Boolean);
 
-      // Keep existing Set 1 & Set 2 with any coach overrides!
       const freshPlan = clientSideOptimize(activeList, selectedTacticalBias, selectedMatchStrategy, currentSet3Mode, true);
       currentPlan.set3 = freshPlan.set3;
-      currentPlan.audit = freshPlan.audit;
+      setApproved.set3 = false;
+      recalculatePlanAudit();
 
       renderPlanTabs();
       switchSetTab('set3');
     }
 
-    // Build Court HTML with Clickable Coach Override
+    function approveSet(setNum) {
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      if (setNum === 1) {
+        setApproved.set1 = true;
+        currentPlan.set2 = generateSet2FromSet1(activeList, currentPlan.set1, selectedTacticalBias, selectedMatchStrategy);
+        recalculatePlanAudit();
+        renderPlanTabs();
+        switchSetTab('set2');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (setNum === 2) {
+        setApproved.set2 = true;
+        recalculatePlanAudit();
+        renderPlanTabs();
+        switchSetTab('set3');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (setNum === 3) {
+        setApproved.set3 = true;
+        recalculatePlanAudit();
+        renderPlanTabs();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function unapproveSet(setNum) {
+      if (setNum === 1) setApproved.set1 = false;
+      else if (setNum === 2) setApproved.set2 = false;
+      else if (setNum === 3) setApproved.set3 = false;
+      renderPlanTabs();
+    }
+
+    function generateSet2() {
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      currentPlan.set2 = generateSet2FromSet1(activeList, currentPlan.set1, selectedTacticalBias, selectedMatchStrategy);
+      recalculatePlanAudit();
+      renderPlanTabs();
+      switchSetTab('set2');
+    }
+
+    function resetSetWithOptimizer(setKey) {
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      if (setKey === 'set1') {
+        const fresh = clientSideOptimize(activeList, selectedTacticalBias, selectedMatchStrategy, "win", false);
+        currentPlan.set1 = fresh.set1;
+        setApproved.set1 = false;
+      } else if (setKey === 'set2') {
+        currentPlan.set2 = generateSet2FromSet1(activeList, currentPlan.set1, selectedTacticalBias, selectedMatchStrategy);
+        setApproved.set2 = false;
+      }
+      recalculatePlanAudit();
+      renderPlanTabs();
+    }
+
+    function generateSet2FromSet1(activeList, set1, tacticalBias = "balanced", matchStrategy = "balanced") {
+      const active = [...activeList].sort((a, b) => b.total_score - a.total_score);
+      const n = active.length;
+      const numAnchors = Math.max(0, 12 - n);
+
+      function calcServeThreat(p) {
+        let pWeight = 1.8;
+        let cWeight = 1.3;
+        if (tacticalBias === "offense") {
+          pWeight = 2.4;
+          cWeight = 0.9;
+        } else if (tacticalBias === "defense") {
+          pWeight = 1.3;
+          cWeight = 1.7;
+        }
+        return (p.serve_power * pWeight) + (p.serve_consistency * cWeight) + (p.total_score * 0.25);
+      }
+
+      function calcDefenseValue(p) {
+        return (p.serve_receive * 2.5) + (p.rally_hits * 1.5) + (p.total_score * 0.2);
+      }
+
+      function arrangePositions(six, priorityServers = []) {
+        const positions = {};
+        let available = [...six];
+
+        let cands = [];
+        if (priorityServers && priorityServers.length > 0) {
+          cands = available.filter(p => priorityServers.includes(p));
+          cands.sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        } else {
+          cands = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        }
+
+        const byServe = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+
+        let p1 = (cands.length > 0) ? cands[0] : byServe[0];
+        positions[1] = p1;
+        available = available.filter(p => p !== p1);
+        cands = cands.filter(p => p !== p1);
+
+        let p2 = (cands.length > 0) ? cands[0] : [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a))[0];
+        positions[2] = p2;
+        available = available.filter(p => p !== p2);
+        cands = cands.filter(p => p !== p2);
+
+        let p3 = (cands.length > 0) ? cands[0] : [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a))[0];
+        positions[3] = p3;
+        available = available.filter(p => p !== p3);
+        cands = cands.filter(p => p !== p3);
+
+        const byDefWeakest = [...available].sort((a, b) => calcDefenseValue(a) - calcDefenseValue(b));
+        positions[4] = byDefWeakest[0];
+        available = available.filter(p => p !== positions[4]);
+
+        const byDefStrongest = [...available].sort((a, b) => calcDefenseValue(b) - calcDefenseValue(a));
+        positions[6] = byDefStrongest[0];
+        positions[5] = byDefStrongest[1];
+
+        const list = [positions[1], positions[2], positions[3], positions[4], positions[5], positions[6]];
+        const tot = list.reduce((sum, p) => sum + p.total_score, 0);
+        const avgRcv = (list.reduce((sum, p) => sum + p.serve_receive, 0) / 6).toFixed(1);
+
+        return { positions, total_score: tot, avg_receive: avgRcv };
+      }
+
+      function arrangeSecondHalfPositions(six) {
+        const positions = {};
+        let available = [...six];
+
+        const byServe = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        positions[5] = byServe[0];
+        available = available.filter(p => p !== positions[5]);
+
+        const byServe2 = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        positions[6] = byServe2[0];
+        available = available.filter(p => p !== positions[6]);
+
+        const byServe3 = [...available].sort((a, b) => calcServeThreat(b) - calcServeThreat(a));
+        positions[4] = byServe3[0];
+        available = available.filter(p => p !== positions[4]);
+
+        const byDef = [...available].sort((a, b) => calcDefenseValue(b) - calcDefenseValue(a));
+        positions[3] = byDef[0];
+        available = available.filter(p => p !== positions[3]);
+
+        positions[1] = available[0];
+        positions[2] = available[1];
+
+        const list = [positions[1], positions[2], positions[3], positions[4], positions[5], positions[6]];
+        const tot = list.reduce((sum, p) => sum + p.total_score, 0);
+        const avgRcv = (list.reduce((sum, p) => sum + p.serve_receive, 0) / 6).toFixed(1);
+
+        return { positions, total_score: tot, avg_receive: avgRcv };
+      }
+
+      const s1Halves = {};
+      const s1Served = new Set();
+      active.forEach(p => { s1Halves[p.name] = 0; });
+
+      if (set1 && set1.first_half) {
+        Object.values(set1.first_half.positions).forEach((p, idx) => {
+          s1Halves[p.name] = (s1Halves[p.name] || 0) + 1;
+          if (idx < 3) s1Served.add(p.name);
+        });
+      }
+      if (set1 && set1.second_half) {
+        Object.values(set1.second_half.positions).forEach((p, idx) => {
+          s1Halves[p.name] = (s1Halves[p.name] || 0) + 1;
+          if (idx >= 3) s1Served.add(p.name);
+        });
+      }
+
+      const anchorCandidates = [...active].sort((a, b) => {
+        const diff = (s1Halves[a.name] || 0) - (s1Halves[b.name] || 0);
+        if (diff !== 0) return diff;
+        return b.total_score - a.total_score;
+      });
+
+      const s2Anchors = anchorCandidates.slice(0, numAnchors);
+      const remaining = active.filter(p => !s2Anchors.includes(p));
+
+      const nonAnchors = [...remaining].sort((a, b) => {
+        const diff = (s1Halves[a.name] || 0) - (s1Halves[b.name] || 0);
+        if (diff !== 0) return diff;
+        return b.total_score - a.total_score;
+      });
+
+      const halfSingles = 6 - numAnchors;
+      const h1Singles = nonAnchors.slice(0, halfSingles);
+      const h2Singles = nonAnchors.slice(halfSingles, halfSingles * 2);
+
+      const s2Pool = {
+        h1: [...s2Anchors, ...h1Singles],
+        h2: [...s2Anchors, ...h2Singles]
+      };
+
+      const unservedInS1 = s2Pool.h1.filter(p => !s1Served.has(p.name));
+      const s2H1 = arrangePositions(s2Pool.h1, unservedInS1);
+      const s2H2 = arrangeSecondHalfPositions(s2Pool.h2);
+
+      const benchH1 = active.filter(p => !Object.values(s2H1.positions).some(x => x.name === p.name));
+      const benchH2 = active.filter(p => !Object.values(s2H2.positions).some(x => x.name === p.name));
+
+      return {
+        first_half: s2H1,
+        second_half: s2H2,
+        bench_first_half: benchH1,
+        bench_second_half: benchH2,
+        meta: {
+          anchors: s2Anchors.map(p => p.name)
+        }
+      };
+    }
+
+    function recalculatePlanAudit() {
+      if (!currentPlan) return;
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const s1 = currentPlan.set1;
+      const s2 = currentPlan.set2;
+      const s3 = currentPlan.set3;
+
+      const halvesCount = {};
+      const servedSet = new Set();
+      const s3Halves = {};
+      const s3Status = {};
+
+      activeList.forEach(p => {
+        halvesCount[p.name] = 0;
+        s3Halves[p.name] = 0;
+        s3Status[p.name] = "— (Pending)";
+      });
+
+      if (s1 && s1.first_half) {
+        Object.values(s1.first_half.positions).forEach((p, idx) => {
+          halvesCount[p.name] = (halvesCount[p.name] || 0) + 1;
+          if (idx < 3) servedSet.add(p.name);
+        });
+      }
+      if (s1 && s1.second_half) {
+        Object.values(s1.second_half.positions).forEach((p, idx) => {
+          halvesCount[p.name] = (halvesCount[p.name] || 0) + 1;
+          if (idx >= 3) servedSet.add(p.name);
+        });
+      }
+
+      if (s2 && s2.first_half) {
+        Object.values(s2.first_half.positions).forEach((p, idx) => {
+          halvesCount[p.name] = (halvesCount[p.name] || 0) + 1;
+          if (idx < 3) servedSet.add(p.name);
+        });
+      }
+      if (s2 && s2.second_half) {
+        Object.values(s2.second_half.positions).forEach((p, idx) => {
+          halvesCount[p.name] = (halvesCount[p.name] || 0) + 1;
+          if (idx >= 3) servedSet.add(p.name);
+        });
+      }
+
+      if (isSet3Generated && s3 && s3.generated) {
+        if (s3.is_split) {
+          if (s3.first_half) {
+            Object.values(s3.first_half.positions).forEach(p => {
+              s3Halves[p.name] = (s3Halves[p.name] || 0) + 1;
+            });
+          }
+          if (s3.second_half) {
+            Object.values(s3.second_half.positions).forEach(p => {
+              s3Halves[p.name] = (s3Halves[p.name] || 0) + 1;
+            });
+          }
+          activeList.forEach(p => {
+            const h = s3Halves[p.name] || 0;
+            if (h === 2) s3Status[p.name] = "Both Halves (0–15 pts)";
+            else if (h === 1) s3Status[p.name] = "1 Half (8 pts)";
+            else s3Status[p.name] = "Bench";
+          });
+        } else if (s3.lineup) {
+          const courtNames = new Set(Object.values(s3.lineup.positions).map(p => p.name));
+          activeList.forEach(p => {
+            if (courtNames.has(p.name)) {
+              s3Halves[p.name] = 2;
+              s3Status[p.name] = "Full Set (15 pts)";
+            } else {
+              s3Halves[p.name] = 0;
+              s3Status[p.name] = "Bench";
+            }
+          });
+        }
+      }
+
+      currentPlan.audit = activeList.map(p => {
+        const s1s2 = halvesCount[p.name] || 0;
+        const s3H = s3Halves[p.name] || 0;
+        return {
+          number: p.number,
+          name: p.name,
+          s1s2_halves: s1s2,
+          s1s2_full_game_met: s1s2 >= 2,
+          s1s2_served: servedSet.has(p.name),
+          set3_halves: s3H,
+          set3_status: s3Status[p.name] || "—",
+          total_halves: s1s2 + s3H
+        };
+      });
+    }
+
+    function updateStepperUI() {
+      const s1Btn = document.getElementById("stepperStep1");
+      const s2Btn = document.getElementById("stepperStep2");
+      const s3Btn = document.getElementById("stepperStep3");
+
+      const s1Stat = document.getElementById("stepperStatus1");
+      const s2Stat = document.getElementById("stepperStatus2");
+      const s3Stat = document.getElementById("stepperStatus3");
+
+      const overall = document.getElementById("workflowOverallBadge");
+
+      if (s1Btn && s1Stat) {
+        if (setApproved.set1) {
+          s1Btn.classList.add("approved");
+          s1Stat.textContent = "✓ Approved";
+        } else {
+          s1Btn.classList.remove("approved");
+          s1Stat.textContent = "Review";
+        }
+      }
+
+      if (s2Btn && s2Stat) {
+        if (setApproved.set2) {
+          s2Btn.classList.add("approved");
+          s2Stat.textContent = "✓ Approved";
+        } else if (currentPlan && currentPlan.set2) {
+          s2Btn.classList.remove("approved");
+          s2Stat.textContent = "Review";
+        } else {
+          s2Btn.classList.remove("approved");
+          s2Stat.textContent = "Pending";
+        }
+      }
+
+      if (s3Btn && s3Stat) {
+        if (setApproved.set3) {
+          s3Btn.classList.add("approved");
+          s3Stat.textContent = "✓ Approved";
+        } else if (isSet3Generated) {
+          s3Btn.classList.remove("approved");
+          s3Stat.textContent = "Review";
+        } else {
+          s3Btn.classList.remove("approved");
+          s3Stat.textContent = "Decider";
+        }
+      }
+    }
+
+    function renderSetApprovalCard(setNum) {
+      const setKey = 'set' + setNum;
+      const isApproved = setApproved[setKey];
+
+      if (setNum === 1) {
+        if (!isApproved) {
+          return `
+            <div class="card" style="background:#eff6ff; border:2px solid #3b82f6; padding:16px; margin-top:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                <div>
+                  <div style="font-size:14px; font-weight:800; color:#1e40af;">Step 1: Set 1 Ready for Approval?</div>
+                  <div style="font-size:11px; color:#3b82f6;">Confirm rotation &amp; point 13 subs to lock Set 1 and generate Set 2.</div>
+                </div>
+                <span class="badge" style="background:#fef3c7; color:#b45309; font-weight:700;">In Review</span>
+              </div>
+              <button type="button" class="btn-primary" style="background:#2563eb; width:100%; padding:14px; font-size:15px;" onclick="approveSet(1)">
+                <span>✅ Approve Set 1 &amp; Generate Set 2 ➔</span>
+              </button>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="card" style="background:#f0fdf4; border:1.5px solid #86efac; padding:14px; margin-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="font-size:22px;">✅</div>
+                <div>
+                  <div style="font-size:14px; font-weight:800; color:#166534;">Set 1 Approved</div>
+                  <div style="font-size:11px; color:#15803d;">Lineup and subs locked. Set 2 generated.</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="btn-secondary" style="font-size:11px; padding:8px 12px;" onclick="unapproveSet(1)">
+                  ✎ Unlock to Edit
+                </button>
+                <button type="button" class="btn-primary" style="font-size:12px; padding:8px 16px; width:auto; background:#16a34a;" onclick="switchSetTab('set2')">
+                  Next: Set 2 ➔
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      } else if (setNum === 2) {
+        if (!isApproved) {
+          return `
+            <div class="card" style="background:#eff6ff; border:2px solid #3b82f6; padding:16px; margin-top:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                <div>
+                  <div style="font-size:14px; font-weight:800; color:#1e40af;">Step 2: Set 2 Ready for Approval?</div>
+                  <div style="font-size:11px; color:#3b82f6;">All player minutes and serve turns verified. Approve to proceed to Set 3.</div>
+                </div>
+                <span class="badge" style="background:#fef3c7; color:#b45309; font-weight:700;">In Review</span>
+              </div>
+              <button type="button" class="btn-primary" style="background:#2563eb; width:100%; padding:14px; font-size:15px;" onclick="approveSet(2)">
+                <span>✅ Approve Set 2 &amp; Proceed to Set 3 ➔</span>
+              </button>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="card" style="background:#f0fdf4; border:1.5px solid #86efac; padding:14px; margin-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div style="display:flex; align-items:center; gap:10px;">
+                <div style="font-size:22px;">✅</div>
+                <div>
+                  <div style="font-size:14px; font-weight:800; color:#166534;">Set 2 Approved</div>
+                  <div style="font-size:11px; color:#15803d;">Equal playing time guarantee satisfied.</div>
+                </div>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" class="btn-secondary" style="font-size:11px; padding:8px 12px;" onclick="unapproveSet(2)">
+                  ✎ Unlock to Edit
+                </button>
+                <button type="button" class="btn-primary" style="font-size:12px; padding:8px 16px; width:auto; background:#16a34a;" onclick="switchSetTab('set3')">
+                  Next: Set 3 ➔
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      } else if (setNum === 3) {
+        if (!isApproved) {
+          return `
+            <div class="card" style="background:#eff6ff; border:2px solid #7c3aed; padding:16px; margin-top:16px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                <div>
+                  <div style="font-size:14px; font-weight:800; color:#6d28d9;">Step 3: Set 3 Ready for Approval?</div>
+                  <div style="font-size:11px; color:#7c3aed;">Deciding tiebreaker lineup and subs ready.</div>
+                </div>
+                <span class="badge" style="background:#fef3c7; color:#b45309; font-weight:700;">In Review</span>
+              </div>
+              <button type="button" class="btn-primary" style="background:#7c3aed; width:100%; padding:14px; font-size:15px;" onclick="approveSet(3)">
+                <span>🏆 Approve Set 3 &amp; Finalize Match Plan!</span>
+              </button>
+            </div>
+          `;
+        } else {
+          return `
+            <div class="card" style="background:#f0fdf4; border:2px solid #16a34a; padding:16px; margin-top:16px; text-align:center;">
+              <div style="font-size:32px; margin-bottom:6px;">🏆</div>
+              <div style="font-size:16px; font-weight:800; color:#166534; margin-bottom:4px;">
+                Match Plan 100% Approved &amp; Game Ready!
+              </div>
+              <p style="font-size:12px; color:#15803d; margin-bottom:14px;">
+                All 3 sets and substitution sheets are verified and compliant with CYO rules.
+              </p>
+              <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn-secondary" style="font-size:11px; padding:8px 12px;" onclick="unapproveSet(3)">
+                  ✎ Unlock Set 3
+                </button>
+                <button type="button" class="btn-secondary" style="font-size:11px; padding:8px 12px;" onclick="switchSetTab('audit')">
+                  📊 View Compliance Audit
+                </button>
+                <button type="button" class="btn-primary" style="font-size:12px; padding:8px 16px; width:auto; background:#16a34a;" onclick="saveCurrentGameToHistory()">
+                  💾 Save Match to History
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      }
+    }
+
+    // Manual Rotation Builder
+    function openManualRotationBuilder(setKey) {
+      manualTargetSetKey = setKey || "set1";
+      const setNum = manualTargetSetKey === "set1" ? 1 : (manualTargetSetKey === "set2" ? 2 : 3);
+      document.getElementById("manualRotationModalTitle").textContent = `✍️ Build Set ${setNum} Rotation Manually`;
+      document.getElementById("manualRotationModalSubtitle").textContent = `Pick starting 6 players, review bench, and customize subs.`;
+
+      renderManualSlots();
+      document.getElementById("manualRotationModal").classList.add("active");
+    }
+
+    function closeManualRotationModal() {
+      document.getElementById("manualRotationModal").classList.remove("active");
+    }
+
+    function renderManualSlots() {
+      const container = document.getElementById("manualSlotsContainer");
+      container.innerHTML = "";
+
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const setObj = currentPlan && currentPlan[manualTargetSetKey] ? currentPlan[manualTargetSetKey] : null;
+      const existingH1 = setObj && setObj.first_half ? setObj.first_half.positions : (setObj && setObj.lineup ? setObj.lineup.positions : {});
+
+      const posLabels = {
+        1: "Pos 1 (RB) • 1st Server (Ace Weapon)",
+        2: "Pos 2 (RF) • 2nd Server / Net Right",
+        3: "Pos 3 (MF) • 3rd Server / Net Center",
+        4: "Pos 4 (LF) • 4th Server / Net Left",
+        5: "Pos 5 (LB) • 5th Server / Defense",
+        6: "Pos 6 (MB) • 6th Server / Pass Anchor"
+      };
+
+      for (let pos = 1; pos <= 6; pos++) {
+        const currentP = existingH1[pos] || null;
+        const card = document.createElement("div");
+        card.className = "manual-slot-card";
+        card.innerHTML = `
+          <div class="manual-slot-header">
+            <span style="color:#1e4f95; font-weight:800;">${posLabels[pos]}</span>
+          </div>
+          <select class="form-input manual-pos-select" id="manualPosSelect_${pos}" onchange="onManualPosChange()" style="font-weight:600; font-size:13px;">
+            <option value="">-- Choose Player --</option>
+            ${activeList.map(p => `
+              <option value="${p.number}_${p.name}" ${currentP && currentP.name === p.name ? 'selected' : ''}>
+                #${p.number} ${p.name} (Tot: ${p.total_score} | Srv: ${p.serve_consistency}/${p.serve_power} | Pass: ${p.serve_receive})
+              </option>
+            `).join('')}
+          </select>
+        `;
+        container.appendChild(card);
+      }
+
+      onManualPosChange();
+    }
+
+    function onManualPosChange() {
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const selectedNames = new Set();
+      for (let pos = 1; pos <= 6; pos++) {
+        const sel = document.getElementById(`manualPosSelect_${pos}`);
+        if (sel && sel.value) {
+          const [num, name] = sel.value.split("_");
+          selectedNames.add(name);
+        }
+      }
+
+      const bench = activeList.filter(p => !selectedNames.has(p.name));
+      const benchText = bench.map(p => `#${p.number} ${p.name}`).join(', ') || 'None (All active on court)';
+      const el = document.getElementById("manualBenchText");
+      if (el) el.textContent = benchText;
+    }
+
+    function autoFillManualRemaining() {
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const selectedNames = new Set();
+      for (let pos = 1; pos <= 6; pos++) {
+        const sel = document.getElementById(`manualPosSelect_${pos}`);
+        if (sel && sel.value) {
+          const [num, name] = sel.value.split("_");
+          selectedNames.add(name);
+        }
+      }
+
+      const unassigned = activeList.filter(p => !selectedNames.has(p.name)).sort((a, b) => b.total_score - a.total_score);
+      let unIdx = 0;
+
+      for (let pos = 1; pos <= 6; pos++) {
+        const sel = document.getElementById(`manualPosSelect_${pos}`);
+        if (sel && !sel.value && unIdx < unassigned.length) {
+          const p = unassigned[unIdx++];
+          sel.value = `${p.number}_${p.name}`;
+        }
+      }
+
+      onManualPosChange();
+    }
+
+    function applyManualRotation() {
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const h1Positions = {};
+      const chosenNames = new Set();
+
+      for (let pos = 1; pos <= 6; pos++) {
+        const sel = document.getElementById(`manualPosSelect_${pos}`);
+        if (!sel || !sel.value) {
+          alert(`Please select a player for Position ${pos} (or tap Auto-Fill).`);
+          return;
+        }
+        const [num, name] = sel.value.split("_");
+        if (chosenNames.has(name)) {
+          alert(`Player #${num} ${name} is selected more than once on court.`);
+          return;
+        }
+        chosenNames.add(name);
+        const p = activeList.find(x => String(x.number) === num && x.name === name);
+        h1Positions[pos] = { ...p, _isOverride: true };
+      }
+
+      const h1List = Object.values(h1Positions);
+      const h1Total = h1List.reduce((s, p) => s + (p.total_score || 0), 0);
+      const h1Rcv = (h1List.reduce((s, p) => s + (p.serve_receive || 0), 0) / 6).toFixed(1);
+      const bench1 = activeList.filter(p => !chosenNames.has(p.name));
+
+      // Build Second Half (Point 13 rotation)
+      const h2Positions = {};
+      if (bench1.length === 0) {
+        for (let pos = 1; pos <= 6; pos++) {
+          h2Positions[pos] = { ...h1Positions[pos] };
+        }
+      } else {
+        const subTargetSlots = [4, 5, 6, 3, 2, 1];
+        const benchCopy = [...bench1];
+        let benchIdx = 0;
+
+        for (let i = 0; i < subTargetSlots.length; i++) {
+          const slot = subTargetSlots[i];
+          if (benchIdx < benchCopy.length) {
+            h2Positions[slot] = { ...benchCopy[benchIdx++], _isOverride: true };
+          }
+        }
+
+        for (let pos = 1; pos <= 6; pos++) {
+          if (!h2Positions[pos]) {
+            h2Positions[pos] = { ...h1Positions[pos] };
+          }
+        }
+      }
+
+      const h2List = Object.values(h2Positions);
+      const h2Total = h2List.reduce((s, p) => s + (p.total_score || 0), 0);
+      const h2Rcv = (h2List.reduce((s, p) => s + (p.serve_receive || 0), 0) / 6).toFixed(1);
+      const h2Names = new Set(h2List.map(p => p.name));
+      const bench2 = activeList.filter(p => !h2Names.has(p.name));
+
+      if (!currentPlan) currentPlan = {};
+
+      if (manualTargetSetKey === 'set3') {
+        currentPlan.set3 = {
+          generated: true,
+          mode: "manual",
+          title: "✍️ Coach Manual Rotation (15 Points)",
+          desc: "Custom coach-assigned rotation for Set 3.",
+          is_split: bench1.length > 0,
+          first_half: { positions: h1Positions, total_score: h1Total, avg_receive: h1Rcv },
+          second_half: { positions: h2Positions, total_score: h2Total, avg_receive: h2Rcv },
+          bench_first_half: bench1,
+          bench_second_half: bench2,
+          lineup: { positions: h1Positions, total_score: h1Total, avg_receive: h1Rcv },
+          bench: bench1
+        };
+        isSet3Generated = true;
+      } else {
+        currentPlan[manualTargetSetKey] = {
+          first_half: { positions: h1Positions, total_score: h1Total, avg_receive: h1Rcv },
+          second_half: { positions: h2Positions, total_score: h2Total, avg_receive: h2Rcv },
+          bench_first_half: bench1,
+          bench_second_half: bench2,
+          meta: {
+            anchors: h1List.filter(p => h2Names.has(p.name)).map(p => p.name)
+          }
+        };
+      }
+
+      recalculatePlanAudit();
+      closeManualRotationModal();
+      renderPlanTabs();
+      switchSetTab(manualTargetSetKey);
+      switchView('viewLineups');
+    }
+
+    // Direct Sub Editing Modal (Bench Players Only)
+    function openEditSubModal(setKey, pos) {
+      if (!currentPlan || !currentPlan[setKey]) return;
+      const setObj = currentPlan[setKey];
+      const h1 = setObj.first_half || (setObj.lineup ? setObj.lineup : null);
+      const h2 = setObj.second_half || (setObj.lineup ? setObj.lineup : null);
+      if (!h1 || !h2) return;
+
+      const currentOutPlayer = h1.positions[pos] || {};
+      const currentInPlayer = h2.positions[pos] || {};
+
+      currentEditingSub = {
+        setKey: setKey,
+        pos: pos,
+        currentIn: currentInPlayer,
+        currentOut: currentOutPlayer
+      };
+
+      document.getElementById("editSubModalTitle").textContent = `Edit Sub: ${getSubPositionName(pos)}`;
+      document.getElementById("editSubModalSubtitle").textContent = `Set ${setKey === 'set1' ? 1 : (setKey === 'set2' ? 2 : 3)} Point 12–13 Substitution`;
+      document.getElementById("editSubPosLabel").textContent = `${getSubPositionName(pos)}: Currently #${currentInPlayer.number || '?'} ${currentInPlayer.name || 'None'} IN for #${currentOutPlayer.number || '?'} ${currentOutPlayer.name || 'None'} OUT`;
+
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const inSelect = document.getElementById("editSubInSelect");
+      inSelect.innerHTML = "";
+
+      // ONLY players on the first-half bench are eligible to enter as substitutes
+      const h1CourtNames = new Set(Object.values(h1.positions).map(p => p.name));
+      const benchPlayers = activeList.filter(p => !h1CourtNames.has(p.name));
+
+      if (benchPlayers.length === 0) {
+        const opt = document.createElement("option");
+        opt.value = "";
+        opt.textContent = "No bench players available (6-player roster)";
+        inSelect.appendChild(opt);
+      } else {
+        benchPlayers.forEach(p => {
+          const opt = document.createElement("option");
+          opt.value = p.number + "_" + p.name;
+          
+          let statusTag = " [Available on Bench]";
+          for (let pIdx = 1; pIdx <= 6; pIdx++) {
+            if (h2.positions[pIdx] && h2.positions[pIdx].name === p.name) {
+              if (pIdx === pos) {
+                statusTag = " [Current Sub Here]";
+              } else {
+                statusTag = ` [Assigned to Pos ${pIdx} Sub]`;
+              }
+              break;
+            }
+          }
+          opt.textContent = `#${p.number} ${p.name} (Tot: ${p.total_score}, Srv: ${p.serve_consistency}/${p.serve_power})${statusTag}`;
+          if (p.name === currentInPlayer.name) opt.selected = true;
+          inSelect.appendChild(opt);
+        });
+      }
+
+      const outSelect = document.getElementById("editSubOutSelect");
+      outSelect.innerHTML = "";
+      for (let p = 1; p <= 6; p++) {
+        const cp = h1.positions[p] || {};
+        const opt = document.createElement("option");
+        opt.value = p;
+        opt.textContent = `${getSubPositionName(p)}: #${cp.number || '?'} ${cp.name || 'Empty'}`;
+        if (p === pos) opt.selected = true;
+        outSelect.appendChild(opt);
+      }
+
+      document.getElementById("editSubModal").classList.add("active");
+    }
+
+    function closeEditSubModal() {
+      document.getElementById("editSubModal").classList.remove("active");
+    }
+
+    function saveEditedSubPair() {
+      if (!currentEditingSub) return;
+      const { setKey, pos, currentIn } = currentEditingSub;
+      const setObj = currentPlan[setKey];
+      const inSelect = document.getElementById("editSubInSelect");
+      const outSelect = document.getElementById("editSubOutSelect");
+
+      if (!inSelect.value) return;
+      const [inNum, inName] = inSelect.value.split("_");
+      const targetPos = parseInt(outSelect.value) || pos;
+
+      const activeList = activePlayerNumbers.map(k => {
+        const [num, idx] = k.split("_");
+        return playersData[parseInt(idx)];
+      }).filter(Boolean);
+
+      const newInPlayer = activeList.find(p => String(p.number) === inNum && p.name === inName);
+      if (!newInPlayer) return;
+
+      if (!setObj.second_half) setObj.second_half = { positions: {} };
+
+      // Prevent duplicates: if newInPlayer is already assigned to another sub slot in second half, swap
+      let duplicatePos = null;
+      for (let p = 1; p <= 6; p++) {
+        if (p !== targetPos && setObj.second_half.positions[p] && setObj.second_half.positions[p].name === newInPlayer.name) {
+          duplicatePos = p;
+          break;
+        }
+      }
+
+      const prevPlayerAtTarget = setObj.second_half.positions[targetPos];
+
+      // If newInPlayer was at duplicatePos, put the displaced sub into duplicatePos
+      if (duplicatePos) {
+        if (prevPlayerAtTarget) {
+          setObj.second_half.positions[duplicatePos] = { ...prevPlayerAtTarget, _isOverride: true };
+        } else if (currentIn && currentIn.name) {
+          setObj.second_half.positions[duplicatePos] = { ...currentIn, _isOverride: true };
+        }
+      }
+
+      setObj.second_half.positions[targetPos] = { ...newInPlayer, _isOverride: true };
+
+      const h2Names = new Set(Object.values(setObj.second_half.positions).map(p => p.name));
+      setObj.bench_second_half = activeList.filter(p => !h2Names.has(p.name));
+
+      const list2 = Object.values(setObj.second_half.positions);
+      setObj.second_half.total_score = list2.reduce((s, p) => s + (p.total_score || 0), 0);
+      setObj.second_half.avg_receive = (list2.reduce((s, p) => s + (p.serve_receive || 0), 0) / 6).toFixed(1);
+
+      recalculatePlanAudit();
+      closeEditSubModal();
+      renderPlanTabs();
+    }
+
+    // Build Clean Modern Court HTML
     function buildCourtHTML(half, setKey, halfKey, activeRotation = 1) {
       const rot = (halfKey === 'second_half') ? (activeRotation || 1) : 1;
 
@@ -2311,148 +3425,117 @@
       const p5 = half.positions[((rot + 3) % 6) + 1] || {};
       const p6 = half.positions[((rot + 4) % 6) + 1] || {};
 
-      function makeCell(pos, roleClass, roleText, player) {
+      function makeCell(pos, roleTagHTML, player) {
         const offsets = { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5 };
         const slotIdx = (halfKey === 'second_half') ? (((rot - 1 + offsets[pos]) % 6) + 1) : pos;
-        const isOverride = player._isOverride ? `<span class="cell-role-tag role-override">Override</span>` : `<span class="cell-role-tag ${roleClass}">${roleText}</span>`;
+        const tag = player._isOverride ? `<span class="cell-role-tag role-override">Override</span>` : roleTagHTML;
         return `
-          <div class="court-cell" onclick="openOverrideModal('${setKey}', '${halfKey}', ${slotIdx})">
+          <div class="court-cell" onclick="openOverrideModal('${setKey}', '${halfKey}', ${slotIdx})" title="Tap to swap #${player.number || '?'} ${escapeHTML(player.name || '')}">
             <span class="cell-pos-tag">P${pos}</span>
-            ${isOverride}
-            <div class="cell-player-name">#${player.number || '?'} ${player.name || 'Empty'}</div>
-            <div class="cell-player-stat">Pass:${player.serve_receive || 0} Srv:${player.serve_consistency || 0}/${player.serve_power || 0}</div>
-            <span class="cell-edit-hint">Tap to swap ✎</span>
+            ${tag}
+            <div class="cell-player-name">#${player.number || '?'} ${escapeHTML(player.name || 'Empty')}</div>
+            <div class="cell-player-stat">Pass ${player.serve_receive || 0} · Srv ${player.serve_consistency || 0}/${player.serve_power || 0}</div>
           </div>
         `;
       }
 
-      const p1Tag = (halfKey === 'second_half') ? `🎯 Srv #${rot}` : "★ Srv #1";
-      const p2Tag = (halfKey === 'second_half') ? "🔜 Next Srv" : "Srv #2";
-      const p3Tag = (halfKey === 'second_half') ? "🔜 3rd Srv" : "Srv #3";
-      const p4Tag = (halfKey === 'second_half') ? "Net (LF)" : "Net / LF";
-      const p5Tag = (halfKey === 'second_half') ? "Left Back" : "Defense";
-      const p6Tag = (halfKey === 'second_half') ? "Mid Back (Rcv)" : "Anchor";
+      let p1Tag = "", p2Tag = "", p3Tag = "";
+      if (halfKey === 'second_half') {
+        p1Tag = `<span class="cell-role-tag role-active-srv">🎯 Srv #${rot}</span>`;
+      } else {
+        p1Tag = `<span class="cell-role-tag role-srv1">★ Srv 1</span>`;
+        p2Tag = `<span class="cell-role-tag role-srv2">Srv 2</span>`;
+        p3Tag = `<span class="cell-role-tag role-srv3">Srv 3</span>`;
+      }
 
       return `
         <div class="vb-court">
-          <div class="court-net-line">▲ ▲ ▲ NET ▲ ▲ ▲</div>
+          <div class="court-net-line">── NET ──</div>
           <div class="court-grid">
-            ${makeCell(4, "role-hide", p4Tag, p4)}
-            ${makeCell(3, "role-srv3", p3Tag, p3)}
-            ${makeCell(2, "role-srv2", p2Tag, p2)}
+            ${makeCell(4, "", p4)}
+            ${makeCell(3, p3Tag, p3)}
+            ${makeCell(2, p2Tag, p2)}
 
-            ${makeCell(5, "role-pass", p5Tag, p5)}
-            ${makeCell(6, "role-pass", p6Tag, p6)}
-            ${makeCell(1, "role-srv1", p1Tag, p1)}
+            ${makeCell(5, "", p5)}
+            ${makeCell(6, "", p6)}
+            ${makeCell(1, p1Tag, p1)}
           </div>
         </div>
       `;
     }
 
-    // Mid-Set Substitution Tracker Header (Point 12–13 or Point 8)
+    // Mid-Set Substitution Tracker Header (Compact & Collapsible)
     function buildSubTrackerHeaderHTML(setKey, isSet3 = false) {
       const currentRot = activeSubServer[setKey] || (isSet3 ? 3 : 5);
       const currentPoss = activeSubPossession[setKey] || "serving";
       const triggerPoint = isSet3 ? "8" : "12–13";
 
       return `
-        <div class="sub-tracker-card" style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:12px 14px; margin-bottom:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-            <div style="font-size:12px; font-weight:800; color:#166534; display:flex; align-items:center; gap:6px;">
-              <span>⏱️</span> Mid-Set Substitution Tracker (Point ${triggerPoint})
-            </div>
-            <span style="font-size:10px; background:#dcfce7; color:#15803d; font-weight:700; padding:2px 8px; border-radius:10px; border:1px solid #86efac;">Active Sub State</span>
-          </div>
-          <p style="font-size:11px; color:#475569; margin-bottom:10px; line-height:1.4;">
-            Tap which server was active at the point ${triggerPoint} whistle to view the exact physical floor rotation &amp; closing serve queue:
-          </p>
-          
-          <div style="display:flex; flex-direction:column; gap:8px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-              <span style="font-size:11px; font-weight:700; color:#1e293b;">Active Server at Sub:</span>
+        <details class="clean-sub-tracker" style="margin-top:8px; margin-bottom:8px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:6px 10px;">
+          <summary style="font-size:11px; font-weight:700; color:#475569; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none;">
+            <span>⏱️ Rotation at Whistle (Active: S${currentRot} · ${currentPoss === 'serving' ? 'Serving' : 'Receiving'})</span>
+            <span style="font-size:10px; color:#3b82f6;">Adjust ▾</span>
+          </summary>
+          <div style="margin-top:8px; padding-top:8px; border-top:1px dashed #cbd5e1; display:flex; flex-direction:column; gap:6px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+              <span style="font-size:11px; font-weight:700; color:#1e293b;">Server at Point ${triggerPoint}:</span>
               <div class="segment-group" style="display:inline-flex; width:auto; margin:0;">
                 ${[1, 2, 3, 4, 5, 6].map(num => `
-                  <button type="button" class="segment-btn ${currentRot === num ? 'active' : ''}" style="padding:4px 8px; font-size:11px;" onclick="setSubServer('${setKey}', ${num})">
+                  <button type="button" class="segment-btn ${currentRot === num ? 'active' : ''}" style="padding:2px 7px; font-size:10px;" onclick="setSubServer('${setKey}', ${num})">
                     S${num}${!isSet3 && num === 5 ? ' (Avg)' : isSet3 && num === 3 ? ' (Avg)' : ''}
                   </button>
                 `).join('')}
               </div>
             </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px;">
-              <span style="font-size:11px; font-weight:700; color:#1e293b;">Possession at Sub:</span>
+            <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px;">
+              <span style="font-size:11px; font-weight:700; color:#1e293b;">Possession:</span>
               <div class="segment-group" style="display:inline-flex; width:auto; margin:0;">
-                <button type="button" class="segment-btn ${currentPoss === 'serving' ? 'active' : ''}" style="padding:4px 10px; font-size:11px;" onclick="toggleSubPossession('${setKey}', 'serving')">
-                  🟢 We Are Serving
+                <button type="button" class="segment-btn ${currentPoss === 'serving' ? 'active' : ''}" style="padding:2px 8px; font-size:10px;" onclick="toggleSubPossession('${setKey}', 'serving')">
+                  Serving
                 </button>
-                <button type="button" class="segment-btn ${currentPoss === 'receiving' ? 'active' : ''}" style="padding:4px 10px; font-size:11px;" onclick="toggleSubPossession('${setKey}', 'receiving')">
-                  🟡 Opponent Serving (Receive)
+                <button type="button" class="segment-btn ${currentPoss === 'receiving' ? 'active' : ''}" style="padding:2px 8px; font-size:10px;" onclick="toggleSubPossession('${setKey}', 'receiving')">
+                  Receiving
                 </button>
               </div>
             </div>
           </div>
-        </div>
+        </details>
       `;
     }
 
-    // Closing Serve Queue (Points 12–25)
+    // Closing Serve Queue (Compact & Clean)
     function buildClosingServeQueueHTML(half, rot, poss, isSet3 = false) {
       const p1 = half.positions[((rot - 1) % 6) + 1] || {};
       const p2 = half.positions[(rot % 6) + 1] || {};
       const p3 = half.positions[((rot + 1) % 6) + 1] || {};
-      const p4 = half.positions[((rot + 2) % 6) + 1] || {};
-      const p5 = half.positions[((rot + 3) % 6) + 1] || {};
-      const p6 = half.positions[((rot + 4) % 6) + 1] || {};
 
-      const isServing = poss !== "receiving";
       const pointsSpan = isSet3 ? "Points 8–15" : "Points 12–25";
 
       return `
-        <div class="card" style="padding:12px 14px; background:#f8fafc; border:1px solid #e2e8f0; margin-top:10px;">
-          <div style="font-size:12px; font-weight:800; color:#1e293b; margin-bottom:6px; display:flex; align-items:center; justify-content:space-between;">
-            <span>🎯 Closing Serve Order (${pointsSpan})</span>
-            <span style="font-size:10px; color:#16a34a; font-weight:700;">Max 5 Serves / Kid</span>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:6px 10px; margin-top:8px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+            <span style="font-size:11px; font-weight:800; color:#1e293b;">🎯 Closing Servers (${pointsSpan}):</span>
+            <span style="font-size:10px; color:#16a34a; font-weight:700;">Max 5 Serves/Kid</span>
           </div>
-          <p style="font-size:11px; color:#64748b; margin-bottom:10px;">
-            With only ~12 points remaining, these 3 servers will handle the entire second half:
-          </p>
-          <div style="display:flex; flex-direction:column; gap:6px;">
-            <div style="display:flex; align-items:center; justify-content:space-between; background:white; padding:7px 10px; border-radius:6px; border-left:4px solid #16a34a; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-              <div>
-                <span style="font-size:11px; font-weight:700; color:#15803d;">1st Server: </span>
-                <strong style="font-size:13px; color:#0f172a;">#${p1.number || '?'} ${escapeHTML(p1.name || 'TBD')}</strong>
-                <span style="font-size:10px; color:#64748b; margin-left:4px;">(Srv: ${p1.serve_consistency || 0}/${p1.serve_power || 0})</span>
-              </div>
-              <span style="font-size:11px; font-weight:700; color:#16a34a;">${isServing ? 'Serving Now' : 'Serves on 1st Sideout'}</span>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; font-size:12px;">
+            <div style="background:white; border:1px solid #dbeafe; border-radius:6px; padding:3px 8px; display:flex; align-items:center; gap:4px;">
+              <span style="font-size:9px; font-weight:800; color:#1e40af; background:#eff6ff; padding:1px 4px; border-radius:3px;">1st</span>
+              <strong>#${p1.number || '?'} ${escapeHTML(p1.name || 'TBD')}</strong>
             </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; background:white; padding:7px 10px; border-radius:6px; border-left:4px solid #2563eb; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-              <div>
-                <span style="font-size:11px; font-weight:700; color:#2563eb;">2nd Server: </span>
-                <strong style="font-size:13px; color:#0f172a;">#${p2.number || '?'} ${escapeHTML(p2.name || 'TBD')}</strong>
-                <span style="font-size:10px; color:#64748b; margin-left:4px;">(Srv: ${p2.serve_consistency || 0}/${p2.serve_power || 0})</span>
-              </div>
-              <span style="font-size:11px; font-weight:700; color:#2563eb;">Next Up</span>
+            <div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:3px 8px; display:flex; align-items:center; gap:4px;">
+              <span style="font-size:9px; font-weight:800; color:#475569; background:#f1f5f9; padding:1px 4px; border-radius:3px;">2nd</span>
+              <strong>#${p2.number || '?'} ${escapeHTML(p2.name || 'TBD')}</strong>
             </div>
-
-            <div style="display:flex; align-items:center; justify-content:space-between; background:white; padding:7px 10px; border-radius:6px; border-left:4px solid #7c3aed; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-              <div>
-                <span style="font-size:11px; font-weight:700; color:#7c3aed;">3rd Server: </span>
-                <strong style="font-size:13px; color:#0f172a;">#${p3.number || '?'} ${escapeHTML(p3.name || 'TBD')}</strong>
-                <span style="font-size:10px; color:#64748b; margin-left:4px;">(Srv: ${p3.serve_consistency || 0}/${p3.serve_power || 0})</span>
-              </div>
-              <span style="font-size:11px; font-weight:700; color:#7c3aed;">Closing Points</span>
-            </div>
-
-            <div style="font-size:11px; color:#64748b; padding:6px 8px; background:#f1f5f9; border-radius:6px; margin-top:4px;">
-              🏐 <strong>Front Row (Plays Net / Won't Serve before 25):</strong> #${p4.number || '?'} ${escapeHTML(p4.name || '')}, #${p5.number || '?'} ${escapeHTML(p5.name || '')}, #${p6.number || '?'} ${escapeHTML(p6.name || '')}
+            <div style="background:white; border:1px solid #e2e8f0; border-radius:6px; padding:3px 8px; display:flex; align-items:center; gap:4px;">
+              <span style="font-size:9px; font-weight:800; color:#64748b; background:#f8fafc; padding:1px 4px; border-radius:3px;">3rd</span>
+              <strong>#${p3.number || '?'} ${escapeHTML(p3.name || 'TBD')}</strong>
             </div>
           </div>
         </div>
       `;
     }
 
-    // Build Formatted Ref / Scorekeeper Lineup Slip
+    // Build Formatted Ref / Scorekeeper Lineup Slip (Collapsible Details)
     function buildScorekeeperSlipHTML(half, label = "") {
       const serveSequence = [1, 2, 3, 4, 5, 6];
       const posLabels = {
@@ -2486,20 +3569,23 @@
       const copyPayload = encodeURIComponent("St. Cecilia - " + label + " Lineup Card (Pos 1–6):\n" + plainTextList.join('\n'));
 
       return `
-        <div class="scorekeeper-card">
-          <div class="scorekeeper-header">
-            <div style="display:flex; align-items:center; gap:8px;">
-              <img src="./st_cecilia_logo.png" alt="St. Cecilia" style="width:26px; height:24px; object-fit:contain; background:white; border-radius:4px; padding:1px;">
-              <span class="scorekeeper-title">St. Cecilia Lineup Card (For Ref & Bookkeeper)</span>
+        <details class="scorekeeper-details" style="margin-top:8px; background:#f8fafc; border:1px dashed #cbd5e1; border-radius:8px; padding:6px 10px;">
+          <summary style="font-size:11px; font-weight:700; color:#64748b; cursor:pointer; display:flex; justify-content:space-between; align-items:center; user-select:none;">
+            <span>📋 Official Lineup Slip for Referee (Tap to expand)</span>
+            <span style="font-size:10px; color:#94a3b8;">${label}</span>
+          </summary>
+          <div style="margin-top:8px; padding-top:8px; border-top:1px dashed #cbd5e1;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:700; color:#1e293b;">Positions 1–6 Serving Order</span>
+              <button type="button" class="copy-lineup-btn" style="padding:3px 8px; font-size:11px;" onclick="copyLineupText('${copyPayload}')">
+                📋 Copy Text
+              </button>
             </div>
-            <button type="button" class="copy-lineup-btn" onclick="copyLineupText('${copyPayload}')">
-              📋 Copy
-            </button>
+            <div class="scorekeeper-list">
+              ${rows}
+            </div>
           </div>
-          <div class="scorekeeper-list">
-            ${rows}
-          </div>
-        </div>
+        </details>
       `;
     }
 
@@ -2542,7 +3628,7 @@
       return names[pos] || `Pos ${pos}`;
     }
 
-    function buildSubPairsHTML(h1, h2, defaultAnchors = []) {
+    function buildSubPairsHTML(h1, h2, defaultAnchors = [], setKey = 'set1') {
       if (!h1 || !h2 || !h1.positions || !h2.positions) return "";
 
       const h1Players = [];
@@ -2624,20 +3710,21 @@
 
       pairs.sort((a, b) => a.pos - b.pos);
 
-      const rowsHTML = pairs.map(pair => `
-        <div class="sub-pair-row">
-          <div class="sub-in-tag">
-            <span class="sub-pill in">IN</span>
-            <strong>#${pair.inPlayer.number}</strong> ${escapeHTML(pair.inPlayer.name)}
+      const rowsHTML = pairs.length > 0 ? pairs.map(pair => `
+        <div class="sub-pair-row" style="cursor:pointer; display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; margin-bottom:6px; transition:all 0.15s ease;" onclick="openEditSubModal('${setKey}', ${pair.pos})">
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:10px; font-weight:800; color:#1e40af; background:#eff6ff; padding:2px 6px; border-radius:4px; border:1px solid #dbeafe;">P${pair.pos}</span>
+            <span style="font-size:13px; font-weight:700; color:#0f172a;">#${pair.inPlayer.number} ${escapeHTML(pair.inPlayer.name)}</span>
+            <span style="font-size:11px; color:#16a34a; font-weight:700;">IN</span>
+            <span style="font-size:11px; color:#94a3b8;">for</span>
+            <span style="font-size:13px; color:#64748b; font-weight:600;">${pair.outPlayer ? `#${pair.outPlayer.number} ${escapeHTML(pair.outPlayer.name)}` : 'Open'}</span>
+            <span style="font-size:11px; color:#dc2626; font-weight:700;">OUT</span>
           </div>
-          <div class="sub-arrow">➔ for ➔</div>
-          <div class="sub-out-tag">
-            <span class="sub-pill out">OUT</span>
-            ${pair.outPlayer ? `<strong>#${pair.outPlayer.number}</strong> ${escapeHTML(pair.outPlayer.name)}` : '<span style="color:#94a3b8;">(Open)</span>'}
+          <div style="font-size:11px; font-weight:700; color:var(--primary); display:flex; align-items:center; gap:2px;">
+            <span>✎ Edit</span>
           </div>
-          <span class="sub-pos-badge">${pair.posLabel}</span>
         </div>
-      `).join('');
+      `).join('') : '<div style="font-size:12px; color:var(--text-muted); padding:8px 0;">All 6 active players play full match (no bench subs).</div>';
 
       let anchorHTML = "";
       if (anchors.length > 0) {
@@ -2646,13 +3733,13 @@
           return `<strong>#${a.player.number} ${escapeHTML(a.player.name)}</strong> (${posNote})`;
         }).join(' & ');
         anchorHTML = `
-          <div class="anchor-status-box" style="margin-top:10px;">
+          <div class="anchor-status-box" style="margin-top:8px; padding:6px 10px; font-size:11px;">
             ★ <strong>Full-Set Anchor:</strong> ${anchorDesc} plays both halves (no sub).
           </div>
         `;
       } else if (defaultAnchors && defaultAnchors.length > 0) {
         anchorHTML = `
-          <div class="anchor-status-box" style="margin-top:10px;">
+          <div class="anchor-status-box" style="margin-top:8px; padding:6px 10px; font-size:11px;">
             ★ <strong>Full-Set Anchor:</strong> ${defaultAnchors.join(', ')} plays both halves (no sub).
           </div>
         `;
@@ -2663,16 +3750,16 @@
       const subCallEncoded = encodeURIComponent(subCallText);
 
       return `
-        <div class="swap-card">
-          <div class="swap-header">
+        <div class="card" style="padding:12px 14px; margin-bottom:14px; border-radius:12px; border:1px solid #e2e8f0; background:white;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
             <div>
-              <div class="swap-title">⇄ Midway Substitution Plan (Point 12–13)</div>
-              <div class="swap-subtitle">Official 1-to-1 player exchange for referee / scorekeeper:</div>
+              <div style="font-size:13px; font-weight:800; color:#0f172a;">Midway Substitutions (Point 12–13)</div>
+              <div style="font-size:11px; color:#64748b;">Tap any row to customize bench sub</div>
             </div>
-            <div style="display:flex; align-items:center; gap:8px;">
+            <div style="display:flex; align-items:center; gap:6px;">
               <span class="badge badge-blue">${pairs.length} Subs</span>
-              <button type="button" class="copy-lineup-btn" style="padding:4px 8px; font-size:11px;" onclick="copySubCallText('${subCallEncoded}')">
-                📋 Copy Sub Call
+              <button type="button" class="btn-secondary" style="padding:3px 8px; font-size:11px;" onclick="copySubCallText('${subCallEncoded}')">
+                📋 Copy
               </button>
             </div>
           </div>
@@ -2837,81 +3924,141 @@
       const poss1 = activeSubPossession.set1 || "serving";
 
       // SET 1
-      document.getElementById("set1Content").innerHTML = `
-        <div class="court-card">
-          <div class="court-header">
-            <div class="court-title">Set 1: First Half (0 to ~12–13 pts)</div>
-            <div class="court-badges">
-              <span class="badge badge-blue">Score: ${s1.first_half.total_score}</span>
-              <span class="badge badge-green">Rcv: ${s1.first_half.avg_receive}</span>
+      if (s1) {
+        document.getElementById("set1Content").innerHTML = `
+          <div class="card" style="padding:10px 14px; margin-bottom:12px; background:#f8fafc; border:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <div style="font-size:13px; font-weight:800; color:#1e293b;">Set 1: Review Rotation &amp; Subs</div>
+              <div style="font-size:11px; color:#64748b;">Tap court cells to swap players. Tap '✎ Edit Sub' to adjust point 13 subs.</div>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="btn-secondary" style="padding:5px 9px; font-size:11px; font-weight:700;" onclick="openManualRotationBuilder('set1')">✍️ Build Manually</button>
+              <button type="button" class="btn-secondary" style="padding:5px 9px; font-size:11px;" onclick="resetSetWithOptimizer('set1')">🔄 Auto-Optimize</button>
             </div>
           </div>
-          ${buildCourtHTML(s1.first_half, 'set1', 'first_half')}
-          ${buildScorekeeperSlipHTML(s1.first_half, 'Set 1 First Half')}
-          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
-            <strong>Bench (Waiting):</strong> ${s1.bench_first_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
-          </div>
-        </div>
 
-        ${buildSubPairsHTML(s1.first_half, s1.second_half, p.meta.anchors_set1)}
-
-        <div class="court-card">
-          <div class="court-header">
-            <div class="court-title">Set 1: Second Half (Point 12–13 to 25 pts)</div>
-            <div class="court-badges">
-              <span class="badge badge-blue">Score: ${s1.second_half.total_score}</span>
-              <span class="badge badge-green">Rcv: ${s1.second_half.avg_receive}</span>
+          <div class="court-card">
+            <div class="court-header">
+              <div>
+                <div class="court-title">Set 1: First Half (0 to ~12–13 pts)</div>
+                <div style="font-size:11px; color:var(--text-muted);">Tap any player to swap</div>
+              </div>
+              <div class="court-badges">
+                <span class="badge badge-blue">Score: ${s1.first_half.total_score}</span>
+                <span class="badge badge-green">Rcv: ${s1.first_half.avg_receive}</span>
+              </div>
             </div>
+            ${buildCourtHTML(s1.first_half, 'set1', 'first_half')}
+            <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+              <strong>Bench:</strong> ${(s1.bench_first_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+            </div>
+            ${buildScorekeeperSlipHTML(s1.first_half, 'Set 1 First Half')}
           </div>
-          ${buildSubTrackerHeaderHTML('set1', false)}
-          ${buildCourtHTML(s1.second_half, 'set1', 'second_half', rot1)}
-          ${buildClosingServeQueueHTML(s1.second_half, rot1, poss1, false)}
-          ${buildScorekeeperSlipHTML(s1.second_half, 'Set 1 Second Half')}
-          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
-            <strong>Bench (Resting):</strong> ${s1.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
-          </div>
-        </div>
-      `;
 
-      const rot2 = activeSubServer.set2 || 5;
-      const poss2 = activeSubPossession.set2 || "serving";
+          ${buildSubPairsHTML(s1.first_half, s1.second_half, (p.meta && p.meta.anchors_set1) || [], 'set1')}
+
+          <div class="court-card">
+            <div class="court-header">
+              <div>
+                <div class="court-title">Set 1: Second Half (Point 12–13 to 25 pts)</div>
+                <div style="font-size:11px; color:var(--text-muted);">Tap any player to swap</div>
+              </div>
+              <div class="court-badges">
+                <span class="badge badge-blue">Score: ${s1.second_half.total_score}</span>
+                <span class="badge badge-green">Rcv: ${s1.second_half.avg_receive}</span>
+              </div>
+            </div>
+            ${buildCourtHTML(s1.second_half, 'set1', 'second_half', rot1)}
+            <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+              <strong>Bench:</strong> ${(s1.bench_second_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+            </div>
+            ${buildClosingServeQueueHTML(s1.second_half, rot1, poss1, false)}
+            ${buildSubTrackerHeaderHTML('set1', false)}
+            ${buildScorekeeperSlipHTML(s1.second_half, 'Set 1 Second Half')}
+          </div>
+
+          ${renderSetApprovalCard(1)}
+        `;
+      }
 
       // SET 2
-      document.getElementById("set2Content").innerHTML = `
-        <div class="court-card">
-          <div class="court-header">
-            <div class="court-title">Set 2: First Half (0 to ~12–13 pts)</div>
-            <div class="court-badges">
-              <span class="badge badge-blue">Score: ${s2.first_half.total_score}</span>
-              <span class="badge badge-green">Rcv: ${s2.first_half.avg_receive}</span>
+      if (!s2) {
+        document.getElementById("set2Content").innerHTML = `
+          <div class="card" style="text-align:center; padding:28px 16px;">
+            <div style="font-size:36px; margin-bottom:10px;">📋</div>
+            <h3 style="font-size:17px; font-weight:800; margin-bottom:6px;">Set 2: Review &amp; Approval Pending</h3>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:18px; max-width:440px; margin-left:auto; margin-right:auto;">
+              Set 1 is currently in review. Approve Set 1 to automatically generate Set 2 (balancing all player minutes and serve rotations), or start building Set 2 manually now.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:10px; max-width:320px; margin:0 auto;">
+              <button type="button" class="btn-primary" onclick="generateSet2()">
+                ⚡ Auto-Generate Set 2 Now ➔
+              </button>
+              <button type="button" class="btn-secondary" style="font-weight:700; color:var(--primary); border-color:var(--primary);" onclick="openManualRotationBuilder('set2')">
+                ✍️ Build Set 2 Manually ➔
+              </button>
             </div>
           </div>
-          ${buildCourtHTML(s2.first_half, 'set2', 'first_half')}
-          ${buildScorekeeperSlipHTML(s2.first_half, 'Set 2 First Half')}
-          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
-            <strong>Bench:</strong> ${s2.bench_first_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
-          </div>
-        </div>
+        `;
+      } else {
+        const rot2 = activeSubServer.set2 || 5;
+        const poss2 = activeSubPossession.set2 || "serving";
 
-        ${buildSubPairsHTML(s2.first_half, s2.second_half, p.meta.anchors_set2)}
-
-        <div class="court-card">
-          <div class="court-header">
-            <div class="court-title">Set 2: Second Half (Point 12–13 to 25 pts)</div>
-            <div class="court-badges">
-              <span class="badge badge-blue">Score: ${s2.second_half.total_score}</span>
-              <span class="badge badge-green">Rcv: ${s2.second_half.avg_receive}</span>
+        document.getElementById("set2Content").innerHTML = `
+          <div class="card" style="padding:10px 14px; margin-bottom:12px; background:#f8fafc; border:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <div style="font-size:13px; font-weight:800; color:#1e293b;">Set 2: Review Rotation &amp; Subs</div>
+              <div style="font-size:11px; color:#64748b;">Equal playing time guarantee &amp; serve rotations balanced from Set 1.</div>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button type="button" class="btn-secondary" style="padding:5px 9px; font-size:11px; font-weight:700;" onclick="openManualRotationBuilder('set2')">✍️ Build Manually</button>
+              <button type="button" class="btn-secondary" style="padding:5px 9px; font-size:11px;" onclick="resetSetWithOptimizer('set2')">🔄 Auto-Optimize</button>
             </div>
           </div>
-          ${buildSubTrackerHeaderHTML('set2', false)}
-          ${buildCourtHTML(s2.second_half, 'set2', 'second_half', rot2)}
-          ${buildClosingServeQueueHTML(s2.second_half, rot2, poss2, false)}
-          ${buildScorekeeperSlipHTML(s2.second_half, 'Set 2 Second Half')}
-          <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
-            <strong>Bench:</strong> ${s2.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+
+          <div class="court-card">
+            <div class="court-header">
+              <div>
+                <div class="court-title">Set 2: First Half (0 to ~12–13 pts)</div>
+                <div style="font-size:11px; color:var(--text-muted);">Tap any player to swap</div>
+              </div>
+              <div class="court-badges">
+                <span class="badge badge-blue">Score: ${s2.first_half.total_score}</span>
+                <span class="badge badge-green">Rcv: ${s2.first_half.avg_receive}</span>
+              </div>
+            </div>
+            ${buildCourtHTML(s2.first_half, 'set2', 'first_half')}
+            <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+              <strong>Bench:</strong> ${(s2.bench_first_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+            </div>
+            ${buildScorekeeperSlipHTML(s2.first_half, 'Set 2 First Half')}
           </div>
-        </div>
-      `;
+
+          ${buildSubPairsHTML(s2.first_half, s2.second_half, (p.meta && p.meta.anchors_set2) || [], 'set2')}
+
+          <div class="court-card">
+            <div class="court-header">
+              <div>
+                <div class="court-title">Set 2: Second Half (Point 12–13 to 25 pts)</div>
+                <div style="font-size:11px; color:var(--text-muted);">Tap any player to swap</div>
+              </div>
+              <div class="court-badges">
+                <span class="badge badge-blue">Score: ${s2.second_half.total_score}</span>
+                <span class="badge badge-green">Rcv: ${s2.second_half.avg_receive}</span>
+              </div>
+            </div>
+            ${buildCourtHTML(s2.second_half, 'set2', 'second_half', rot2)}
+            <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+              <strong>Bench:</strong> ${(s2.bench_second_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+            </div>
+            ${buildClosingServeQueueHTML(s2.second_half, rot2, poss2, false)}
+            ${buildSubTrackerHeaderHTML('set2', false)}
+            ${buildScorekeeperSlipHTML(s2.second_half, 'Set 2 Second Half')}
+          </div>
+
+          ${renderSetApprovalCard(2)}
+        `;
+      }
 
       // SET 3
       if (!isSet3Generated || !s3 || !s3.generated) {
@@ -2920,7 +4067,7 @@
             <div style="font-size:36px; margin-bottom:10px;">🏐</div>
             <h3 style="font-size:18px; font-weight:800; margin-bottom:6px;">Set 3: Deciding Tiebreaker (15 Points)</h3>
             <p style="font-size:13px; color:var(--text-muted); margin-bottom:18px;">
-              Played to 15 points (substitutions at 8 points). Play Sets 1 and 2 first. Once ready for Set 3, choose your match situation below:
+              Played to 15 points (substitutions at 8 points). Play Sets 1 and 2 first. Once ready for Set 3, choose your match situation below or build manually:
             </p>
 
             <div class="segment-group" style="margin-bottom:16px;">
@@ -2929,9 +4076,14 @@
               <button type="button" class="segment-btn" id="btnS3Reps" onclick="setInitialS3Choice('reps')">🌟 Get Reps<br><span style="font-size:10px; font-weight:normal;">(Won 2–0)</span></button>
             </div>
 
-            <button type="button" class="btn-primary" onclick="triggerGenerateSet3(currentSet3Mode)">
-              ⚡ Generate Set 3 Rotation Sheet ➔
-            </button>
+            <div style="display:flex; flex-direction:column; gap:10px; max-width:320px; margin:0 auto;">
+              <button type="button" class="btn-primary" onclick="triggerGenerateSet3(currentSet3Mode)">
+                ⚡ Generate Set 3 Rotation Sheet ➔
+              </button>
+              <button type="button" class="btn-secondary" style="font-weight:700; color:var(--primary); border-color:var(--primary);" onclick="openManualRotationBuilder('set3')">
+                ✍️ Build Set 3 Manually ➔
+              </button>
+            </div>
           </div>
         `;
       } else {
@@ -2940,7 +4092,7 @@
             <div class="safe-sub-title">🔄 ${sub.situation} (${sub.position})</div>
             <div>${sub.reason}</div>
           </div>
-        `).join('') || '<div style="font-size:13px; color:var(--text-muted); margin-top:6px;">No subs needed.</div>';
+        `).join('') || '<div style="font-size:13px; color:var(--text-muted); margin-top:6px;">No situational subs needed.</div>';
 
         let set3BodyHTML = "";
         if (s3.is_split) {
@@ -2950,53 +4102,62 @@
           set3BodyHTML = `
             <div class="court-card">
               <div class="court-header">
-                <div class="court-title">Set 3: First Half (0 to 8 pts)</div>
+                <div>
+                  <div class="court-title">Set 3: First Half (0 to 8 pts)</div>
+                  <div style="font-size:11px; color:var(--text-muted);">Tap any player to swap</div>
+                </div>
                 <div class="court-badges">
                   <span class="badge badge-purple">Score: ${s3.first_half.total_score}</span>
                   <span class="badge badge-green">Rcv: ${s3.first_half.avg_receive}</span>
                 </div>
               </div>
               ${buildCourtHTML(s3.first_half, 'set3', 'first_half')}
-              ${buildScorekeeperSlipHTML(s3.first_half, 'Set 3 First Half')}
-              <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
-                <strong>Bench (Waiting):</strong> ${s3.bench_first_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+              <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+                <strong>Bench:</strong> ${(s3.bench_first_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
               </div>
+              ${buildScorekeeperSlipHTML(s3.first_half, 'Set 3 First Half')}
             </div>
 
-            ${buildSubPairsHTML(s3.first_half, s3.second_half, s3.anchors || [])}
+            ${buildSubPairsHTML(s3.first_half, s3.second_half, s3.anchors || [], 'set3')}
 
             <div class="court-card">
               <div class="court-header">
-                <div class="court-title">Set 3: Second Half (8 to 15 pts)</div>
+                <div>
+                  <div class="court-title">Set 3: Second Half (8 to 15 pts)</div>
+                  <div style="font-size:11px; color:var(--text-muted);">Tap any player to swap</div>
+                </div>
                 <div class="court-badges">
                   <span class="badge badge-purple">Score: ${s3.second_half.total_score}</span>
                   <span class="badge badge-green">Rcv: ${s3.second_half.avg_receive}</span>
                 </div>
               </div>
-              ${buildSubTrackerHeaderHTML('set3', true)}
               ${buildCourtHTML(s3.second_half, 'set3', 'second_half', rot3)}
-              ${buildClosingServeQueueHTML(s3.second_half, rot3, poss3, true)}
-              ${buildScorekeeperSlipHTML(s3.second_half, 'Set 3 Second Half')}
-              <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
-                <strong>Bench (Resting):</strong> ${s3.bench_second_half.map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
+              <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
+                <strong>Bench:</strong> ${(s3.bench_second_half || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
               </div>
+              ${buildClosingServeQueueHTML(s3.second_half, rot3, poss3, true)}
+              ${buildSubTrackerHeaderHTML('set3', true)}
+              ${buildScorekeeperSlipHTML(s3.second_half, 'Set 3 Second Half')}
             </div>
           `;
         } else {
           set3BodyHTML = `
             <div class="court-card">
               <div class="court-header">
-                <div class="court-title">${s3.title}</div>
+                <div>
+                  <div class="court-title">${s3.title}</div>
+                  <div style="font-size:11px; color:var(--text-muted);">Tap any player to swap</div>
+                </div>
                 <div class="court-badges">
                   <span class="badge badge-purple">Score: ${s3.lineup.total_score}</span>
                   <span class="badge badge-green">Rcv: ${s3.lineup.avg_receive}</span>
                 </div>
               </div>
               ${buildCourtHTML(s3.lineup, 'set3', 'lineup')}
-              ${buildScorekeeperSlipHTML(s3.lineup, s3.title)}
-              <div style="font-size:12px; color:var(--text-muted); margin-top:8px;">
+              <div style="font-size:12px; color:var(--text-muted); margin-top:6px;">
                 <strong>Bench:</strong> ${(s3.bench || []).map(b => '#' + b.number + ' ' + b.name).join(', ') || 'None'}
               </div>
+              ${buildScorekeeperSlipHTML(s3.lineup, s3.title)}
             </div>
 
             <div class="card">
@@ -3010,78 +4171,88 @@
         }
 
         document.getElementById("set3Content").innerHTML = `
-          <div class="card" style="padding:12px 14px; margin-bottom:14px; background:#f8fafc; border:1.5px solid #cbd5e1;">
-            <div style="font-size:13px; font-weight:700; margin-bottom:8px; color:var(--text);">Set 3 Objective (Change anytime!):</div>
-            <div class="segment-group">
-              <button type="button" class="segment-btn ${s3.mode === 'win' ? 'active' : ''}" onclick="triggerGenerateSet3('win')">🏆 Win at All Costs</button>
-              <button type="button" class="segment-btn ${s3.mode === 'even' ? 'active' : ''}" onclick="triggerGenerateSet3('even')">⚖️ Even Minutes</button>
-              <button type="button" class="segment-btn ${s3.mode === 'reps' ? 'active' : ''}" onclick="triggerGenerateSet3('reps')">🌟 Get Reps</button>
+          <div class="card" style="padding:12px 14px; margin-bottom:14px; background:#f8fafc; border:1.5px solid #cbd5e1; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <div style="font-size:13px; font-weight:700; color:var(--text);">Set 3 Objective (Change anytime):</div>
+              <div style="font-size:11px; color:var(--text-muted);">${s3.desc || 'Deciding set to 15 points.'}</div>
             </div>
-            <p style="font-size:11px; color:var(--text-muted); margin-top:8px;">${s3.desc}</p>
+            <button type="button" class="btn-secondary" style="padding:5px 9px; font-size:11px; font-weight:700;" onclick="openManualRotationBuilder('set3')">✍️ Build Manually</button>
+          </div>
+
+          <div class="segment-group" style="margin-bottom:14px;">
+            <button type="button" class="segment-btn ${s3.mode === 'win' ? 'active' : ''}" onclick="triggerGenerateSet3('win')">🏆 Win at All Costs</button>
+            <button type="button" class="segment-btn ${s3.mode === 'even' ? 'active' : ''}" onclick="triggerGenerateSet3('even')">⚖️ Even Minutes</button>
+            <button type="button" class="segment-btn ${s3.mode === 'reps' ? 'active' : ''}" onclick="triggerGenerateSet3('reps')">🌟 Get Reps</button>
           </div>
 
           ${set3BodyHTML}
+
+          ${renderSetApprovalCard(3)}
         `;
       }
 
       // AUDIT
-      const auditRows = p.audit.map(a => `
-        <tr>
-          <td><strong>#${a.number} ${a.name}</strong></td>
-          <td>
-            <strong>${a.s1s2_halves}</strong> / 4 halves
-            <span class="badge-check">✓ Full Set</span>
-          </td>
-          <td>
-            ${a.s1s2_served ? '<span class="badge-check">✓ YES (P1–P3)</span>' : '<span style="color:#ef4444">✗ No</span>'}
-          </td>
-          <td>
-            ${isSet3Generated 
-              ? `<span class="badge ${a.set3_halves > 0 ? 'badge-purple' : 'badge-gray'}">${a.set3_status}</span>`
-              : `<span style="color:var(--text-muted); font-size:12px; font-style:italic;">Pending Sets 1 & 2</span>`}
-          </td>
-          <td style="font-weight:700;">
-            ${isSet3Generated ? `${a.total_halves} halves` : `${a.s1s2_halves} halves`}
-          </td>
-        </tr>
-      `).join('');
+      if (p.audit) {
+        const auditRows = p.audit.map(a => `
+          <tr>
+            <td><strong>#${a.number} ${a.name}</strong></td>
+            <td>
+              <strong>${a.s1s2_halves}</strong> / 4 halves
+              ${a.s1s2_full_game_met ? '<span class="badge-check">✓ Full Set</span>' : '<span style="color:#ef4444; font-size:11px; font-weight:700;">⚠ &lt; 2 halves</span>'}
+            </td>
+            <td>
+              ${a.s1s2_served ? '<span class="badge-check">✓ YES (P1–P3)</span>' : '<span style="color:#ef4444">✗ No</span>'}
+            </td>
+            <td>
+              ${isSet3Generated 
+                ? `<span class="badge ${a.set3_halves > 0 ? 'badge-purple' : 'badge-gray'}">${a.set3_status}</span>`
+                : `<span style="color:var(--text-muted); font-size:12px; font-style:italic;">Pending Sets 1 & 2</span>`}
+            </td>
+            <td style="font-weight:700;">
+              ${isSet3Generated ? `${a.total_halves} halves` : `${a.s1s2_halves} halves`}
+            </td>
+          </tr>
+        `).join('');
 
-      document.getElementById("auditContent").innerHTML = `
-        <div class="card">
-          <div class="card-title">Sets 1 & 2 Playing Time & Serve Audit</div>
-          <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
-            Sets 1 & 2 consist of <strong>4 total halves</strong> (24 court player-halves). Every player is verified to play ≥ 2 halves (equivalent of 1 full set / 50% match time) and gets a guaranteed service turn in Pos 1–3. Set 3 (played to 15 points, sub at 8) is shown separately.
-          </p>
+        document.getElementById("auditContent").innerHTML = `
+          <div class="card">
+            <div class="card-title">Sets 1 &amp; 2 Playing Time &amp; Serve Audit</div>
+            <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+              Sets 1 &amp; 2 consist of <strong>4 total halves</strong> (24 court player-halves). Every player is verified to play ≥ 2 halves (equivalent of 1 full set / 50% match time) and gets a guaranteed service turn in Pos 1–3. Set 3 (played to 15 points, sub at 8) is shown separately.
+            </p>
 
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:14px;">
-            <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px;">
-              <div style="font-size:11px; font-weight:700; color:#15803d; text-transform:uppercase;">Sets 1 & 2 Playing Time</div>
-              <div style="font-size:15px; font-weight:800; color:#166534; margin-top:2px;">100% Full Set Met</div>
-              <div style="font-size:11px; color:#15803d;">All players play ≥2 of 4 halves</div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-bottom:14px;">
+              <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:10px;">
+                <div style="font-size:11px; font-weight:700; color:#15803d; text-transform:uppercase;">Sets 1 & 2 Playing Time</div>
+                <div style="font-size:15px; font-weight:800; color:#166534; margin-top:2px;">Equal Play Met</div>
+              </div>
+              <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px;">
+                <div style="font-size:11px; font-weight:700; color:#1d4ed8; text-transform:uppercase;">Serving Turns</div>
+                <div style="font-size:15px; font-weight:800; color:#1e40af; margin-top:2px;">100% Guaranteed</div>
+              </div>
             </div>
-            <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px;">
-              <div style="font-size:11px; font-weight:700; color:#1d4ed8; text-transform:uppercase;">Sets 1 & 2 Serve Turns</div>
-              <div style="font-size:15px; font-weight:800; color:#1e40af; margin-top:2px;">100% Guaranteed</div>
-              <div style="font-size:11px; color:#1d4ed8;">Every player in Pos 1–3</div>
+
+            <div style="overflow-x:auto;">
+              <table class="audit-table">
+                <thead>
+                  <tr>
+                    <th>Player</th>
+                    <th>Sets 1 &amp; 2 Play</th>
+                    <th>Guaranteed Srv</th>
+                    <th>Set 3 Role</th>
+                    <th>Total Match</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${auditRows}
+                </tbody>
+              </table>
             </div>
           </div>
+        `;
+      }
 
-          <table class="audit-table">
-            <thead>
-              <tr>
-                <th>Player</th>
-                <th>Sets 1 & 2 Time</th>
-                <th>Sets 1 & 2 Serve</th>
-                <th>Set 3 (15 Pts)</th>
-                <th>Total Match</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${auditRows}
-            </tbody>
-          </table>
-        </div>
-      `;
+      updateStepperUI();
     }
 
     function setInitialS3Choice(mode) {

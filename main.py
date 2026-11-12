@@ -2,13 +2,17 @@
 Moneyball VB - 4th Grade Rotation Optimizer
 Main CLI to run strategies and print game plans.
 """
+import os
 import sys
 from engine.optimizer import load_players, MoneyballOptimizer
 from engine.visualizer import render_set_summary, render_court_ascii
 from engine.match_planner import MatchPlanner
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PLAYERS_FILE = os.path.join(BASE_DIR, "players.json")
+
 def main():
-    players = load_players("players.json")
+    players = load_players(PLAYERS_FILE)
     opt = MoneyballOptimizer(players)
     planner = MatchPlanner(opt)
 

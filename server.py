@@ -10,8 +10,11 @@ from engine.optimizer import load_players
 from engine.mobile_optimizer import DynamicOptimizer
 from engine.models import Player
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PORT = 8080
-STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
+PLAYERS_FILE = os.path.join(BASE_DIR, "players.json")
+GAMES_FILE = os.path.join(BASE_DIR, "games.json")
 
 class MoneyballHandler(BaseHTTPRequestHandler):
     def _send_json(self, data, status=200):
@@ -37,7 +40,7 @@ class MoneyballHandler(BaseHTTPRequestHandler):
 
         if url_path == "/api/players":
             try:
-                with open("players.json", "r") as f:
+                with open(PLAYERS_FILE, "r") as f:
                     data = json.load(f)
                 self._send_json(data)
             except Exception as e:
@@ -46,8 +49,8 @@ class MoneyballHandler(BaseHTTPRequestHandler):
 
         if url_path == "/api/games":
             try:
-                if os.path.exists("games.json"):
-                    with open("games.json", "r") as f:
+                if os.path.exists(GAMES_FILE):
+                    with open(GAMES_FILE, "r") as f:
                         data = json.load(f)
                 else:
                     data = {"games": []}
@@ -96,7 +99,7 @@ class MoneyballHandler(BaseHTTPRequestHandler):
         if url_path == "/api/players":
             # Save players
             try:
-                with open("players.json", "w") as f:
+                with open(PLAYERS_FILE, "w") as f:
                     json.dump(body, f, indent=2)
                 self._send_json({"success": True, "message": "Players saved successfully."})
             except Exception as e:
@@ -106,7 +109,7 @@ class MoneyballHandler(BaseHTTPRequestHandler):
         if url_path == "/api/optimize":
             try:
                 # Load current players
-                players = load_players("players.json")
+                players = load_players(PLAYERS_FILE)
                 optimizer = DynamicOptimizer(players)
 
                 active_numbers = body.get("active_players", [p.name for p in players])
@@ -137,8 +140,8 @@ class MoneyballHandler(BaseHTTPRequestHandler):
             try:
                 # Save or update game in games.json
                 games = []
-                if os.path.exists("games.json"):
-                    with open("games.json", "r") as f:
+                if os.path.exists(GAMES_FILE):
+                    with open(GAMES_FILE, "r") as f:
                         data = json.load(f)
                         games = data.get("games", [])
 
@@ -154,7 +157,7 @@ class MoneyballHandler(BaseHTTPRequestHandler):
                 if not updated:
                     games.insert(0, game_data)
 
-                with open("games.json", "w") as f:
+                with open(GAMES_FILE, "w") as f:
                     json.dump({"games": games}, f, indent=2)
 
                 self._send_json({"success": True, "message": "Game saved to history."})
